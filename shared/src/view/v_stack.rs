@@ -17,6 +17,6 @@ impl<T> View for VStack<T> where T: View {
     type Body = Never;
 
     fn primitive(&self) -> Primitive {
-        Primitive::VStack(Box::new(self.wrapped.primitive()))
+        Primitive::VStack { wrapped: Box::new(self.wrapped.primitive()) }
     }
 }

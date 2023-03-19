@@ -17,6 +17,6 @@ impl<T> View for ZStack<T> where T: View {
     type Body = Never;
 
     fn primitive(&self) -> Primitive {
-        Primitive::ZStack(Box::new(self.wrapped.primitive()))
+        Primitive::ZStack { wrapped: Box::new(self.wrapped.primitive()) }
     }
 }

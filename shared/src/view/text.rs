@@ -17,6 +17,6 @@ impl View for Text {
     type Body = Never;
 
     fn primitive(&self) -> Primitive {
-        Primitive::Text(self.content.clone())
+        Primitive::Text { content: self.content.clone() }
     }
 }

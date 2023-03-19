@@ -17,6 +17,6 @@ impl<T> View for HStack<T> where T: View {
     type Body = Never;
 
     fn primitive(&self) -> Primitive {
-        Primitive::HStack(Box::new(self.wrapped.primitive()))
+        Primitive::HStack { wrapped: Box::new(self.wrapped.primitive()) }
     }
 }
