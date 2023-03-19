@@ -13,13 +13,10 @@ pub struct CView {
     /// Renders the view to a JSON-serialized primitive tree.
     /// **Callers are responsible for freeing this string!**
     render_json: extern fn(*const CView) -> *const c_char,
-    /// Frees (deallocates) this view. Must only be called once.
-    /// **Note that Rust already calls this through the `Drop` trait**,
-    /// therefore this method is only relevant to foreign callers.
-    /// See the struct doc for more details.
-    drop: extern fn(*const CView),
 }
 
+/// Renders the view to a JSON-serialized primitive tree.
+/// **Callers are responsible for freeing this string!**
 extern "C" fn render_json_impl<T>(c_view: *const CView) -> *const c_char where T: View {
     unsafe {
         let view = (*c_view).wrapped_view as *const T;
@@ -30,7 +27,12 @@ extern "C" fn render_json_impl<T>(c_view: *const CView) -> *const c_char where T
     }
 }
 
-extern "C" fn drop_impl(c_view: *const CView) {
+/// Frees (deallocates) this view. Must only be called once.
+/// **Note that Rust already calls this through the `Drop` trait**,
+/// therefore this method is only relevant to foreign callers.
+/// See the struct doc for more details.
+#[no_mangle]
+pub extern "C" fn nui_c_view_drop(c_view: *const CView) {
     unsafe {
         drop(Box::from_raw((*c_view).wrapped_view as *mut c_void));
     }
@@ -38,7 +40,7 @@ extern "C" fn drop_impl(c_view: *const CView) {
 
 impl Drop for CView {
     fn drop(&mut self) {
-        drop_impl(self as *const CView)
+        nui_c_view_drop(self as *const CView)
     }
 }
 
@@ -47,7 +49,6 @@ impl<T> From<Box<T>> for CView where T: View {
         Self {
             wrapped_view: Box::into_raw(value) as *const c_void,
             render_json: render_json_impl::<T>,
-            drop: drop_impl,
         }
     }
 }

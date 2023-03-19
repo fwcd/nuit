@@ -6,7 +6,7 @@ pub fn bootstrap(view: impl View) {
     unsafe {
         #[cfg(target_os = "macos")]
         {
-            nui_swiftui_bridge::bootstrap(ffi_view);
+            nui_swiftui_bridge::bootstrap(&ffi_view);
         }
     }
 }
