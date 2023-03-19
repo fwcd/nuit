@@ -8,5 +8,8 @@ pub enum Primitive {
     VStack { wrapped: Box<Primitive> },
     HStack { wrapped: Box<Primitive> },
     ZStack { wrapped: Box<Primitive> },
-    Group { children: Vec<Primitive> },
+    Tuple2 { child1: Box<Primitive>, child2: Box<Primitive> },
+    Tuple3 { child1: Box<Primitive>, child2: Box<Primitive>, child3: Box<Primitive> },
+    Tuple4 { child1: Box<Primitive>, child2: Box<Primitive>, child3: Box<Primitive>, child4: Box<Primitive> },
+    Tuple5 { child1: Box<Primitive>, child2: Box<Primitive>, child3: Box<Primitive>, child4: Box<Primitive>, child5: Box<Primitive> },
 }

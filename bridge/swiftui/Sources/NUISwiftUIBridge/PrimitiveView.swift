@@ -19,13 +19,24 @@ struct PrimitiveView: View {
             ZStack {
                 PrimitiveView(primitive: wrapped)
             }
-        case let .group(children: children):
-            Group {
-                // TODO: Figure out a proper way to identify these views
-                ForEach(children, id: \.self) { child in
-                    PrimitiveView(primitive: child)
-                }
-            }
+        case let .tuple2(child1: child1, child2: child2):
+            PrimitiveView(primitive: child1)
+            PrimitiveView(primitive: child2)
+        case let .tuple3(child1: child1, child2: child2, child3: child3):
+            PrimitiveView(primitive: child1)
+            PrimitiveView(primitive: child2)
+            PrimitiveView(primitive: child3)
+        case let .tuple4(child1: child1, child2: child2, child3: child3, child4: child4):
+            PrimitiveView(primitive: child1)
+            PrimitiveView(primitive: child2)
+            PrimitiveView(primitive: child3)
+            PrimitiveView(primitive: child4)
+        case let .tuple5(child1: child1, child2: child2, child3: child3, child4: child4, child5: child5):
+            PrimitiveView(primitive: child1)
+            PrimitiveView(primitive: child2)
+            PrimitiveView(primitive: child3)
+            PrimitiveView(primitive: child4)
+            PrimitiveView(primitive: child5)
         }
     }
 }
