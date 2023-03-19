@@ -1,4 +1,5 @@
 import SwiftUI
+import CNUISwiftUIBridge
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -11,9 +12,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 struct NUIApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
+    static var view: UnsafePointer<CView>!
+    private static var primitive: Primitive {
+        let json = String(cString: view.pointee.render_json(view)!)
+        let primitive = try! JSONDecoder().decode(Primitive.self, from: json.data(using: .utf8)!)
+        return primitive
+    }
+
     var body: some Scene {
         WindowGroup {
-            Text("Hello world!")
+            PrimitiveView(primitive: Self.primitive)
         }
     }
 }
