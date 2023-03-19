@@ -1,5 +1,7 @@
+use serde::{Serialize, Deserialize};
+
 /// A UI component tree composed of primitive components.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub enum Primitive {
     Text(String),
     VStack(Box<Primitive>),
