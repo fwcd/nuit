@@ -1,5 +1,8 @@
-use nui_shared::Text;
+use nui_shared::{Text, Group, VStack};
 
 fn main() {
-    nui::run_app(Text::new("Hello world!"));
+    nui::run_app(VStack::new(Group::new([
+        Text::new("Hello"),
+        Text::new("World"),
+    ])));
 }
