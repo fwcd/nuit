@@ -3,9 +3,6 @@ use std::ffi::{c_void, CString, c_char};
 use crate::View;
 
 /// An owned, FFI-style type-erased view.
-/// Callers from another language that use functions returning
-/// this type **will have to manually call the drop function**
-/// once done, otherwise the memory will be leaked.
 #[repr(C)]
 pub struct CView {
     /// The opaque pointer to the owned underlying implementor of the `View` trait.
@@ -27,20 +24,11 @@ extern "C" fn render_json_impl<T>(c_view: *const CView) -> *const c_char where T
     }
 }
 
-/// Frees (deallocates) this view. Must only be called once.
-/// **Note that Rust already calls this through the `Drop` trait**,
-/// therefore this method is only relevant to foreign callers.
-/// See the struct doc for more details.
-#[no_mangle]
-pub extern "C" fn nui_c_view_drop(c_view: *const CView) {
-    unsafe {
-        drop(Box::from_raw((*c_view).wrapped_view as *mut c_void));
-    }
-}
-
 impl Drop for CView {
     fn drop(&mut self) {
-        nui_c_view_drop(self as *const CView)
+        unsafe {
+            drop(Box::from_raw(self.wrapped_view as *mut c_void));
+        }
     }
 }
 
