@@ -1,4 +1,4 @@
-@_cdecl("hello")
-func hello() {
-    helloImpl()
+@_cdecl("bootstrap")
+func bootstrap() {
+    NUIApp.main()
 }

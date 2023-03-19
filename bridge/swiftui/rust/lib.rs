@@ -1,3 +1,3 @@
 extern "C" {
-    pub fn hello();
+    pub fn bootstrap();
 }

@@ -1,5 +1,6 @@
-pub fn hello() {
+pub fn bootstrap() {
     unsafe {
-        nui_swiftui_bridge::hello();
+        #[cfg(target_os = "macos")]
+        nui_swiftui_bridge::bootstrap();
     }
 }

@@ -17,7 +17,3 @@ struct NUIApp: App {
         }
     }
 }
-
-func helloImpl() {
-    NUIApp.main()
-}

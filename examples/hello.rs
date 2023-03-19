@@ -1,3 +1,3 @@
 fn main() {
-    nui::hello();
+    nui::bootstrap();
 }
