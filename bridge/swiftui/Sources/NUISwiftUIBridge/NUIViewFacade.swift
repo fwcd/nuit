@@ -2,12 +2,13 @@ import CNUISwiftUIBridge
 import Foundation
 import Combine
 
-class CViewRef: ObservableObject {
+class NUIViewFacade: ObservableObject {
     private let cView: UnsafePointer<CView>
 
     /// A manually installed publisher since we don't use `@Published`.
     var objectWillChange = ObservableObjectPublisher()
 
+    /// The root view primitive.
     var primitive: Primitive {
         let cString = cView.pointee.render_json(cView)!
         defer { nui_c_string_drop(cString) }

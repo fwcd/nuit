@@ -3,6 +3,6 @@ import Foundation
 
 @_cdecl("run_app")
 func runApp(view: UnsafePointer<CView>) {
-    NUIApp.rootView = CViewRef(cView: view)
+    NUIApp.facade = NUIViewFacade(cView: view)
     NUIApp.main()
 }
