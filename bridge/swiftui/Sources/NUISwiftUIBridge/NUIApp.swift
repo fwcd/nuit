@@ -12,18 +12,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 struct NUIApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
-    static var view: UnsafePointer<CView>!
-    private static var primitive: Primitive {
-        let cString = view.pointee.render_json(view)!
-        let json = String(cString: cString)
-        let primitive = try! JSONDecoder().decode(Primitive.self, from: json.data(using: .utf8)!)
-        nui_c_string_drop(cString)
-        return primitive
-    }
+    static var rootView: CViewRef!
 
     var body: some Scene {
         WindowGroup {
-            PrimitiveView(primitive: Self.primitive)
+            PrimitiveView(primitive: Self.rootView.primitive)
         }
     }
 }
