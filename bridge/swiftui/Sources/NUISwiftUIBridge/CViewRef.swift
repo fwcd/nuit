@@ -1,8 +1,12 @@
 import CNUISwiftUIBridge
 import Foundation
+import Combine
 
-struct CViewRef {
+class CViewRef: ObservableObject {
     private let cView: UnsafePointer<CView>
+
+    /// A manually installed publisher since we don't use `@Published`.
+    var objectWillChange = ObservableObjectPublisher()
 
     var primitive: Primitive {
         let cString = cView.pointee.render_json(cView)!
@@ -14,5 +18,9 @@ struct CViewRef {
 
     init(cView: UnsafePointer<CView>) {
         self.cView = cView
+    }
+
+    func triggerUpdate() {
+        objectWillChange.send()
     }
 }

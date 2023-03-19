@@ -17,6 +17,7 @@ struct NUIApp: App {
     var body: some Scene {
         WindowGroup {
             PrimitiveView(primitive: Self.rootView.primitive)
+                .environmentObject(Self.rootView)
         }
     }
 }
