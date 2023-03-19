@@ -1,4 +1,4 @@
-use nui_shared::{View, CView};
+pub use nui_shared::*;
 
 /// Blocks and presents the given view to the user.
 pub fn run_app(view: impl View) {

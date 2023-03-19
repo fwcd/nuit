@@ -1,4 +1,4 @@
-use nui_shared::{Text, VStack};
+use nui::{Text, VStack};
 
 fn main() {
     nui::run_app(VStack::new((
