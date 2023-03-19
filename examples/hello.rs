@@ -1,3 +1,5 @@
+use nui_shared::Text;
+
 fn main() {
-    nui::bootstrap();
+    nui::bootstrap(Text::new("Hello!"));
 }
