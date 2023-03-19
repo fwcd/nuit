@@ -4,6 +4,7 @@ use serde::{Serialize, Deserialize};
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub enum Primitive {
+    Empty,
     Text { content: String },
     VStack { wrapped: Box<Primitive> },
     HStack { wrapped: Box<Primitive> },

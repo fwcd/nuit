@@ -1,4 +1,5 @@
 indirect enum Primitive: Codable, Hashable {
+    case empty
     case text(content: String)
     case vStack(wrapped: Primitive)
     case hStack(wrapped: Primitive)

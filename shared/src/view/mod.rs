@@ -29,6 +29,26 @@ impl View for Never {
 
 // TODO: Generate tuple variants with a macro (or variadic generics once possible)
 
+impl View for () {
+    type Body = Never;
+
+    fn primitive(&self) -> Primitive {
+        Primitive::Empty
+    }
+}
+
+impl<T> View for (T,) where T: View {
+    type Body = T::Body;
+
+    fn body(&self) -> Self::Body {
+        self.0.body()
+    }
+
+    fn primitive(&self) -> Primitive {
+        self.0.primitive()
+    }
+}
+
 impl<T, U> View for (T, U) where T: View, U: View {
     type Body = Never;
 

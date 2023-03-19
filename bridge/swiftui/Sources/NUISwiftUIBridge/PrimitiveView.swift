@@ -5,6 +5,8 @@ struct PrimitiveView: View {
 
     var body: some View {
         switch primitive {
+        case .empty:
+            EmptyView()
         case let .text(content: content):
             Text(content)
         case let .vStack(wrapped: wrapped):
