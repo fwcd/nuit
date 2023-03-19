@@ -1,4 +1,4 @@
-use crate::{View, Never, Primitive};
+use crate::{View, Primitive};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Text {
@@ -14,8 +14,6 @@ impl Text {
 }
 
 impl View for Text {
-    type Body = Never;
-
     fn primitive(&self) -> Primitive {
         Primitive::Text { content: self.content.clone() }
     }

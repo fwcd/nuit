@@ -1,4 +1,4 @@
-use crate::{View, Never, Primitive};
+use crate::{View, Primitive};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct HStack<T> {
@@ -14,8 +14,6 @@ impl<T> HStack<T> {
 }
 
 impl<T> View for HStack<T> where T: View {
-    type Body = Never;
-
     fn primitive(&self) -> Primitive {
         Primitive::HStack { wrapped: Box::new(self.wrapped.primitive()) }
     }

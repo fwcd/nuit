@@ -8,11 +8,11 @@ pub use text::*;
 pub use v_stack::*;
 pub use z_stack::*;
 
-use crate::{Never, Primitive};
+use crate::Primitive;
 
 /// The primary view trait. Represents a lightweight UI component.
 pub trait View {
-    type Body: View;
+    type Body: View = !;
 
     fn body(&self) -> Self::Body {
         panic!("View does not have a body!")
@@ -23,15 +23,11 @@ pub trait View {
     }
 }
 
-impl View for Never {
-    type Body = Never;
-}
-
 // TODO: Generate tuple variants with a macro (or variadic generics once possible)
 
-impl View for () {
-    type Body = Never;
+impl View for ! {}
 
+impl View for () {
     fn primitive(&self) -> Primitive {
         Primitive::Empty
     }
@@ -50,8 +46,6 @@ impl<T> View for (T,) where T: View {
 }
 
 impl<T, U> View for (T, U) where T: View, U: View {
-    type Body = Never;
-
     fn primitive(&self) -> Primitive {
         Primitive::Tuple2 {
             child1: Box::new(self.0.primitive()),
@@ -61,8 +55,6 @@ impl<T, U> View for (T, U) where T: View, U: View {
 }
 
 impl<T, U, V> View for (T, U, V) where T: View, U: View, V: View {
-    type Body = Never;
-
     fn primitive(&self) -> Primitive {
         Primitive::Tuple3 {
             child1: Box::new(self.0.primitive()),
@@ -73,8 +65,6 @@ impl<T, U, V> View for (T, U, V) where T: View, U: View, V: View {
 }
 
 impl<T, U, V, W> View for (T, U, V, W) where T: View, U: View, V: View, W: View {
-    type Body = Never;
-
     fn primitive(&self) -> Primitive {
         Primitive::Tuple4 {
             child1: Box::new(self.0.primitive()),
@@ -86,8 +76,6 @@ impl<T, U, V, W> View for (T, U, V, W) where T: View, U: View, V: View, W: View 
 }
 
 impl<T, U, V, W, X> View for (T, U, V, W, X) where T: View, U: View, V: View, W: View, X: View {
-    type Body = Never;
-
     fn primitive(&self) -> Primitive {
         Primitive::Tuple5 {
             child1: Box::new(self.0.primitive()),

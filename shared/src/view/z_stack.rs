@@ -1,4 +1,4 @@
-use crate::{View, Never, Primitive};
+use crate::{View, Primitive};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct ZStack<T> {
@@ -14,8 +14,6 @@ impl<T> ZStack<T> {
 }
 
 impl<T> View for ZStack<T> where T: View {
-    type Body = Never;
-
     fn primitive(&self) -> Primitive {
         Primitive::ZStack { wrapped: Box::new(self.wrapped.primitive()) }
     }
