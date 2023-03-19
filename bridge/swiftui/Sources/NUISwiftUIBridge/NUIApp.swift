@@ -14,8 +14,10 @@ struct NUIApp: App {
 
     static var view: UnsafePointer<CView>!
     private static var primitive: Primitive {
-        let json = String(cString: view.pointee.render_json(view)!)
+        let cString = view.pointee.render_json(view)!
+        let json = String(cString: cString)
         let primitive = try! JSONDecoder().decode(Primitive.self, from: json.data(using: .utf8)!)
+        nui_c_string_drop(cString)
         return primitive
     }
 

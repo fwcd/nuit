@@ -1,4 +1,4 @@
 module CNUISwiftUIBridge [system] {
-    header "include/CView.h"
+    header "include/CNUISwiftUIBridge.h"
     export *
 }
