@@ -1,6 +1,7 @@
 #![feature(associated_type_defaults, never_type)]
 
 mod bind;
+mod binding;
 mod context;
 mod id;
 mod ffi;
@@ -11,6 +12,7 @@ mod storage;
 mod view;
 
 pub use bind::*;
+pub use binding::*;
 pub use context::*;
 pub use id::*;
 pub use ffi::*;

@@ -1,6 +1,6 @@
 use std::rc::Rc;
 
-use crate::{Storage, IdPath};
+use crate::{Storage, IdPath, Binding};
 
 #[derive(Clone)]
 pub struct State<T> {
@@ -37,5 +37,14 @@ impl<T> State<T> where T: 'static + Clone {
     pub fn set(&self, value: T) {
         let storage = self.storage.as_ref().expect("Storage not linked prior to set");
         storage.insert_state(self.key.clone().unwrap(), value);
+    }
+
+    pub fn binding(&self) -> Binding<T, impl Fn() -> T, impl Fn(T)> {
+        let self1 = self.clone();
+        let self2 = self.clone();
+        Binding::new(
+            move || self1.get(),
+            move |value| self2.set(value),
+        )
     }
 }
