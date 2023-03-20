@@ -1,5 +1,4 @@
 import SwiftUI
-import CNUISwiftUIBridge
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
@@ -16,7 +15,7 @@ struct NUIApp: App {
 
     var body: some Scene {
         WindowGroup {
-            PrimitiveView(primitive: Self.root.primitive)
+            RootView()
                 .environmentObject(Self.root)
         }
     }
