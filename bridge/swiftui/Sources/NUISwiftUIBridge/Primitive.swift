@@ -1,6 +1,7 @@
 indirect enum Primitive: Codable, Hashable {
     case empty
     case text(content: String)
+    case textField(content: String)
     case button(label: Id<Primitive>)
     case vStack(wrapped: Id<Primitive>)
     case hStack(wrapped: Id<Primitive>)

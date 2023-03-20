@@ -10,9 +10,9 @@ pub struct State<T> {
 }
 
 impl<T> State<T> where T: 'static + Clone {
-    pub fn new(initial_value: T) -> Self {
+    pub fn new(initial_value: impl Into<T>) -> Self {
         Self {
-            initial_value,
+            initial_value: initial_value.into(),
             storage: None,
             key: None,
         }

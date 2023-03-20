@@ -8,6 +8,7 @@ use crate::Id;
 pub enum Primitive {
     Empty,
     Text { content: String },
+    TextField { content: String },
     Button { label: Box<Id<Primitive>> },
     VStack { wrapped: Box<Id<Primitive>> },
     HStack { wrapped: Box<Id<Primitive>> },

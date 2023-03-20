@@ -11,6 +11,13 @@ struct PrimitiveView: View {
             EmptyView()
         case let .text(content: content):
             Text(content)
+        case let .textField(content: content):
+            TextField(text: Binding(
+                get: { content },
+                set: { _ in /* TODO */ }
+            )) {
+                // TODO: Investigate adding a label
+            }
         case let .button(label: label):
             Button {
                 root.fireClickAction(for: primitive.idPath)

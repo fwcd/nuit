@@ -1,4 +1,4 @@
-use std::rc::Rc;
+use std::{rc::Rc, fmt};
 
 #[derive(Clone)]
 pub struct Binding<T> {
@@ -6,7 +6,7 @@ pub struct Binding<T> {
     set: Rc<dyn Fn(T)>,
 }
 
-impl<T> Binding<T> {
+impl<T> Binding<T> where T: 'static {
     pub fn new(get: impl Fn() -> T + 'static, set: impl Fn(T) + 'static) -> Self {
         Self { get: Rc::new(get), set: Rc::new(set) }
     }
@@ -17,5 +17,17 @@ impl<T> Binding<T> {
 
     pub fn set(&self, value: T) {
         (self.set)(value)
+    }
+}
+
+impl<T> Binding<T> where T: Clone + 'static {
+    pub fn constant(value: T) -> Self {
+        Self::new(move || value.clone(), |_| {})
+    }
+}
+
+impl<T> fmt::Debug for Binding<T> {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "Binding")
     }
 }
