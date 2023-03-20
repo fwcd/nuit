@@ -31,9 +31,6 @@ impl<T, F> Bind for Button<T, F> where T: Bind, F: Fn() + 'static {
 impl<T, F> View for Button<T, F> where T: View, F: Fn() + 'static {
     fn render(&mut self, context: &Context) -> Id<Primitive> {
         self.bind(context);
-        Id::new(
-            context.id_path().clone(),
-            Primitive::Button { label: Box::new(self.label.render(&context.child(0))) }
-        )
+        context.identify(Primitive::Button { label: Box::new(self.label.render(&context.child(0))) })
     }
 }

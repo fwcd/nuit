@@ -14,7 +14,7 @@ struct PrimitiveView: View {
         case let .textField(content: content):
             TextField(text: Binding(
                 get: { content },
-                set: { _ in /* TODO */ }
+                set: { root.fire(event: .updateText(content: $0), for: primitive.idPath) }
             )) {
                 // TODO: Investigate adding a label
             }
