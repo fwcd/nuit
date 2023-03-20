@@ -20,7 +20,7 @@ impl<T> Bind for ZStack<T> where T: Bind {
 }
 
 impl<T> View for ZStack<T> where T: View {
-    fn primitive(&self) -> Primitive {
-        Primitive::ZStack { wrapped: Box::new(self.wrapped.primitive()) }
+    fn render(&self) -> Primitive {
+        Primitive::ZStack { wrapped: Box::new(self.wrapped.render()) }
     }
 }

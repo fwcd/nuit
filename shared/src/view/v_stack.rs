@@ -20,7 +20,7 @@ impl<T> Bind for VStack<T> where T: Bind {
 }
 
 impl<T> View for VStack<T> where T: View {
-    fn primitive(&self) -> Primitive {
-        Primitive::VStack { wrapped: Box::new(self.wrapped.primitive()) }
+    fn render(&self) -> Primitive {
+        Primitive::VStack { wrapped: Box::new(self.wrapped.render()) }
     }
 }

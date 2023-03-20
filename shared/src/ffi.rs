@@ -15,7 +15,7 @@ pub struct CView {
 extern "C" fn render_json_impl<T>(c_view: *const CView) -> *const c_char where T: View {
     unsafe {
         let view = (*c_view).wrapped_view as *const T;
-        let primitive = (*view).primitive();
+        let primitive = (*view).render();
         let json = serde_json::to_string(&primitive).expect("Could not serialize view");
         let c_string = CString::new(json).expect("Could not convert JSON to C string");
         c_string.into_raw()

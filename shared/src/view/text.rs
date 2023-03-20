@@ -16,7 +16,7 @@ impl Text {
 impl Bind for Text {}
 
 impl View for Text {
-    fn primitive(&self) -> Primitive {
+    fn render(&self) -> Primitive {
         Primitive::Text { content: self.content.clone() }
     }
 }

@@ -18,8 +18,8 @@ pub trait View: Bind {
         panic!("View does not have a body!")
     }
 
-    fn primitive(&self) -> Primitive {
-        self.body().primitive()
+    fn render(&self) -> Primitive {
+        self.body().render()
     }
 }
 
@@ -28,7 +28,7 @@ pub trait View: Bind {
 impl View for ! {}
 
 impl View for () {
-    fn primitive(&self) -> Primitive {
+    fn render(&self) -> Primitive {
         Primitive::Empty
     }
 }
@@ -40,49 +40,49 @@ impl<T> View for (T,) where T: View {
         self.0.body()
     }
 
-    fn primitive(&self) -> Primitive {
-        self.0.primitive()
+    fn render(&self) -> Primitive {
+        self.0.render()
     }
 }
 
 impl<T, U> View for (T, U) where T: View, U: View {
-    fn primitive(&self) -> Primitive {
+    fn render(&self) -> Primitive {
         Primitive::Tuple2 {
-            child1: Box::new(self.0.primitive()),
-            child2: Box::new(self.1.primitive()),
+            child1: Box::new(self.0.render()),
+            child2: Box::new(self.1.render()),
         }
     }
 }
 
 impl<T, U, V> View for (T, U, V) where T: View, U: View, V: View {
-    fn primitive(&self) -> Primitive {
+    fn render(&self) -> Primitive {
         Primitive::Tuple3 {
-            child1: Box::new(self.0.primitive()),
-            child2: Box::new(self.1.primitive()),
-            child3: Box::new(self.2.primitive()),
+            child1: Box::new(self.0.render()),
+            child2: Box::new(self.1.render()),
+            child3: Box::new(self.2.render()),
         }
     }
 }
 
 impl<T, U, V, W> View for (T, U, V, W) where T: View, U: View, V: View, W: View {
-    fn primitive(&self) -> Primitive {
+    fn render(&self) -> Primitive {
         Primitive::Tuple4 {
-            child1: Box::new(self.0.primitive()),
-            child2: Box::new(self.1.primitive()),
-            child3: Box::new(self.2.primitive()),
-            child4: Box::new(self.3.primitive()),
+            child1: Box::new(self.0.render()),
+            child2: Box::new(self.1.render()),
+            child3: Box::new(self.2.render()),
+            child4: Box::new(self.3.render()),
         }
     }
 }
 
 impl<T, U, V, W, X> View for (T, U, V, W, X) where T: View, U: View, V: View, W: View, X: View {
-    fn primitive(&self) -> Primitive {
+    fn render(&self) -> Primitive {
         Primitive::Tuple5 {
-            child1: Box::new(self.0.primitive()),
-            child2: Box::new(self.1.primitive()),
-            child3: Box::new(self.2.primitive()),
-            child4: Box::new(self.3.primitive()),
-            child5: Box::new(self.4.primitive()),
+            child1: Box::new(self.0.render()),
+            child2: Box::new(self.1.render()),
+            child3: Box::new(self.2.render()),
+            child4: Box::new(self.3.render()),
+            child5: Box::new(self.4.render()),
         }
     }
 }
