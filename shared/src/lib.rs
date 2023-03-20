@@ -3,6 +3,7 @@
 mod bind;
 mod binding;
 mod context;
+mod event;
 mod id;
 mod ffi;
 mod primitive;
@@ -14,6 +15,7 @@ mod view;
 pub use bind::*;
 pub use binding::*;
 pub use context::*;
+pub use event::*;
 pub use id::*;
 pub use ffi::*;
 pub use primitive::*;

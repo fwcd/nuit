@@ -1,6 +1,6 @@
 use std::ffi::{c_void, c_char, CString, CStr};
 
-use crate::{NUIRoot, View, IdPath};
+use crate::{NUIRoot, View, IdPath, Event};
 
 /// A C/FFI-compatible wrapper around `NUIRoot<T>`.
 #[repr(C)]
@@ -10,8 +10,8 @@ pub struct CNUIRoot {
     /// Renders the view to an owned JSON-serialized primitive tree.
     /// **Callers are responsible for calling `nui_drop_string` on this string!**
     render_json: extern fn(*const CNUIRoot) -> *const c_char,
-    /// Fires a click action to the given JSON-serialized id path.
-    fire_click_action: extern fn(*const CNUIRoot, *const c_char),
+    /// Fires an to the given JSON-serialized id path with the given JSON-serialized event.
+    fire_event: extern fn(*const CNUIRoot, *const c_char, *const c_char),
 }
 
 extern "C" fn render_json_impl<T>(c_root: *const CNUIRoot) -> *const c_char where T: View {
@@ -24,13 +24,13 @@ extern "C" fn render_json_impl<T>(c_root: *const CNUIRoot) -> *const c_char wher
     }
 }
 
-extern "C" fn fire_click_action_impl<T>(c_root: *const CNUIRoot, raw_json: *const c_char) where T: View {
+extern "C" fn fire_event_impl<T>(c_root: *const CNUIRoot, raw_id_path_json: *const c_char, raw_event_json: *const c_char) where T: View {
     unsafe {
         let root = (*c_root).wrapped as *mut NUIRoot<T>;
-        let c_str = CStr::from_ptr(raw_json);
-        let id_path: IdPath = serde_json::from_slice(c_str.to_bytes()).expect("Could not deserialize id path");
+        let id_path: IdPath = serde_json::from_slice(CStr::from_ptr(raw_id_path_json).to_bytes()).expect("Could not deserialize id path");
+        let event: Event = serde_json::from_slice(CStr::from_ptr(raw_event_json).to_bytes()).expect("Could not deserialize id path");
         let storage = (*root).storage();
-        storage.fire_click_action(&id_path);
+        storage.fire_event(&id_path, event);
     }
 }
 
@@ -39,7 +39,7 @@ impl<T> From<Box<NUIRoot<T>>> for CNUIRoot where T: View {
         Self {
             wrapped: Box::into_raw(value) as *mut c_void,
             render_json: render_json_impl::<T>,
-            fire_click_action: fire_click_action_impl::<T>,
+            fire_event: fire_event_impl::<T>,
         }
     }
 }

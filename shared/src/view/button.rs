@@ -1,4 +1,4 @@
-use crate::{View, Primitive, Bind, Context, Id};
+use crate::{View, Primitive, Bind, Context, Id, Event};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Button<T, F> {
@@ -19,7 +19,11 @@ impl<T, F> Bind for Button<T, F> where T: Bind, F: Fn() + 'static {
     fn bind(&mut self, context: &Context) {
         let storage = context.storage();
         if let Some(action) = self.action.take() {
-            storage.insert_click_action(context.id_path().clone(), action);
+            storage.insert_event_handler(context.id_path().clone(), move |event| {
+                if let Event::Click {} = event {
+                    action();
+                }
+            });
         }
     }
 }

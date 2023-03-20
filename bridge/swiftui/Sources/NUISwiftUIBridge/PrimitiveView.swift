@@ -20,7 +20,7 @@ struct PrimitiveView: View {
             }
         case let .button(label: label):
             Button {
-                root.fireClickAction(for: primitive.idPath)
+                root.fire(event: .click, for: primitive.idPath)
             } label: {
                 PrimitiveView(primitive: label)
             }

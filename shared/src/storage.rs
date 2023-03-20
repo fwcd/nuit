@@ -1,19 +1,19 @@
 use std::{collections::HashMap, any::Any, cell::RefCell};
 
-use crate::IdPath;
+use crate::{IdPath, Event};
 
 // TODO: Use trees to model these id path keys (this should also allow us to take them by ref and delete subtrees easily)
 
 pub struct Storage {
     state: RefCell<HashMap<(IdPath, usize), Box<dyn Any>>>,
-    click_actions: RefCell<HashMap<IdPath, Box<dyn Fn()>>>,
+    event_handlers: RefCell<HashMap<IdPath, Box<dyn Fn(Event)>>>,
 }
 
 impl Storage {
     pub fn new() -> Self {
         Self {
             state: RefCell::new(HashMap::new()),
-            click_actions: RefCell::new(HashMap::new()),
+            event_handlers: RefCell::new(HashMap::new()),
         }
     }
 
@@ -30,13 +30,13 @@ impl Storage {
         state.downcast_ref::<T>().expect("State has invalid type").clone()
     }
 
-    pub fn insert_click_action(&self, key: IdPath, action: impl Fn() + 'static) {
-        self.click_actions.borrow_mut().insert(key, Box::new(action));
+    pub fn insert_event_handler(&self, key: IdPath, handler: impl Fn(Event) + 'static) {
+        self.event_handlers.borrow_mut().insert(key, Box::new(handler));
     }
 
-    pub fn fire_click_action(&self, key: &IdPath) {
-        if let Some(action) = self.click_actions.borrow().get(key) {
-            action();
+    pub fn fire_event(&self, key: &IdPath, event: Event) {
+        if let Some(handler) = self.event_handlers.borrow().get(key) {
+            handler(event);
         }
     }
 }
