@@ -1,5 +1,6 @@
 use crate::{Storage, Primitive, View};
 
+/// The central state of a NUI application.
 pub struct NUIRoot<T> {
     view: T,
     storage: Storage,

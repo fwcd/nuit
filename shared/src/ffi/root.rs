@@ -2,7 +2,7 @@ use std::ffi::{c_void, c_char, CString};
 
 use crate::{NUIRoot, View};
 
-/// An owned, FFI-style type-erased view.
+/// A C/FFI-compatible wrapper around `NUIRoot<T>`.
 #[repr(C)]
 pub struct CNUIRoot {
     /// The opaque pointer to the owned underlying Rust `NUIRoot<T>`.
