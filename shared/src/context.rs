@@ -1,6 +1,6 @@
 use std::{rc::Rc, cell::RefCell};
 
-use crate::{Storage, IdPath};
+use crate::{Storage, IdPath, Id};
 
 pub struct Context {
     id_path: IdPath,
@@ -28,5 +28,9 @@ impl Context {
             id_path: self.id_path.child(i),
             storage: self.storage.clone(),
         }
+    }
+
+    pub fn identify<T>(&self, value: T) -> Id<T> {
+        Id::new(self.id_path.clone(), value)
     }
 }

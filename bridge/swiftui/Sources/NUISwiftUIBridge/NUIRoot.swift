@@ -9,9 +9,9 @@ class NUIRoot: ObservableObject {
     var objectWillChange = ObservableObjectPublisher()
 
     /// The rendered root primitive.
-    var primitive: Primitive {
+    var primitive: Id<Primitive> {
         let json = renderJson()
-        let primitive = try! JSONDecoder().decode(Primitive.self, from: json.data(using: .utf8)!)
+        let primitive = try! JSONDecoder().decode(Id<Primitive>.self, from: json.data(using: .utf8)!)
         return primitive
     }
 

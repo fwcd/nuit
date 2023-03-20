@@ -1,16 +1,22 @@
 import SwiftUI
 
 struct PrimitiveView: View {
-    let primitive: Primitive
+    let primitive: Id<Primitive>
 
     @EnvironmentObject private var root: NUIRoot
 
     var body: some View {
-        switch primitive {
+        switch primitive.value {
         case .empty:
             EmptyView()
         case let .text(content: content):
             Text(content)
+        case let .button(label: label):
+            Button {
+                // TODO
+            } label: {
+                PrimitiveView(primitive: label)
+            }
         case let .vStack(wrapped: wrapped):
             VStack {
                 PrimitiveView(primitive: wrapped)

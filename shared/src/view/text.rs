@@ -1,4 +1,4 @@
-use crate::{View, Primitive, Bind, Context};
+use crate::{View, Primitive, Bind, Context, Id};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Text {
@@ -16,7 +16,7 @@ impl Text {
 impl Bind for Text {}
 
 impl View for Text {
-    fn render(&mut self, _context: &Context) -> Primitive {
-        Primitive::Text { content: self.content.clone() }
+    fn render(&mut self, context: &Context) -> Id<Primitive> {
+        context.identify(Primitive::Text { content: self.content.clone() })
     }
 }

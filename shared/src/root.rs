@@ -1,6 +1,6 @@
 use std::{rc::Rc, cell::RefCell};
 
-use crate::{Storage, Primitive, View, Context};
+use crate::{Storage, Primitive, View, Context, Id};
 
 /// The central state of a NUI application.
 pub struct NUIRoot<T> {
@@ -18,7 +18,7 @@ impl<T> NUIRoot<T> {
 }
 
 impl<T> NUIRoot<T> where T: View {
-    pub fn render(&mut self) -> Primitive {
+    pub fn render(&mut self) -> Id<Primitive> {
         self.view.render(&Context::new(self.storage.clone()))
     }
 }
