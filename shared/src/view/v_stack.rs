@@ -13,11 +13,7 @@ impl<T> VStack<T> {
     }
 }
 
-impl<T> Bind for VStack<T> where T: Bind {
-    fn bind(&mut self, context: &Context) {
-        self.wrapped.bind(context);
-    }
-}
+impl<T> Bind for VStack<T> where T: Bind {}
 
 impl<T> View for VStack<T> where T: View {
     fn render(&mut self, context: &Context) -> Primitive {

@@ -13,11 +13,7 @@ impl<T> ZStack<T> {
     }
 }
 
-impl<T> Bind for ZStack<T> where T: Bind {
-    fn bind(&mut self, context: &Context) {
-        self.wrapped.bind(context);
-    }
-}
+impl<T> Bind for ZStack<T> where T: Bind {}
 
 impl<T> View for ZStack<T> where T: View {
     fn render(&mut self, context: &Context) -> Primitive {

@@ -13,11 +13,7 @@ impl<T> HStack<T> {
     }
 }
 
-impl<T> Bind for HStack<T> where T: Bind {
-    fn bind(&mut self, context: &Context) {
-        self.wrapped.bind(context);
-    }
-}
+impl<T> Bind for HStack<T> where T: Bind {}
 
 impl<T> View for HStack<T> where T: View {
     fn render(&mut self, context: &Context) -> Primitive {
