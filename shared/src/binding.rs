@@ -1,15 +1,14 @@
-use std::marker::PhantomData;
+use std::rc::Rc;
 
 #[derive(Clone)]
-pub struct Binding<T, G, S> {
-    get: G,
-    set: S,
-    phantom: PhantomData<T>,
+pub struct Binding<T> {
+    get: Rc<dyn Fn() -> T>,
+    set: Rc<dyn Fn(T)>,
 }
 
-impl<T, G, S> Binding<T, G, S> where G: Fn() -> T + Clone, S: Fn(T) + Clone {
-    pub fn new(get: G, set: S) -> Self {
-        Self { get, set, phantom: PhantomData }
+impl<T> Binding<T> {
+    pub fn new(get: impl Fn() -> T + 'static, set: impl Fn(T) + 'static) -> Self {
+        Self { get: Rc::new(get), set: Rc::new(set) }
     }
 
     pub fn get(&self) -> T {

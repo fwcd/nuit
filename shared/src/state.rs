@@ -39,7 +39,7 @@ impl<T> State<T> where T: 'static + Clone {
         storage.insert_state(self.key.clone().unwrap(), value);
     }
 
-    pub fn binding(&self) -> Binding<T, impl Fn() -> T, impl Fn(T)> {
+    pub fn binding(&self) -> Binding<T> {
         let self1 = self.clone();
         let self2 = self.clone();
         Binding::new(
