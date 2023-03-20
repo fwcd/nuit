@@ -1,11 +1,11 @@
-use std::{rc::Rc, cell::RefCell};
+use std::rc::Rc;
 
 use crate::{Storage, IdPath};
 
 #[derive(Clone)]
 pub struct State<T> {
     initial_value: T,
-    storage: Option<Rc<RefCell<Storage>>>,
+    storage: Option<Rc<Storage>>,
     key: Option<(IdPath, usize)>,
 }
 
@@ -18,12 +18,11 @@ impl<T> State<T> where T: 'static + Clone {
         }
     }
 
-    pub fn link(&mut self, storage: Rc<RefCell<Storage>>, id_path: IdPath, i: usize) {
+    pub fn link(&mut self, storage: Rc<Storage>, id_path: IdPath, i: usize) {
         let key = (id_path.clone(), i);
 
         self.storage = Some(storage.clone());
         self.key = Some(key.clone());
-        let mut storage = storage.borrow_mut();
 
         if !storage.contains_state(&key) {
             storage.insert_state(key, self.initial_value.clone());
@@ -31,12 +30,12 @@ impl<T> State<T> where T: 'static + Clone {
     }
 
     pub fn get(&self) -> T {
-        let storage = self.storage.as_ref().expect("Storage not linked prior to get").borrow();
-        storage.state::<T>(self.key.as_ref().unwrap()).clone()
+        let storage = self.storage.as_ref().expect("Storage not linked prior to get");
+        storage.state::<T>(self.key.as_ref().unwrap())
     }
 
     pub fn set(&self, value: T) {
-        let mut storage = self.storage.as_ref().expect("Storage not linked prior to set").borrow_mut();
-        *storage.state_mut::<T>(self.key.as_ref().unwrap()) = value;
+        let storage = self.storage.as_ref().expect("Storage not linked prior to set");
+        storage.insert_state(self.key.clone().unwrap(), value);
     }
 }

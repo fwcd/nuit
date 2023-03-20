@@ -29,7 +29,7 @@ extern "C" fn fire_click_action_impl<T>(c_root: *const CNUIRoot, raw_json: *cons
         let root = (*c_root).wrapped as *mut NUIRoot<T>;
         let c_str = CStr::from_ptr(raw_json);
         let id_path: IdPath = serde_json::from_slice(c_str.to_bytes()).expect("Could not deserialize id path");
-        let storage = (*root).storage().borrow();
+        let storage = (*root).storage();
         storage.fire_click_action(&id_path);
     }
 }

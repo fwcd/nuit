@@ -1,21 +1,21 @@
-use std::{rc::Rc, cell::RefCell};
+use std::rc::Rc;
 
 use crate::{Storage, IdPath, Id};
 
 pub struct Context {
     id_path: IdPath,
-    storage: Rc<RefCell<Storage>>,
+    storage: Rc<Storage>,
 }
 
 impl Context {
-    pub fn new(storage: Rc<RefCell<Storage>>) -> Self {
+    pub fn new(storage: Rc<Storage>) -> Self {
         Self {
             id_path: IdPath::root(),
             storage,
         }
     }
 
-    pub fn storage(&self) -> &Rc<RefCell<Storage>> {
+    pub fn storage(&self) -> &Rc<Storage> {
         &self.storage
     }
 

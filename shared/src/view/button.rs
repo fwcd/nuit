@@ -17,7 +17,7 @@ impl<T, F> Button<T, F> {
 
 impl<T, F> Bind for Button<T, F> where T: Bind, F: Fn() + 'static {
     fn bind(&mut self, context: &Context) {
-        let mut storage = context.storage().borrow_mut();
+        let storage = context.storage();
         if let Some(action) = self.action.take() {
             storage.insert_click_action(context.id_path().clone(), action);
         }
