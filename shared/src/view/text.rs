@@ -1,4 +1,4 @@
-use crate::{View, Primitive, Bind};
+use crate::{View, Primitive, Bind, Storage};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Text {
@@ -16,7 +16,7 @@ impl Text {
 impl Bind for Text {}
 
 impl View for Text {
-    fn render(&self) -> Primitive {
+    fn render(&self, _storage: &Storage) -> Primitive {
         Primitive::Text { content: self.content.clone() }
     }
 }
