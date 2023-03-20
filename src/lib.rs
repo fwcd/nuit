@@ -1,4 +1,5 @@
 pub use nui_shared::*;
+pub use nui_derive::*;
 
 /// Blocks and presents the given view to the user.
 pub fn run_app(view: impl View) {

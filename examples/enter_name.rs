@@ -1,7 +1,6 @@
 #![feature(type_alias_impl_trait)]
 
-use nui::{Text, VStack, View, State, HStack, TextField};
-use nui_derive::Bind;
+use nui::{Text, VStack, View, State, HStack, TextField, Bind};
 
 #[derive(Bind)]
 struct EnterNameView {
