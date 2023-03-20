@@ -1,7 +1,9 @@
 #![feature(type_alias_impl_trait)]
 
-use nui::{Text, VStack, View, Bind, State, Context, HStack, TextField};
+use nui::{Text, VStack, View, State, HStack, TextField};
+use nui_derive::Bind;
 
+#[derive(Bind)]
 struct EnterNameView {
     name: State<String>,
 }
@@ -9,12 +11,6 @@ struct EnterNameView {
 impl EnterNameView {
     fn new() -> Self {
         Self { name: State::new("") }
-    }
-}
-
-impl Bind for EnterNameView {
-    fn bind(&mut self, context: &Context) {
-        self.name.link(context.storage().clone(), context.id_path().clone(), 0);
     }
 }
 
