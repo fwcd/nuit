@@ -5,6 +5,7 @@ use serde::{Serialize, Deserialize};
 #[serde(rename_all = "camelCase")]
 pub enum Primitive {
     Empty,
+    Button { label: Box<Primitive> },
     Text { content: String },
     VStack { wrapped: Box<Primitive> },
     HStack { wrapped: Box<Primitive> },
