@@ -1,6 +1,6 @@
 use std::rc::Rc;
 
-use crate::{Storage, Primitive, View, Context, Id};
+use crate::{Storage, Primitive, View, Context, Id, Event, IdPath};
 
 /// The central state of a NUI application.
 pub struct NUIRoot<T> {
@@ -24,5 +24,16 @@ impl<T> NUIRoot<T> {
 impl<T> NUIRoot<T> where T: View {
     pub fn render(&mut self) -> Id<Primitive> {
         self.view.render(&Context::new(self.storage.clone()))
+    }
+
+    pub fn render_json(&mut self) -> String {
+        let primitive = self.render();
+        serde_json::to_string(&primitive).expect("Could not serialize view")
+    }
+
+    pub fn fire_event_json(&mut self, id_path_json: &str, event_json: &str) {
+        let id_path: IdPath = serde_json::from_str(id_path_json).expect("Could not deserialize id path");
+        let event: Event = serde_json::from_str(event_json).expect("Could not deserialize event");
+        self.storage.fire_event(&id_path, event);
     }
 }

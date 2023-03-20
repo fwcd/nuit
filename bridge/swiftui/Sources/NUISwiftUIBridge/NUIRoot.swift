@@ -27,7 +27,7 @@ class NUIRoot: ObservableObject {
         let encoder = JSONEncoder()
         let idPathJson = String(data: try! encoder.encode(idPath), encoding: .utf8)
         let eventJson = String(data: try! encoder.encode(event), encoding: .utf8)
-        cRoot.pointee.fire_event(cRoot, idPathJson, eventJson)
+        cRoot.pointee.fire_event_json(cRoot, idPathJson, eventJson)
         triggerUpdate()
     }
 
