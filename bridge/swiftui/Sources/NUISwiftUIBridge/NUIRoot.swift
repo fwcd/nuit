@@ -8,11 +8,9 @@ class NUIRoot: ObservableObject {
     /// A manually installed publisher since we don't use `@Published`.
     var objectWillChange = ObservableObjectPublisher()
 
-    /// The root view primitive.
+    /// The rendered root primitive.
     var primitive: Primitive {
-        let cString = cRoot.pointee.render_json(cRoot)!
-        defer { nui_c_string_drop(cString) }
-        let json = String(cString: cString)
+        let json = renderJson()
         let primitive = try! JSONDecoder().decode(Primitive.self, from: json.data(using: .utf8)!)
         return primitive
     }
@@ -23,5 +21,11 @@ class NUIRoot: ObservableObject {
 
     func triggerUpdate() {
         objectWillChange.send()
+    }
+
+    private func renderJson() -> String {
+        let cString = cRoot.pointee.render_json(cRoot)!
+        defer { nui_c_string_drop(cString) }
+        return String(cString: cString)
     }
 }
