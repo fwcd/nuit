@@ -25,6 +25,7 @@ pub fn derive_bind(input: TokenStream) -> TokenStream {
             (self.#name).link(context.storage().clone(), context.id_path().clone(), #i);
         });
 
+    // TODO: Handle generic structs
     let impl_block = quote! {
         impl nui::Bind for #name {
             fn bind(&mut self, context: &nui::Context) {

@@ -1,7 +1,8 @@
 #![feature(type_alias_impl_trait)]
 
-use nui::{Text, VStack, View, Bind, Button, State, Context};
+use nui::{Text, VStack, View, Bind, Button, State};
 
+#[derive(Bind)]
 struct CounterView {
     count: State<i32>,
 }
@@ -9,12 +10,6 @@ struct CounterView {
 impl CounterView {
     fn new() -> Self {
         Self { count: State::new(0) }
-    }
-}
-
-impl Bind for CounterView {
-    fn bind(&mut self, context: &Context) {
-        self.count.link(context.storage().clone(), context.id_path().clone(), 0);
     }
 }
 
