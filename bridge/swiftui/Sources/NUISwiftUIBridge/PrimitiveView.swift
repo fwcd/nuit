@@ -3,7 +3,7 @@ import SwiftUI
 struct PrimitiveView: View {
     let primitive: Primitive
 
-    @EnvironmentObject private var facade: NUIViewFacade
+    @EnvironmentObject private var root: NUIRoot
 
     var body: some View {
         switch primitive {

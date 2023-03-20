@@ -2,7 +2,7 @@ import CNUISwiftUIBridge
 import Foundation
 
 @_cdecl("run_app")
-func runApp(view: UnsafePointer<CView>) {
-    NUIApp.facade = NUIViewFacade(cView: view)
+func runApp(cRoot: UnsafePointer<CNUIRoot>) {
+    NUIApp.root = NUIRoot(cRoot: cRoot)
     NUIApp.main()
 }

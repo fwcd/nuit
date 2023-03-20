@@ -1,0 +1,8 @@
+use std::ffi::{CString, c_char};
+
+#[no_mangle]
+pub extern "C" fn nui_c_string_drop(raw_string: *const c_char) {
+    unsafe {
+        drop(CString::from_raw(raw_string as *mut c_char))
+    }
+}

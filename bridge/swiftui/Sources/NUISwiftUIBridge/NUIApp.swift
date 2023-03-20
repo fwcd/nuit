@@ -12,12 +12,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 struct NUIApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
-    static var facade: NUIViewFacade!
+    static var root: NUIRoot!
 
     var body: some Scene {
         WindowGroup {
-            PrimitiveView(primitive: Self.facade.primitive)
-                .environmentObject(Self.facade)
+            PrimitiveView(primitive: Self.root.primitive)
+                .environmentObject(Self.root)
         }
     }
 }

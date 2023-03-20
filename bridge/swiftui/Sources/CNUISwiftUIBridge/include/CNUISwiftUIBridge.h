@@ -1,4 +1,4 @@
 #pragma once
 
-#include "CView.h"
+#include "CNUIRoot.h"
 #include "CString.h"

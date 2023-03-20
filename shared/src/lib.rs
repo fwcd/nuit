@@ -3,6 +3,7 @@
 mod bind;
 mod ffi;
 mod primitive;
+mod root;
 mod state;
 mod storage;
 mod view;
@@ -10,6 +11,7 @@ mod view;
 pub use bind::*;
 pub use ffi::*;
 pub use primitive::*;
+pub use root::*;
 pub use state::*;
 pub use storage::*;
 pub use view::*;

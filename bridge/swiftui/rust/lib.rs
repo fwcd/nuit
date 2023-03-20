@@ -1,5 +1,5 @@
-use nui_shared::CView;
+use nui_shared::CNUIRoot;
 
 extern "C" {
-    pub fn run_app(view: *const CView);
+    pub fn run_app(root: *const CNUIRoot);
 }
