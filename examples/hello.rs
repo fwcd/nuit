@@ -1,8 +1,10 @@
 #![feature(type_alias_impl_trait)]
 
-use nui::{Text, VStack, View};
+use nui::{Text, VStack, View, Bind};
 
 struct HelloView;
+
+impl Bind for HelloView {}
 
 impl View for HelloView {
     type Body = impl View;

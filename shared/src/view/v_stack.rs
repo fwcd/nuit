@@ -1,4 +1,4 @@
-use crate::{View, Primitive};
+use crate::{View, Primitive, Bind, Storage};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct VStack<T> {
@@ -10,6 +10,12 @@ impl<T> VStack<T> {
         Self {
             wrapped
         }
+    }
+}
+
+impl<T> Bind for VStack<T> where T: Bind {
+    fn bind(&self, storage: &Storage) {
+        self.wrapped.bind(storage);
     }
 }
 

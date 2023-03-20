@@ -8,10 +8,10 @@ pub use text::*;
 pub use v_stack::*;
 pub use z_stack::*;
 
-use crate::Primitive;
+use crate::{Primitive, Bind};
 
 /// The primary view trait. Represents a lightweight UI component.
-pub trait View {
+pub trait View: Bind {
     type Body: View = !;
 
     fn body(&self) -> Self::Body {
