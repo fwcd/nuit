@@ -1,8 +1,8 @@
-use crate::Storage;
+use crate::Context;
 
 /// Binds a storage to the view's state.
 pub trait Bind {
-    fn bind(&self, _storage: &Storage) {
+    fn bind(&mut self, _context: &Context) {
         // Bind nothing by default
     }
 }

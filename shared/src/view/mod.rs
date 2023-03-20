@@ -10,7 +10,7 @@ pub use text::*;
 pub use v_stack::*;
 pub use z_stack::*;
 
-use crate::{Primitive, Bind, Storage};
+use crate::{Primitive, Bind, Context};
 
 /// The primary view trait. Represents a lightweight UI component.
 pub trait View: Bind {
@@ -20,8 +20,9 @@ pub trait View: Bind {
         panic!("View does not have a body!")
     }
 
-    fn render(&self, storage: &Storage) -> Primitive {
-        self.body().render(storage)
+    fn render(&mut self, context: &Context) -> Primitive {
+        self.bind(context);
+        self.body().render(context)
     }
 }
 
@@ -30,7 +31,7 @@ pub trait View: Bind {
 impl View for ! {}
 
 impl View for () {
-    fn render(&self, _storage: &Storage) -> Primitive {
+    fn render(&mut self, _context: &Context) -> Primitive {
         Primitive::Empty
     }
 }
@@ -42,49 +43,49 @@ impl<T> View for (T,) where T: View {
         self.0.body()
     }
 
-    fn render(&self, storage: &Storage) -> Primitive {
-        self.0.render(storage)
+    fn render(&mut self, context: &Context) -> Primitive {
+        self.0.render(&context.child(0))
     }
 }
 
 impl<T, U> View for (T, U) where T: View, U: View {
-    fn render(&self, storage: &Storage) -> Primitive {
+    fn render(&mut self, context: &Context) -> Primitive {
         Primitive::Tuple2 {
-            child1: Box::new(self.0.render(storage)),
-            child2: Box::new(self.1.render(storage)),
+            child1: Box::new(self.0.render(&context.child(0))),
+            child2: Box::new(self.1.render(&context.child(1))),
         }
     }
 }
 
 impl<T, U, V> View for (T, U, V) where T: View, U: View, V: View {
-    fn render(&self, storage: &Storage) -> Primitive {
+    fn render(&mut self, context: &Context) -> Primitive {
         Primitive::Tuple3 {
-            child1: Box::new(self.0.render(storage)),
-            child2: Box::new(self.1.render(storage)),
-            child3: Box::new(self.2.render(storage)),
+            child1: Box::new(self.0.render(&context.child(0))),
+            child2: Box::new(self.1.render(&context.child(1))),
+            child3: Box::new(self.2.render(&context.child(2))),
         }
     }
 }
 
 impl<T, U, V, W> View for (T, U, V, W) where T: View, U: View, V: View, W: View {
-    fn render(&self, storage: &Storage) -> Primitive {
+    fn render(&mut self, context: &Context) -> Primitive {
         Primitive::Tuple4 {
-            child1: Box::new(self.0.render(storage)),
-            child2: Box::new(self.1.render(storage)),
-            child3: Box::new(self.2.render(storage)),
-            child4: Box::new(self.3.render(storage)),
+            child1: Box::new(self.0.render(&context.child(0))),
+            child2: Box::new(self.1.render(&context.child(1))),
+            child3: Box::new(self.2.render(&context.child(2))),
+            child4: Box::new(self.3.render(&context.child(3))),
         }
     }
 }
 
 impl<T, U, V, W, X> View for (T, U, V, W, X) where T: View, U: View, V: View, W: View, X: View {
-    fn render(&self, storage: &Storage) -> Primitive {
+    fn render(&mut self, context: &Context) -> Primitive {
         Primitive::Tuple5 {
-            child1: Box::new(self.0.render(storage)),
-            child2: Box::new(self.1.render(storage)),
-            child3: Box::new(self.2.render(storage)),
-            child4: Box::new(self.3.render(storage)),
-            child5: Box::new(self.4.render(storage)),
+            child1: Box::new(self.0.render(&context.child(0))),
+            child2: Box::new(self.1.render(&context.child(1))),
+            child3: Box::new(self.2.render(&context.child(2))),
+            child4: Box::new(self.3.render(&context.child(3))),
+            child5: Box::new(self.4.render(&context.child(4))),
         }
     }
 }

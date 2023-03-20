@@ -1,22 +1,24 @@
-use crate::{View, Primitive, Bind, Storage};
+use crate::{View, Primitive, Bind, Context};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub struct Button<T> {
+pub struct Button<T, F> {
     label: T,
+    action: F,
 }
 
-impl<T> Button<T> {
-    pub fn new(label: T) -> Self {
+impl<T, F> Button<T, F> {
+    pub fn new(label: T, action: F) -> Self {
         Self {
-            label
+            label,
+            action,
         }
     }
 }
 
-impl<T> Bind for Button<T> where T: Bind {}
+impl<T, F> Bind for Button<T, F> where T: Bind, F: Fn() {}
 
-impl<T> View for Button<T> where T: View {
-    fn render(&self, storage: &Storage) -> Primitive {
-        Primitive::Button { label: Box::new(self.label.render(storage)) }
+impl<T, F> View for Button<T, F> where T: View, F: Fn() {
+    fn render(&mut self, context: &Context) -> Primitive {
+        Primitive::Button { label: Box::new(self.label.render(&context.child(0))) }
     }
 }
