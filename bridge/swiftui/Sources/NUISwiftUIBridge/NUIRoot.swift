@@ -23,6 +23,12 @@ class NUIRoot: ObservableObject {
         objectWillChange.send()
     }
 
+    func fireClickAction(for idPath: [Int]) {
+        let json = String(data: try! JSONEncoder().encode(idPath), encoding: .utf8)
+        cRoot.pointee.fire_click_action(cRoot, json)
+        triggerUpdate()
+    }
+
     private func renderJson() -> String {
         let cString = cRoot.pointee.render_json(cRoot)!
         defer { nui_c_string_drop(cString) }

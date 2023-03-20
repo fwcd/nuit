@@ -15,6 +15,10 @@ impl<T> NUIRoot<T> {
             storage: Rc::new(RefCell::new(Storage::new())),
         }
     }
+
+    pub fn storage(&self) -> &Rc<RefCell<Storage>> {
+        &self.storage
+    }
 }
 
 impl<T> NUIRoot<T> where T: View {

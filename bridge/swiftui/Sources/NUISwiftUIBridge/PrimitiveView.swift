@@ -13,7 +13,7 @@ struct PrimitiveView: View {
             Text(content)
         case let .button(label: label):
             Button {
-                // TODO
+                root.fireClickAction(for: primitive.idPath)
             } label: {
                 PrimitiveView(primitive: label)
             }
