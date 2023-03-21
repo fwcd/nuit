@@ -36,4 +36,8 @@ impl<T> NUIRoot<T> where T: View {
         let event: Event = serde_json::from_str(event_json).expect("Could not deserialize event");
         self.storage.fire_event(&id_path, event);
     }
+
+    pub fn set_update_callback(&mut self, update_callback: impl Fn() + 'static) {
+        self.storage.set_update_callback(update_callback);
+    }
 }

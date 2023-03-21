@@ -7,6 +7,7 @@ use crate::{IdPath, Event};
 pub struct Storage {
     state: RefCell<HashMap<(IdPath, usize), Box<dyn Any>>>,
     event_handlers: RefCell<HashMap<IdPath, Box<dyn Fn(Event)>>>,
+    update_callback: RefCell<Option<Box<dyn Fn()>>>,
 }
 
 impl Storage {
@@ -14,6 +15,7 @@ impl Storage {
         Self {
             state: RefCell::new(HashMap::new()),
             event_handlers: RefCell::new(HashMap::new()),
+            update_callback: RefCell::new(None),
         }
     }
 
@@ -23,6 +25,7 @@ impl Storage {
 
     pub fn insert_state(&self, key: (IdPath, usize), value: impl Any) {
         self.state.borrow_mut().insert(key, Box::new(value));
+        self.fire_update_callback();
     }
 
     pub fn state<T>(&self, key: &(IdPath, usize)) -> T where T: Clone + 'static {
@@ -37,6 +40,17 @@ impl Storage {
     pub fn fire_event(&self, key: &IdPath, event: Event) {
         if let Some(handler) = self.event_handlers.borrow().get(key) {
             handler(event);
+            self.fire_update_callback();
         }
+    }
+
+    fn fire_update_callback(&self) {
+        if let Some(update_callback) = self.update_callback.borrow().as_ref() {
+            update_callback();
+        }
+    }
+
+    pub fn set_update_callback(&self, update_callback: impl Fn() + 'static) {
+        *self.update_callback.borrow_mut() = Some(Box::new(update_callback));
     }
 }

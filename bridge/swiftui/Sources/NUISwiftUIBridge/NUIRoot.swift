@@ -28,7 +28,6 @@ class NUIRoot: ObservableObject {
         let idPathJson = String(data: try! encoder.encode(idPath), encoding: .utf8)
         let eventJson = String(data: try! encoder.encode(event), encoding: .utf8)
         cRoot.pointee.fire_event_json(cRoot, idPathJson, eventJson)
-        triggerUpdate()
     }
 
     private func renderJson() -> String {
