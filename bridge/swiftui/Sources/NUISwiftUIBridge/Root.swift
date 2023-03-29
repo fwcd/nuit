@@ -2,8 +2,9 @@ import CNUISwiftUIBridge
 import Foundation
 import Combine
 
-class NUIRoot: ObservableObject {
-    private let cRoot: UnsafePointer<CNUIRoot>
+/// The central state of the NUI application.
+class Root: ObservableObject {
+    private let cRoot: UnsafePointer<CRoot>
 
     /// A manually installed publisher since we don't use `@Published`.
     var objectWillChange = ObservableObjectPublisher()
@@ -15,7 +16,7 @@ class NUIRoot: ObservableObject {
         return primitive
     }
 
-    init(cRoot: UnsafePointer<CNUIRoot>) {
+    init(cRoot: UnsafePointer<CRoot>) {
         self.cRoot = cRoot
     }
 

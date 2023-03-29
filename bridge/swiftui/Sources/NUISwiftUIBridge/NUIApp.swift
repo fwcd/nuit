@@ -11,7 +11,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 struct NUIApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
-    static var root: NUIRoot!
+    static var root: Root!
 
     var body: some Scene {
         WindowGroup {

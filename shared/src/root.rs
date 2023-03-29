@@ -3,12 +3,12 @@ use std::rc::Rc;
 use crate::{Storage, Primitive, View, Context, Id, Event, IdPath};
 
 /// The central state of a NUI application.
-pub struct NUIRoot<T> {
+pub struct Root<T> {
     view: T,
     storage: Rc<Storage>,
 }
 
-impl<T> NUIRoot<T> {
+impl<T> Root<T> {
     pub fn new(view: T) -> Self {
         Self {
             view,
@@ -21,7 +21,7 @@ impl<T> NUIRoot<T> {
     }
 }
 
-impl<T> NUIRoot<T> where T: View {
+impl<T> Root<T> where T: View {
     pub fn render(&mut self) -> Id<Primitive> {
         self.view.render(&Context::new(self.storage.clone()))
     }
