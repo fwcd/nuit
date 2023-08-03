@@ -11,12 +11,14 @@ license.workspace = true
 [dependencies]
 nuit-derive.workspace = true
 nuit-core.workspace = true
+nuit-bridge-relm.workspace = true
 
 [target.'cfg(target_vendor = "apple")'.dependencies]
 nuit-bridge-swiftui.workspace = true
 
 [workspace]
 members = [
+    "nuit-bridge-relm",
     "nuit-bridge-swiftui",
     "nuit-core",
     "nuit-derive",
@@ -29,6 +31,7 @@ license = "GPL-3.0-or-later"
 homepage = "https://github.com/fwcd/nuit"
 
 [workspace.dependencies]
+nuit-bridge-relm = { version = "0.0.7", path = "nuit-bridge-relm" }
 nuit-bridge-swiftui = { version = "0.0.7", path = "nuit-bridge-swiftui" }
 nuit-core = { version = "0.0.7", path = "nuit-core" }
 nuit-derive = { version = "0.0.7", path = "nuit-derive" }

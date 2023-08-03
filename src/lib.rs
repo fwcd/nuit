@@ -32,7 +32,7 @@ pub fn run_app<T>(config: impl Into<Config<T>>) where T: View {
             panic!("SwiftUI is not supported outside of Apple platforms!")
         }
         Backend::Relm => {
-            panic!("Relm is not supported (yet)")
+            nuit_bridge_relm::run_app(&root);
         }
     }
 }

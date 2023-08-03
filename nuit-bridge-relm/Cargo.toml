@@ -1,0 +1,11 @@
+[package]
+name = "nuit-bridge-relm"
+description = "Relm/GTK bindings for Nuit"
+version.workspace = true
+edition.workspace = true
+homepage.workspace = true
+license.workspace = true
+
+[dependencies]
+nuit-core.workspace = true
+relm4 = "0.6.0"
