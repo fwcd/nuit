@@ -1,11 +1,11 @@
-import CNUISwiftUIBridge
+import CNuitSwiftUIBridge
 import Foundation
 
 @_cdecl("run_app")
 func runApp(cRoot: UnsafePointer<CRoot>) {
-    NUIApp.root = Root(cRoot: cRoot)
+    NuitApp.root = Root(cRoot: cRoot)
     cRoot.pointee.set_update_callback(cRoot) {
-        NUIApp.root.triggerUpdate()
+        NuitApp.root.triggerUpdate()
     }
-    NUIApp.main()
+    NuitApp.main()
 }

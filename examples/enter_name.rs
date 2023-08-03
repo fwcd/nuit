@@ -1,6 +1,6 @@
 #![feature(type_alias_impl_trait)]
 
-use nui::{Text, VStack, View, State, HStack, TextField, Bind};
+use nuit::{Text, VStack, View, State, HStack, TextField, Bind};
 
 #[derive(Bind)]
 struct EnterNameView {
@@ -29,5 +29,5 @@ impl View for EnterNameView {
 }
 
 fn main() {
-    nui::run_app(EnterNameView::new());
+    nuit::run_app(EnterNameView::new());
 }

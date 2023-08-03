@@ -1,5 +1,5 @@
 [package]
-name = "nui-derive"
+name = "nuit-derive"
 version = "0.1.0"
 edition = "2021"
 
@@ -7,6 +7,6 @@ edition = "2021"
 proc-macro = true
 
 [dependencies]
-nui-shared = { path = "../shared" }
+nuit-shared = { path = "../shared" }
 syn = "2.0"
 quote = "1.0"

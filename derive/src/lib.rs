@@ -27,8 +27,8 @@ pub fn derive_bind(input: TokenStream) -> TokenStream {
 
     // TODO: Handle generic structs
     let impl_block = quote! {
-        impl nui::Bind for #name {
-            fn bind(&mut self, context: &nui::Context) {
+        impl nuit::Bind for #name {
+            fn bind(&mut self, context: &nuit::Context) {
                 #(#link_calls)*
             }
         }
@@ -38,7 +38,7 @@ pub fn derive_bind(input: TokenStream) -> TokenStream {
 }
 
 fn is_state_type(ty: &Type) -> bool {
-    // TODO: Support qualified/parenthesized/... type annotations that resolve to `nui::State` too
+    // TODO: Support qualified/parenthesized/... type annotations that resolve to `nuit::State` too
     match ty {
         Type::Path(ty_path) => {
             let segments = &ty_path.path.segments;

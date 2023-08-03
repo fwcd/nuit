@@ -8,7 +8,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 }
 
-struct NUIApp: App {
+struct NuitApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
     static var root: Root!

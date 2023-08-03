@@ -2,7 +2,7 @@ use std::rc::Rc;
 
 use crate::{Storage, Primitive, View, Context, Id, Event, IdPath};
 
-/// The central state of a NUI application.
+/// The central state of a Nuit application.
 pub struct Root<T> {
     view: T,
     storage: Rc<Storage>,

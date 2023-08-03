@@ -1,4 +1,0 @@
-module CNUISwiftUIBridge [system] {
-    header "include/CNUISwiftUIBridge.h"
-    export *
-}

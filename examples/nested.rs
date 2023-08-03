@@ -1,6 +1,6 @@
 #![feature(type_alias_impl_trait)]
 
-use nui::{Text, VStack, View, Bind, Button, State, Context};
+use nuit::{Text, VStack, View, Bind, Button, State, Context};
 
 struct IncrementView<F> {
     action: F,
@@ -56,5 +56,5 @@ impl View for CounterView {
 }
 
 fn main() {
-    nui::run_app(CounterView::new());
+    nuit::run_app(CounterView::new());
 }

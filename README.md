@@ -1,17 +1,17 @@
-# NUI
+# Nuit
 
-[![Build](https://github.com/fwcd/nui/actions/workflows/build.yml/badge.svg)](https://github.com/fwcd/nui/actions/workflows/build.yml)
+[![Build](https://github.com/fwcd/nuit/actions/workflows/build.yml/badge.svg)](https://github.com/fwcd/nuit/actions/workflows/build.yml)
 
 A declarative, cross-platform UI library for Rust that uses native controls.
 
-NUI's API takes inspiration from SwiftUI, Xilem, React and a number of other frameworks, while itself using SwiftUI under the hood on macOS.
+Nuit's API takes inspiration from SwiftUI, Xilem, React and a number of other frameworks, while itself using SwiftUI under the hood on macOS.
 
-> Note that NUI currently requires using a nightly Rust toolchain as it uses some unstable compiler features, e.g. [impl Trait in type aliases](https://github.com/rust-lang/rust/issues/63063), [associated type defaults](https://github.com/rust-lang/rust/issues/29661) and the [never type `!`](https://github.com/rust-lang/rust/issues/35121).
+> Note that Nuit currently requires using a nightly Rust toolchain as it uses some unstable compiler features, e.g. [impl Trait in type aliases](https://github.com/rust-lang/rust/issues/63063), [associated type defaults](https://github.com/rust-lang/rust/issues/29661) and the [never type `!`](https://github.com/rust-lang/rust/issues/35121).
 
 ## Example
 
 ```rust
-use nui::{Text, VStack, View, Bind, Button, State};
+use nuit::{Text, VStack, View, Bind, Button, State};
 
 #[derive(Bind)]
 struct CounterView {
@@ -39,7 +39,7 @@ impl View for CounterView {
 }
 
 fn main() {
-    nui::run_app(CounterView::new());
+    nuit::run_app(CounterView::new());
 }
 ```
 

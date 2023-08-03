@@ -1,6 +1,6 @@
 #![feature(type_alias_impl_trait)]
 
-use nui::{Text, VStack, View, Bind};
+use nuit::{Text, VStack, View, Bind};
 
 struct HelloView;
 
@@ -18,5 +18,5 @@ impl View for HelloView {
 }
 
 fn main() {
-    nui::run_app(HelloView);
+    nuit::run_app(HelloView);
 }

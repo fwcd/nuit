@@ -5,10 +5,10 @@ use crate::{Root, View};
 /// A C/FFI-compatible wrapper around `Root<T>`.
 #[repr(C)]
 pub struct CRoot {
-    /// The opaque pointer to the owned underlying Rust `NUIRoot<T>`.
+    /// The opaque pointer to the owned underlying Rust `NuitRoot<T>`.
     wrapped: *mut c_void,
     /// Renders the view to an owned JSON-serialized primitive tree.
-    /// **Callers are responsible for calling `nui_drop_string` on this string!**
+    /// **Callers are responsible for calling `nuit_drop_string` on this string!**
     render_json: extern "C" fn(*const CRoot) -> *const c_char,
     /// Fires an to the given JSON-serialized id path with the given JSON-serialized event.
     fire_event_json: extern "C" fn(*const CRoot, *const c_char, *const c_char),

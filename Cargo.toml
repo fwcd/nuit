@@ -1,16 +1,16 @@
 [package]
-name = "nui"
+name = "nuit"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-nui-derive = { path = "derive" }
-nui-shared = { path = "shared" }
+nuit-derive = { path = "derive" }
+nuit-shared = { path = "shared" }
 
 [target.'cfg(target_os = "macos")'.dependencies]
-nui-swiftui-bridge = { path = "bridge/swiftui" }
+nuit-swiftui-bridge = { path = "bridge/swiftui" }
 
 [workspace]
 members = [

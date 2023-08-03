@@ -1,6 +1,6 @@
 #![feature(type_alias_impl_trait)]
 
-use nui::{Text, VStack, View, Bind, Button, State};
+use nuit::{Text, VStack, View, Bind, Button, State};
 
 #[derive(Bind)]
 struct CounterView {
@@ -28,5 +28,5 @@ impl View for CounterView {
 }
 
 fn main() {
-    nui::run_app(CounterView::new());
+    nuit::run_app(CounterView::new());
 }

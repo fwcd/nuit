@@ -1,8 +1,8 @@
-import CNUISwiftUIBridge
+import CNuitSwiftUIBridge
 import Foundation
 import Combine
 
-/// The central state of the NUI application.
+/// The central state of the Nuit application.
 class Root: ObservableObject {
     private let cRoot: UnsafePointer<CRoot>
 
@@ -33,7 +33,7 @@ class Root: ObservableObject {
 
     private func renderJson() -> String {
         let cString = cRoot.pointee.render_json(cRoot)!
-        defer { nui_c_string_drop(cString) }
+        defer { nuit_c_string_drop(cString) }
         return String(cString: cString)
     }
 }

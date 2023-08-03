@@ -1,3 +1,3 @@
-# NUI SwiftUI Bridge
+# Nuit SwiftUI Bridge
 
-The SwiftUI implementation of NUI.
+The SwiftUI implementation of Nuit.
