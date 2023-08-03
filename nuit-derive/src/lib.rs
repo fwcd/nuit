@@ -27,8 +27,8 @@ pub fn derive_bind(input: TokenStream) -> TokenStream {
 
     // TODO: Handle generic structs
     let impl_block = quote! {
-        impl nuit::Bind for #name {
-            fn bind(&mut self, context: &nuit::Context) {
+        impl ::nuit::Bind for #name {
+            fn bind(&mut self, context: &::nuit::Context) {
                 #(#link_calls)*
             }
         }
