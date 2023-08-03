@@ -18,23 +18,18 @@ pub fn derive_bind(input: TokenStream) -> TokenStream {
         _ => panic!("#[derive(Bind)] only works on structs!")
     };
 
-    let link_calls = state_fields
-        .into_iter()
-        .enumerate()
-        .map(|(i, name)| quote! {
-            (self.#name).link(context.storage().clone(), context.id_path().clone(), #i);
-        });
+    let indices = 0..state_fields.len();
 
     // TODO: Handle generic structs
     let impl_block = quote! {
         impl ::nuit::Bind for #name {
             fn bind(&mut self, context: &::nuit::Context) {
-                #(#link_calls)*
+                #(self.#state_fields.link(context.storage().clone(), context.id_path().clone(), #indices);)*
             }
         }
     };
 
-    return impl_block.into();
+    impl_block.into()
 }
 
 fn is_state_type(ty: &Type) -> bool {
