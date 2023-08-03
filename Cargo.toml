@@ -11,12 +11,14 @@ license = "GPL-3.0-or-later"
 [dependencies]
 nuit-derive = { version = "0.0.4", path = "nuit-derive" }
 nuit-core = { version = "0.0.4", path = "nuit-core" }
+nuit-bridge-relm = { version = "0.0.4", path = "nuit-bridge-relm" } # TODO: Make this optional/feature-gated
 
 [target.'cfg(target_os = "macos")'.dependencies]
 nuit-bridge-swiftui = { version = "0.0.4", path = "nuit-bridge-swiftui" }
 
 [workspace]
 members = [
+    "nuit-bridge-relm",
     "nuit-bridge-swiftui",
     "nuit-core",
     "nuit-derive",
