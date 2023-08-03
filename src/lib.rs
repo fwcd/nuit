@@ -12,7 +12,7 @@ impl Default for Backend {
         #[cfg(target_os = "macos")]
         return Backend::SwiftUI;
         #[cfg(not(target_os = "macos"))]
-        return Backend::GTK;
+        return Backend::Relm;
     }
 }
 
@@ -31,8 +31,8 @@ pub fn run_app<T>(config: impl Into<Config<T>>) where T: View {
             #[cfg(not(target_os = "macos"))]
             panic!("SwiftUI is not supported outside of macOS!")
         }
-        Backend::GTK => {
-            panic!("GTK is not supported (yet)")
+        Backend::Relm => {
+            panic!("Relm is not supported (yet)")
         }
     }
 }
