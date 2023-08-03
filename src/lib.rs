@@ -4,7 +4,7 @@ mod config;
 pub use backend::*;
 pub use config::*;
 
-pub use nuit_shared::*;
+pub use nuit_core::*;
 pub use nuit_derive::*;
 
 impl Default for Backend {
@@ -27,7 +27,7 @@ pub fn run_app<T>(config: impl Into<Config<T>>) where T: View {
         Backend::SwiftUI => {
             let c_root = CRoot::from(Box::new(root));
             #[cfg(target_os = "macos")]
-            unsafe { nuit_swiftui_bridge::run_app(&c_root); }
+            unsafe { nuit_bridge_swiftui::run_app(&c_root); }
             #[cfg(not(target_os = "macos"))]
             panic!("SwiftUI is not supported outside of macOS!")
         }

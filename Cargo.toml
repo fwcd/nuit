@@ -6,17 +6,17 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-nuit-derive = { path = "derive" }
-nuit-shared = { path = "shared" }
+nuit-derive = { path = "nuit-derive" }
+nuit-core = { path = "nuit-core" }
 
 [target.'cfg(target_os = "macos")'.dependencies]
-nuit-swiftui-bridge = { path = "bridge/swiftui" }
+nuit-bridge-swiftui = { path = "nuit-bridge-swiftui" }
 
 [workspace]
 members = [
-    "bridge/swiftui",
-    "derive",
-    "shared",
+    "nuit-bridge-swiftui",
+    "nuit-core",
+    "nuit-derive",
 ]
 
 [workspace.dependencies]

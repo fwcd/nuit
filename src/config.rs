@@ -1,4 +1,4 @@
-use nuit_shared::View;
+use nuit_core::View;
 
 use crate::Backend;
 

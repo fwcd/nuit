@@ -55,7 +55,7 @@ fn find_swift_runtime_libs() {
     }
 }
 
-fn build_nuit_swiftui_bridge() {
+fn build_nuit_bridge_swiftui() {
     let profile = profile();
 
     let build_succeeded = Command::new("swift")
@@ -79,6 +79,6 @@ fn build_nuit_swiftui_bridge() {
 fn main() {
     if target_os() == "macos" {
         find_swift_runtime_libs();
-        build_nuit_swiftui_bridge();
+        build_nuit_bridge_swiftui();
     }
 }
