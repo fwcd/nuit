@@ -4,16 +4,16 @@
 import PackageDescription
 
 let package = Package(
-    name: "nuit-swiftui-bridge",
+    name: "nuit-bridge-swiftui",
     platforms: [
         .macOS(.v13),
     ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
-            name: "nuit-swiftui-bridge",
+            name: "nuit-bridge-swiftui",
             type: .static,
-            targets: ["NuitSwiftUIBridge"]
+            targets: ["NuitBridgeSwiftUI"]
         ),
     ],
     dependencies: [
@@ -24,13 +24,13 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
-            name: "NuitSwiftUIBridge",
+            name: "NuitBridgeSwiftUI",
             dependencies: [
-                .target(name: "CNuitSwiftUIBridge"),
+                .target(name: "CNuitBridgeSwiftUI"),
             ]
         ),
         .systemLibrary(
-            name: "CNuitSwiftUIBridge"
+            name: "CNuitBridgeSwiftUI"
         )
     ]
 )

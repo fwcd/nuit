@@ -1,4 +1,0 @@
-module CNuitSwiftUIBridge [system] {
-    header "include/CNuitSwiftUIBridge.h"
-    export *
-}

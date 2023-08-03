@@ -1,4 +1,4 @@
-import CNuitSwiftUIBridge
+import CNuitBridgeSwiftUI
 import Foundation
 import Combine
 

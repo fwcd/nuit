@@ -60,10 +60,11 @@ fn find_swift_runtime_libs() {
 }
 
 fn build_nuit_bridge_swiftui() {
+    let out_dir = out_dir();
     let profile = profile();
 
     let build_succeeded = Command::new("swift")
-        .args(&["build", "--build-path", &out_dir(), "-c", &profile])
+        .args(&["build", "--build-path", &out_dir, "-c", &profile])
         .status()
         .unwrap()
         .success();
@@ -75,8 +76,8 @@ fn build_nuit_bridge_swiftui() {
     let root = manifest_dir();
     let arch = target_arch();
 
-    println!("cargo:rustc-link-search=native={}/.build/{}-apple-macosx/{}", root, arch, profile);
-    println!("cargo:rustc-link-lib=static=nuit-swiftui-bridge");
+    println!("cargo:rustc-link-search=native={}/{}-apple-macosx/{}", out_dir, arch, profile);
+    println!("cargo:rustc-link-lib=static=nuit-bridge-swiftui");
     println!("cargo:rerun-if-changed={}/Sources/**/*.swift", root);
 }
 
