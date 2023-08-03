@@ -21,6 +21,10 @@ fn profile() -> String {
     env::var("PROFILE").unwrap()
 }
 
+fn out_dir() -> String {
+    env::var("OUT_DIR").unwrap()
+}
+
 fn manifest_dir() -> String {
     env::var("CARGO_MANIFEST_DIR").unwrap()
 }
@@ -59,7 +63,7 @@ fn build_nuit_bridge_swiftui() {
     let profile = profile();
 
     let build_succeeded = Command::new("swift")
-        .args(&["build", "-c", &profile])
+        .args(&["build", "--build-path", &out_dir(), "-c", &profile])
         .status()
         .unwrap()
         .success();
