@@ -2,6 +2,9 @@
 name = "nuit-core"
 version = "0.0.1"
 edition = "2021"
+description = "Core structures and traits for Nuit"
+homepage = "https://github.com/fwcd/nuit"
+license = "GPL-3.0-or-later"
 
 [dependencies]
 serde = { workspace = true }

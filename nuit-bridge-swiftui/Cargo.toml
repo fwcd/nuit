@@ -2,6 +2,9 @@
 name = "nuit-bridge-swiftui"
 version = "0.0.1"
 edition = "2021"
+description = "SwiftUI bindings for Nuit"
+homepage = "https://github.com/fwcd/nuit"
+license = "GPL-3.0-or-later"
 build = "build.rs"
 
 [build-dependencies]
