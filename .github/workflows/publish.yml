@@ -1,0 +1,27 @@
+name: Publish
+
+on:
+  push:
+    tags:
+    - '*'
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+      - name: Test package
+        run: cargo test
+      - name: Publish nuit-core
+        run: cargo publish --token ${{ secrets.CRATES_IO_TOKEN }}
+        working-directory: nuit-core
+      - name: Publish nuit-bridge-swiftui
+        run: cargo publish --token ${{ secrets.CRATES_IO_TOKEN }}
+        working-directory: nuit-bridge-swiftui
+      - name: Publish nuit
+        run: cargo publish --token ${{ secrets.CRATES_IO_TOKEN }}
