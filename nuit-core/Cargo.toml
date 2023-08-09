@@ -1,6 +1,6 @@
 [package]
 name = "nuit-core"
-version = "0.0.3"
+version = "0.0.4"
 edition = "2021"
 description = "Core structures and traits for Nuit"
 homepage = "https://github.com/fwcd/nuit"
