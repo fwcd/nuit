@@ -2,6 +2,9 @@
 name = "nuit-derive"
 version = "0.0.3"
 edition = "2021"
+description = "Derive macros for Nuit"
+homepage = "https://github.com/fwcd/nuit"
+license = "GPL-3.0-or-later"
 
 [lib]
 proc-macro = true
