@@ -2,7 +2,7 @@ use serde::{Serialize, Deserialize};
 
 use crate::Id;
 
-/// A UI component tree composed of node components.
+/// A UI component tree.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub enum Node {
