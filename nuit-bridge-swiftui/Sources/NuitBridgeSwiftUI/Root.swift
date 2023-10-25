@@ -9,11 +9,11 @@ class Root: ObservableObject {
     /// A manually installed publisher since we don't use `@Published`.
     var objectWillChange = ObservableObjectPublisher()
 
-    /// The rendered root primitive.
-    var primitive: Id<Primitive> {
+    /// The rendered root node.
+    var node: Id<Node> {
         let json = renderJson()
-        let primitive = try! JSONDecoder().decode(Id<Primitive>.self, from: json.data(using: .utf8)!)
-        return primitive
+        let node = try! JSONDecoder().decode(Id<Node>.self, from: json.data(using: .utf8)!)
+        return node
     }
 
     init(cRoot: UnsafePointer<CRoot>) {

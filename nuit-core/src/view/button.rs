@@ -1,4 +1,4 @@
-use crate::{View, Primitive, Bind, Context, Id, Event};
+use crate::{View, Node, Bind, Context, Id, Event};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Button<T, F> {
@@ -29,8 +29,8 @@ impl<T, F> Bind for Button<T, F> where T: Bind, F: Fn() + 'static {
 }
 
 impl<T, F> View for Button<T, F> where T: View, F: Fn() + 'static {
-    fn render(&mut self, context: &Context) -> Id<Primitive> {
+    fn render(&mut self, context: &Context) -> Id<Node> {
         self.bind(context);
-        context.identify(Primitive::Button { label: Box::new(self.label.render(&context.child(0))) })
+        context.identify(Node::Button { label: Box::new(self.label.render(&context.child(0))) })
     }
 }

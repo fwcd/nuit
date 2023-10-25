@@ -7,7 +7,7 @@ use crate::{Root, View};
 pub struct CRoot {
     /// The opaque pointer to the owned underlying Rust `NuitRoot<T>`.
     wrapped: *mut c_void,
-    /// Renders the view to an owned JSON-serialized primitive tree.
+    /// Renders the view to an owned JSON-serialized node tree.
     /// **Callers are responsible for calling `nuit_drop_string` on this string!**
     render_json: extern "C" fn(*const CRoot) -> *const c_char,
     /// Fires an to the given JSON-serialized id path with the given JSON-serialized event.

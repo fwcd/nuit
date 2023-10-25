@@ -1,6 +1,6 @@
 use std::rc::Rc;
 
-use crate::{Storage, Primitive, View, Context, Id, Event, IdPath};
+use crate::{Storage, Node, View, Context, Id, Event, IdPath};
 
 /// The central state of a Nuit application.
 pub struct Root<T> {
@@ -22,13 +22,13 @@ impl<T> Root<T> {
 }
 
 impl<T> Root<T> where T: View {
-    pub fn render(&mut self) -> Id<Primitive> {
+    pub fn render(&mut self) -> Id<Node> {
         self.view.render(&Context::new(self.storage.clone()))
     }
 
     pub fn render_json(&mut self) -> String {
-        let primitive = self.render();
-        serde_json::to_string(&primitive).expect("Could not serialize view")
+        let node = self.render();
+        serde_json::to_string(&node).expect("Could not serialize view")
     }
 
     pub fn fire_event_json(&mut self, id_path_json: &str, event_json: &str) {
