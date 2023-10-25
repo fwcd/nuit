@@ -23,6 +23,6 @@ jobs:
       run: sudo apt-get install -y libadwaita-1-dev libgtk-4-dev
     - name: Install system dependencies (macOS)
       if: runner.os == 'macOS'
-      run: brew install libadwaita
+      run: brew install libadwaita gtk4
     - name: Build and Test
       run: cargo test --all-features
