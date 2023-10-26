@@ -24,7 +24,7 @@ class Root: ObservableObject {
         objectWillChange.send()
     }
 
-    func fire(event: Event, for idPath: [Int]) {
+    func fire(event: Event, for idPath: [Id]) {
         let encoder = JSONEncoder()
         let idPathJson = String(data: try! encoder.encode(idPath), encoding: .utf8)
         let eventJson = String(data: try! encoder.encode(event), encoding: .utf8)

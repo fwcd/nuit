@@ -1,6 +1,6 @@
 use std::rc::Rc;
 
-use crate::{Storage, IdPath, Identified};
+use crate::{Storage, IdPath, Identified, Id};
 
 pub struct Context {
     id_path: IdPath,
@@ -23,9 +23,9 @@ impl Context {
         &self.id_path
     }
 
-    pub fn child(&self, i: usize) -> Self {
+    pub fn child(&self, id: Id) -> Self {
         Self {
-            id_path: self.id_path.child(i),
+            id_path: self.id_path.child(id),
             storage: self.storage.clone(),
         }
     }

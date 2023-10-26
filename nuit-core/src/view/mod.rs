@@ -18,7 +18,7 @@ pub use text::*;
 pub use v_stack::*;
 pub use z_stack::*;
 
-use crate::{Node, Bind, Context, Identified};
+use crate::{Node, Bind, Context, Identified, Id};
 
 /// The primary view trait. Represents a lightweight UI component.
 pub trait View: Bind {
@@ -52,15 +52,15 @@ impl<T> View for (T,) where T: View {
     }
 
     fn render(&mut self, context: &Context) -> Identified<Node> {
-        self.0.render(&context.child(0))
+        self.0.render(&context.child(Id::index(0)))
     }
 }
 
 impl<T, U> View for (T, U) where T: View, U: View {
     fn render(&mut self, context: &Context) -> Identified<Node> {
         context.identify(Node::Group { children: vec![
-            self.0.render(&context.child(0)),
-            self.1.render(&context.child(1)),
+            self.0.render(&context.child(Id::index(0))),
+            self.1.render(&context.child(Id::index(1))),
         ] })
     }
 }
@@ -68,9 +68,9 @@ impl<T, U> View for (T, U) where T: View, U: View {
 impl<T, U, V> View for (T, U, V) where T: View, U: View, V: View {
     fn render(&mut self, context: &Context) -> Identified<Node> {
         context.identify(Node::Group { children: vec![
-            self.0.render(&context.child(0)),
-            self.1.render(&context.child(1)),
-            self.2.render(&context.child(2)),
+            self.0.render(&context.child(Id::index(0))),
+            self.1.render(&context.child(Id::index(1))),
+            self.2.render(&context.child(Id::index(2))),
         ] })
     }
 }
@@ -78,10 +78,10 @@ impl<T, U, V> View for (T, U, V) where T: View, U: View, V: View {
 impl<T, U, V, W> View for (T, U, V, W) where T: View, U: View, V: View, W: View {
     fn render(&mut self, context: &Context) -> Identified<Node> {
         context.identify(Node::Group { children: vec![
-            self.0.render(&context.child(0)),
-            self.1.render(&context.child(1)),
-            self.2.render(&context.child(2)),
-            self.3.render(&context.child(3)),
+            self.0.render(&context.child(Id::index(0))),
+            self.1.render(&context.child(Id::index(1))),
+            self.2.render(&context.child(Id::index(2))),
+            self.3.render(&context.child(Id::index(3))),
         ] })
     }
 }
@@ -89,11 +89,11 @@ impl<T, U, V, W> View for (T, U, V, W) where T: View, U: View, V: View, W: View 
 impl<T, U, V, W, X> View for (T, U, V, W, X) where T: View, U: View, V: View, W: View, X: View {
     fn render(&mut self, context: &Context) -> Identified<Node> {
         context.identify(Node::Group { children: vec![
-            self.0.render(&context.child(0)),
-            self.1.render(&context.child(1)),
-            self.2.render(&context.child(2)),
-            self.3.render(&context.child(3)),
-            self.4.render(&context.child(4)),
+            self.0.render(&context.child(Id::index(0))),
+            self.1.render(&context.child(Id::index(1))),
+            self.2.render(&context.child(Id::index(2))),
+            self.3.render(&context.child(Id::index(3))),
+            self.4.render(&context.child(Id::index(4))),
         ] })
     }
 }

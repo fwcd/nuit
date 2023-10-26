@@ -1,5 +1,6 @@
 mod frame;
 mod id_path;
+mod id;
 mod identifiable;
 mod identified;
 mod insets;
@@ -8,6 +9,7 @@ mod zero;
 
 pub use frame::*;
 pub use id_path::*;
+pub use id::*;
 pub use identifiable::*;
 pub use identified::*;
 pub use insets::*;
