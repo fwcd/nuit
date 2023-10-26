@@ -47,9 +47,9 @@ struct NodeView: View {
             }
 
         // MARK Modifier
-        case let .padding(wrapped: wrapped, insets: insets):
+        case let .modified(wrapped: wrapped, modifier: modifier):
             NodeView(node: wrapped)
-                .padding(EdgeInsets(insets))
+                .modifier(ModifierViewModifier(modifier: modifier))
         }
     }
 }

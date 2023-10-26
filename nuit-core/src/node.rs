@@ -1,6 +1,6 @@
 use serde::{Serialize, Deserialize};
 
-use crate::{Id, Insets};
+use crate::{Id, Modifier};
 
 /// A UI component tree.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -21,5 +21,5 @@ pub enum Node {
     ZStack { wrapped: Box<Id<Node>> },
 
     // Modifier
-    Padding { wrapped: Box<Id<Node>>, insets: Insets, }
+    Modified { wrapped: Box<Id<Node>>, modifier: Modifier, }
 }
