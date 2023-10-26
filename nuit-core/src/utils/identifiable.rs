@@ -1,5 +1,5 @@
-pub trait Identifiable {
-    type Id: Copy;
+use crate::Id;
 
-    fn id(&self) -> Self::Id;
+pub trait Identifiable {
+    fn id(&self) -> Id;
 }
