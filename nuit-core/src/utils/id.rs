@@ -1,6 +1,7 @@
 use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Clone, Hash, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub enum Id {
     Index { value: usize },
     String { value: String },
