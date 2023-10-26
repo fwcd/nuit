@@ -7,6 +7,7 @@ struct NodeView: View {
 
     var body: some View {
         switch node.value {
+        // MARK: Primitive
         case .empty:
             EmptyView()
         case let .text(content: content):
@@ -24,6 +25,14 @@ struct NodeView: View {
             } label: {
                 NodeView(node: label)
             }
+
+        // MARK: Aggregation
+        case let .group(children: children):
+            ForEach(children) { child in
+                NodeView(node: child)
+            }
+
+        // MARK: Layout
         case let .vStack(wrapped: wrapped):
             VStack {
                 NodeView(node: wrapped)
@@ -35,10 +44,6 @@ struct NodeView: View {
         case let .zStack(wrapped: wrapped):
             ZStack {
                 NodeView(node: wrapped)
-            }
-        case let .group(children: children):
-            ForEach(children) { child in
-                NodeView(node: child)
             }
         }
     }
