@@ -45,6 +45,11 @@ struct NodeView: View {
             ZStack {
                 NodeView(node: wrapped)
             }
+
+        // MARK Modifier
+        case let .padding(wrapped: wrapped, insets: insets):
+            NodeView(node: wrapped)
+                .padding(EdgeInsets(insets))
         }
     }
 }

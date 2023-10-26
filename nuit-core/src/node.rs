@@ -1,9 +1,9 @@
 use serde::{Serialize, Deserialize};
 
-use crate::Id;
+use crate::{Id, Insets};
 
 /// A UI component tree.
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub enum Node {
     // Primitive
@@ -19,4 +19,7 @@ pub enum Node {
     VStack { wrapped: Box<Id<Node>> },
     HStack { wrapped: Box<Id<Node>> },
     ZStack { wrapped: Box<Id<Node>> },
+
+    // Modifier
+    Padding { wrapped: Box<Id<Node>>, insets: Insets, }
 }
