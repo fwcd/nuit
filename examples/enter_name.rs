@@ -1,6 +1,6 @@
 #![feature(type_alias_impl_trait, impl_trait_in_assoc_type)]
 
-use nuit::{Text, VStack, View, ViewExt, State, HStack, TextField, Bind, Insets};
+use nuit::{Text, VStack, View, ViewExt, State, HStack, TextField, Bind, Insets, Frame};
 
 #[derive(Bind)]
 struct EnterNameView {
@@ -26,6 +26,7 @@ impl View for EnterNameView {
             Text::new(format!("Hi {}!", name.get())),
         ))
         .padding(Insets::default())
+        .frame(Frame::width(400))
     }
 }
 
