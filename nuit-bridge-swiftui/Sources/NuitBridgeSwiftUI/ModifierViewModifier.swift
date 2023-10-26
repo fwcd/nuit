@@ -7,6 +7,8 @@ struct ModifierViewModifier: ViewModifier {
         switch modifier {
         case let .padding(insets: insets):
             content.padding(EdgeInsets(insets))
+        case let .position(position: position):
+            content.position(CGPoint(position))
         case let .frame(frame: frame):
             switch frame {
             case let .constrained(minWidth: minWidth, idealWidth: idealWidth, maxWidth: maxWidth, minHeight: minHeight, idealHeight: idealHeight, maxHeight: maxHeight):
