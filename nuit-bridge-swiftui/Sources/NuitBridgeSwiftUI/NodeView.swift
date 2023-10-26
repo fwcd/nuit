@@ -36,24 +36,10 @@ struct NodeView: View {
             ZStack {
                 NodeView(node: wrapped)
             }
-        case let .tuple2(child1: child1, child2: child2):
-            NodeView(node: child1)
-            NodeView(node: child2)
-        case let .tuple3(child1: child1, child2: child2, child3: child3):
-            NodeView(node: child1)
-            NodeView(node: child2)
-            NodeView(node: child3)
-        case let .tuple4(child1: child1, child2: child2, child3: child3, child4: child4):
-            NodeView(node: child1)
-            NodeView(node: child2)
-            NodeView(node: child3)
-            NodeView(node: child4)
-        case let .tuple5(child1: child1, child2: child2, child3: child3, child4: child4, child5: child5):
-            NodeView(node: child1)
-            NodeView(node: child2)
-            NodeView(node: child3)
-            NodeView(node: child4)
-            NodeView(node: child5)
+        case let .group(children: children):
+            ForEach(children) { child in
+                NodeView(node: child)
+            }
         }
     }
 }

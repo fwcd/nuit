@@ -52,42 +52,42 @@ impl<T> View for (T,) where T: View {
 
 impl<T, U> View for (T, U) where T: View, U: View {
     fn render(&mut self, context: &Context) -> Id<Node> {
-        context.identify(Node::Tuple2 {
-            child1: Box::new(self.0.render(&context.child(0))),
-            child2: Box::new(self.1.render(&context.child(1))),
-        })
+        context.identify(Node::Group { children: vec![
+            self.0.render(&context.child(0)),
+            self.1.render(&context.child(1)),
+        ] })
     }
 }
 
 impl<T, U, V> View for (T, U, V) where T: View, U: View, V: View {
     fn render(&mut self, context: &Context) -> Id<Node> {
-        context.identify(Node::Tuple3 {
-            child1: Box::new(self.0.render(&context.child(0))),
-            child2: Box::new(self.1.render(&context.child(1))),
-            child3: Box::new(self.2.render(&context.child(2))),
-        })
+        context.identify(Node::Group { children: vec![
+            self.0.render(&context.child(0)),
+            self.1.render(&context.child(1)),
+            self.2.render(&context.child(2)),
+        ] })
     }
 }
 
 impl<T, U, V, W> View for (T, U, V, W) where T: View, U: View, V: View, W: View {
     fn render(&mut self, context: &Context) -> Id<Node> {
-        context.identify(Node::Tuple4 {
-            child1: Box::new(self.0.render(&context.child(0))),
-            child2: Box::new(self.1.render(&context.child(1))),
-            child3: Box::new(self.2.render(&context.child(2))),
-            child4: Box::new(self.3.render(&context.child(3))),
-        })
+        context.identify(Node::Group { children: vec![
+            self.0.render(&context.child(0)),
+            self.1.render(&context.child(1)),
+            self.2.render(&context.child(2)),
+            self.3.render(&context.child(3)),
+        ] })
     }
 }
 
 impl<T, U, V, W, X> View for (T, U, V, W, X) where T: View, U: View, V: View, W: View, X: View {
     fn render(&mut self, context: &Context) -> Id<Node> {
-        context.identify(Node::Tuple5 {
-            child1: Box::new(self.0.render(&context.child(0))),
-            child2: Box::new(self.1.render(&context.child(1))),
-            child3: Box::new(self.2.render(&context.child(2))),
-            child4: Box::new(self.3.render(&context.child(3))),
-            child5: Box::new(self.4.render(&context.child(4))),
-        })
+        context.identify(Node::Group { children: vec![
+            self.0.render(&context.child(0)),
+            self.1.render(&context.child(1)),
+            self.2.render(&context.child(2)),
+            self.3.render(&context.child(3)),
+            self.4.render(&context.child(4)),
+        ] })
     }
 }

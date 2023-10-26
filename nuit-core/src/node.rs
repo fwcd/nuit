@@ -13,8 +13,5 @@ pub enum Node {
     VStack { wrapped: Box<Id<Node>> },
     HStack { wrapped: Box<Id<Node>> },
     ZStack { wrapped: Box<Id<Node>> },
-    Tuple2 { child1: Box<Id<Node>>, child2: Box<Id<Node>> },
-    Tuple3 { child1: Box<Id<Node>>, child2: Box<Id<Node>>, child3: Box<Id<Node>> },
-    Tuple4 { child1: Box<Id<Node>>, child2: Box<Id<Node>>, child3: Box<Id<Node>>, child4: Box<Id<Node>> },
-    Tuple5 { child1: Box<Id<Node>>, child2: Box<Id<Node>>, child3: Box<Id<Node>>, child4: Box<Id<Node>>, child5: Box<Id<Node>> },
+    Group { children: Vec<Id<Node>> },
 }
