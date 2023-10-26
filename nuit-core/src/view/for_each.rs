@@ -1,6 +1,6 @@
 use std::marker::PhantomData;
 
-use crate::{View, Node, Bind, Context, Id};
+use crate::{View, Node, Bind, Context, Id, Identifiable};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct ForEach<C, I, F, V> {
@@ -26,6 +26,7 @@ impl<C, I, F, V> ForEach<C, I, F, V> {
 impl<C, I, F, V> Bind for ForEach<C, I, F, V>
 where
     C: IntoIterator<Item = I> + Clone,
+    I: Identifiable<Id = usize>,
     F: Fn(I) -> V,
     V: Bind
 {}
@@ -33,6 +34,7 @@ where
 impl<C, I, F, V> View for ForEach<C, I, F, V>
 where
     C: IntoIterator<Item = I> + Clone,
+    I: Identifiable<Id = usize>,
     F: Fn(I) -> V,
     V: View
 {
@@ -41,9 +43,10 @@ where
             children: self.collection
                 .clone()
                 .into_iter()
-                // TODO: Stable indexing instead of enumerate
-                .enumerate()
-                .map(|(i, item)| (self.view_func)(item).render(&context.child(i)))
+                .map(|item| {
+                    let id = item.id();
+                    (self.view_func)(item).render(&context.child(id))
+                })
                 .collect(),
         })
     }
