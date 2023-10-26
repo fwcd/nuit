@@ -1,4 +1,4 @@
-use crate::{View, Node, Bind, Context, Id, Binding, Event};
+use crate::{View, Node, Bind, Context, Identified, Binding, Event};
 
 #[derive(Debug, Clone)]
 pub struct TextField {
@@ -24,7 +24,7 @@ impl Bind for TextField {
 }
 
 impl View for TextField {
-    fn render(&mut self, context: &Context) -> Id<Node> {
+    fn render(&mut self, context: &Context) -> Identified<Node> {
         self.bind(context);
         context.identify(Node::TextField { content: self.content.get() })
     }

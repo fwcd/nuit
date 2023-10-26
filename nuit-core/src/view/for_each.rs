@@ -1,6 +1,6 @@
 use std::marker::PhantomData;
 
-use crate::{View, Node, Bind, Context, Id, Identifiable};
+use crate::{View, Node, Bind, Context, Identifiable, Identified};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct ForEach<C, I, F, V> {
@@ -38,7 +38,7 @@ where
     F: Fn(I) -> V,
     V: View
 {
-    fn render(&mut self, context: &Context) -> Id<Node> {
+    fn render(&mut self, context: &Context) -> Identified<Node> {
         context.identify(Node::Group {
             children: self.collection
                 .clone()

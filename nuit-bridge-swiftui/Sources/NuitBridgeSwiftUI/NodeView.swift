@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct NodeView: View {
-    let node: Id<Node>
+    let node: Identified<Node>
 
     @EnvironmentObject private var root: Root
 

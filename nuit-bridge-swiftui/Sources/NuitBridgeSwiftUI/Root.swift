@@ -10,9 +10,9 @@ class Root: ObservableObject {
     var objectWillChange = ObservableObjectPublisher()
 
     /// The rendered root node.
-    var node: Id<Node> {
+    var node: Identified<Node> {
         let json = renderJson()
-        let node = try! JSONDecoder().decode(Id<Node>.self, from: json.data(using: .utf8)!)
+        let node = try! JSONDecoder().decode(Identified<Node>.self, from: json.data(using: .utf8)!)
         return node
     }
 

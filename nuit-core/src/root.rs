@@ -1,6 +1,6 @@
 use std::rc::Rc;
 
-use crate::{Storage, Node, View, Context, Id, Event, IdPath};
+use crate::{Storage, Node, View, Context, Identified, Event, IdPath};
 
 /// The central state of a Nuit application.
 pub struct Root<T> {
@@ -22,7 +22,7 @@ impl<T> Root<T> {
 }
 
 impl<T> Root<T> where T: View {
-    pub fn render(&mut self) -> Id<Node> {
+    pub fn render(&mut self) -> Identified<Node> {
         self.view.render(&Context::new(self.storage.clone()))
     }
 

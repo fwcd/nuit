@@ -3,16 +3,16 @@ indirect enum Node: Codable, Hashable {
     case empty
     case text(content: String)
     case textField(content: String)
-    case button(label: Id<Node>)
+    case button(label: Identified<Node>)
 
     // MARK: Aggregation
-    case group(children: [Id<Node>])
+    case group(children: [Identified<Node>])
 
     // MARK: Layout
-    case vStack(wrapped: Id<Node>)
-    case hStack(wrapped: Id<Node>)
-    case zStack(wrapped: Id<Node>)
+    case vStack(wrapped: Identified<Node>)
+    case hStack(wrapped: Identified<Node>)
+    case zStack(wrapped: Identified<Node>)
 
     // MARK: Modifier
-    case modified(wrapped: Id<Node>, modifier: Modifier)
+    case modified(wrapped: Identified<Node>, modifier: Modifier)
 }

@@ -14,16 +14,3 @@ impl IdPath {
         Self(components)
     }
 }
-
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
-pub struct Id<T> {
-    id_path: IdPath,
-    value: T,
-}
-
-impl<T> Id<T> {
-    pub fn new(id_path: IdPath, value: T) -> Self {
-        Self { id_path, value }
-    }
-}

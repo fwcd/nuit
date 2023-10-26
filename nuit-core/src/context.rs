@@ -1,6 +1,6 @@
 use std::rc::Rc;
 
-use crate::{Storage, IdPath, Id};
+use crate::{Storage, IdPath, Identified};
 
 pub struct Context {
     id_path: IdPath,
@@ -30,7 +30,7 @@ impl Context {
         }
     }
 
-    pub fn identify<T>(&self, value: T) -> Id<T> {
-        Id::new(self.id_path.clone(), value)
+    pub fn identify<T>(&self, value: T) -> Identified<T> {
+        Identified::new(self.id_path.clone(), value)
     }
 }

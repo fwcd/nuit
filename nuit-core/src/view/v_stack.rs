@@ -1,4 +1,4 @@
-use crate::{View, Node, Bind, Context, Id};
+use crate::{View, Node, Bind, Context, Identified};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct VStack<T> {
@@ -16,7 +16,7 @@ impl<T> VStack<T> {
 impl<T> Bind for VStack<T> where T: Bind {}
 
 impl<T> View for VStack<T> where T: View {
-    fn render(&mut self, context: &Context) -> Id<Node> {
+    fn render(&mut self, context: &Context) -> Identified<Node> {
         context.identify(Node::VStack { wrapped: Box::new(self.wrapped.render(&context.child(0))) })
     }
 }
