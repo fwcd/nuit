@@ -1,5 +1,6 @@
 mod button;
 mod ext;
+mod for_each;
 mod h_stack;
 mod modified;
 mod text_field;
@@ -9,6 +10,7 @@ mod z_stack;
 
 pub use button::*;
 pub use ext::*;
+pub use for_each::*;
 pub use h_stack::*;
 pub use modified::*;
 pub use text_field::*;

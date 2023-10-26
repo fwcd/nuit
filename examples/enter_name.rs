@@ -1,6 +1,6 @@
 #![feature(type_alias_impl_trait, impl_trait_in_assoc_type)]
 
-use nuit::{Text, VStack, View, ViewExt, State, HStack, TextField, Bind, Insets, Frame};
+use nuit::{Text, VStack, View, ViewExt, State, HStack, TextField, Bind, Insets, Frame, ForEach};
 
 #[derive(Bind)]
 struct EnterNameView {
@@ -20,10 +20,12 @@ impl View for EnterNameView {
         let name = self.name.clone();
         VStack::new((
             HStack::new((
-                Text::new("Please enter your name:"),
+                Text::new("Please enter some names:"),
                 TextField::new(name.binding()),
             )),
-            Text::new(format!("Hi {}!", name.get())),
+            ForEach::new(name.get().split(" ").map(|s| s.trim().to_owned()).collect::<Vec<_>>(), |name| {
+                Text::new(format!("Hi {}!", name))
+            }),
         ))
         .padding(Insets::default())
         .frame(Frame::width(400))
