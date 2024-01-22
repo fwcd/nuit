@@ -7,7 +7,7 @@ use crate::{Identified, Modifier};
 #[serde(rename_all = "camelCase")]
 pub enum Node {
     // Primitive
-    Empty,
+    Empty {}, // Intentionally not a unit variant for uniform serialization
     Text { content: String },
     TextField { content: String },
     Button { label: Box<Identified<Node>> },

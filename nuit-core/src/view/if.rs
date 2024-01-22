@@ -33,7 +33,7 @@ impl<T, F> View for If<T, F> where T: View, F: View {
         } else if let Some(ref mut else_view) = self.else_view {
             else_view.render(&context.child(1))
         } else {
-            context.identify(Node::Empty)
+            context.identify(Node::Empty {})
         }
     }
 }

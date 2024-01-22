@@ -44,7 +44,7 @@ impl View for ! {}
 
 impl View for () {
     fn render(&mut self, context: &Context) -> Identified<Node> {
-        context.identify(Node::Empty)
+        context.identify(Node::Empty {})
     }
 }
 
