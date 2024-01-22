@@ -23,7 +23,7 @@ impl Context {
         &self.id_path
     }
 
-    pub fn child(&self, id: Id) -> Self {
+    pub fn child(&self, id: impl Into<Id>) -> Self {
         Self {
             id_path: self.id_path.child(id),
             storage: self.storage.clone(),

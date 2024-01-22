@@ -28,3 +28,9 @@ impl From<String> for Id {
         Self::String { value }
     }
 }
+
+impl From<&str> for Id {
+    fn from(value: &str) -> Self {
+        Self::String { value: value.to_owned() }
+    }
+}

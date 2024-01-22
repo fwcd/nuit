@@ -1,4 +1,4 @@
-use crate::{Bind, View, Node, Context, Identified, Id};
+use crate::{Bind, View, Node, Context, Identified};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct List<T> {
@@ -17,6 +17,6 @@ impl<T> Bind for List<T> where T: Bind {}
 
 impl<T> View for List<T> where T: View {
     fn render(&mut self, context: &Context) -> Identified<Node> {
-        context.identify(Node::List { wrapped: Box::new(self.wrapped.render(&context.child(Id::index(0)))) })
+        context.identify(Node::List { wrapped: Box::new(self.wrapped.render(&context.child(0))) })
     }
 }

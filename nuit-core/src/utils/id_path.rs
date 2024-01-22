@@ -10,9 +10,9 @@ impl IdPath {
         Self(Vec::new())
     }
 
-    pub fn child(&self, id: Id) -> Self {
+    pub fn child(&self, id: impl Into<Id>) -> Self {
         let mut components = self.0.clone();
-        components.push(id);
+        components.push(id.into());
         Self(components)
     }
 }
