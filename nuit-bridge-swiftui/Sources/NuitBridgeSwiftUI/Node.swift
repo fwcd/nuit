@@ -12,6 +12,7 @@ indirect enum Node: Codable, Hashable {
     case vStack(wrapped: Identified<Node>)
     case hStack(wrapped: Identified<Node>)
     case zStack(wrapped: Identified<Node>)
+    case list(wrapped: Identified<Node>)
 
     // MARK: Modifier
     case modified(wrapped: Identified<Node>, modifier: Modifier)

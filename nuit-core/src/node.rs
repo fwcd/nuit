@@ -19,6 +19,7 @@ pub enum Node {
     VStack { wrapped: Box<Identified<Node>> },
     HStack { wrapped: Box<Identified<Node>> },
     ZStack { wrapped: Box<Identified<Node>> },
+    List { wrapped: Box<Identified<Node>> },
 
     // Modifier
     Modified { wrapped: Box<Identified<Node>>, modifier: Modifier, }

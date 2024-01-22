@@ -45,6 +45,10 @@ struct NodeView: View {
             ZStack {
                 NodeView(node: wrapped)
             }
+        case let .list(wrapped: wrapped):
+            List {
+                NodeView(node: wrapped)
+            }
 
         // MARK Modifier
         case let .modified(wrapped: wrapped, modifier: modifier):
