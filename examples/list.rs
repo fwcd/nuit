@@ -2,9 +2,8 @@
 
 use nuit::{Text, List, View, Bind};
 
+#[derive(Bind)]
 struct ListView;
-
-impl Bind for ListView {}
 
 impl View for ListView {
     type Body = impl View;

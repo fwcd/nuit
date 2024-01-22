@@ -2,9 +2,8 @@
 
 use nuit::{Text, VStack, View, Bind};
 
+#[derive(Bind)]
 struct HelloView;
-
-impl Bind for HelloView {}
 
 impl View for HelloView {
     type Body = impl View;

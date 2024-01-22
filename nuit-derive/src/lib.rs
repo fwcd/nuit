@@ -9,6 +9,7 @@ pub fn derive_bind(input: TokenStream) -> TokenStream {
 
     let state_fields: Vec<Ident> = match input.data {
         Data::Struct(s) => match s.fields {
+            Fields::Unit => Vec::new(),
             Fields::Named(fs) => fs.named.into_iter()
                 .filter(|Field { ty, .. }| is_state_type(&ty))
                 .map(|f| f.ident.expect("#[derive(Bind)] requires all state fields to be named"))
