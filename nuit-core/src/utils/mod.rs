@@ -1,3 +1,4 @@
+mod clone;
 mod frame;
 mod id_path;
 mod id;
@@ -7,6 +8,7 @@ mod insets;
 mod vec2;
 mod zero;
 
+pub use clone::*;
 pub use frame::*;
 pub use id_path::*;
 pub use id::*;
