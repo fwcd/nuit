@@ -32,9 +32,9 @@ impl<T> State<T> where T: 'static + Clone {
         storage.get::<T>(self.key.as_ref().unwrap())
     }
 
-    pub fn set(&self, value: T) {
+    pub fn set(&self, value: impl Into<T>) {
         let storage = self.storage.as_ref().expect("Storage not linked prior to set");
-        storage.add_change(self.key.clone().unwrap(), value);
+        storage.add_change(self.key.clone().unwrap(), value.into());
     }
 
     pub fn binding(&self) -> Binding<T> {
