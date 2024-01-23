@@ -50,15 +50,15 @@ macro_rules! impl_tuple_view {
             fn fire(&self, event: &Event, id_path: &IdPath) {
                 if let Some(head) = id_path.head() {
                     match head {
-                        $(${ignore(tvs)} Id::Index(${index()}) => self.${index()}.fire(event, &id_path.tail()),)*
-                        i => panic!("Cannot fire event for child id {} on a {}-tuple", i, ${count(tvs, 0)})
+                        $(${ignore($tvs)} Id::Index(${index()}) => self.${index()}.fire(event, &id_path.tail()),)*
+                        i => panic!("Cannot fire event for child id {} on a {}-tuple", i, ${count($tvs, 0)})
                     }
                 }
             }
 
             fn render(&mut self, context: &Context) -> Identified<Node> {
                 context.identify(Node::Group { children: vec![
-                    $(${ignore(tvs)} self.${index()}.render(&context.child(${index()})),)*
+                    $(${ignore($tvs)} self.${index()}.render(&context.child(${index()})),)*
                 ] })
             }
         }
