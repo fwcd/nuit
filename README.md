@@ -13,6 +13,7 @@ Nuit's API takes inspiration from SwiftUI, Xilem, React and a number of other fr
 > - [associated type defaults](https://github.com/rust-lang/rust/issues/29661)
 > - [never type `!`](https://github.com/rust-lang/rust/issues/35121)
 > - [macro metavariable expressions](https://github.com/rust-lang/rust/issues/83527)
+> - [`let` chains](https://github.com/rust-lang/rust/issues/53667)
 >
 > With `rustup` this can be configured conveniently on a per-directory basis `rustup override set nightly` or, as in this repository, automatically with a [`rust-toolchain.toml`](rust-toolchain.toml).
 

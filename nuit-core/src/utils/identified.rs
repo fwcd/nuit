@@ -10,6 +10,10 @@ pub struct Identified<T> {
 }
 
 impl<T> Identified<T> {
+    pub fn root(value: T) -> Self {
+        Self { id_path: IdPathBuf::root(), value }
+    }
+
     pub fn new(id_path: &IdPath, value: T) -> Self {
         Self { id_path: id_path.to_owned(), value }
     }

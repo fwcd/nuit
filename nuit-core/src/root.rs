@@ -6,6 +6,7 @@ use crate::{Storage, Node, View, Context, Identified, Event, IdPathBuf};
 pub struct Root<T> {
     view: T,
     storage: Rc<Storage>,
+    last_render: Identified<Node>,
 }
 
 impl<T> Root<T> {
@@ -13,6 +14,7 @@ impl<T> Root<T> {
         Self {
             view,
             storage: Rc::new(Storage::new()),
+            last_render: Identified::root(Node::Empty {}),
         }
     }
 
@@ -23,8 +25,12 @@ impl<T> Root<T> {
 
 impl<T> Root<T> where T: View {
     pub fn render(&mut self) -> Identified<Node> {
+        let new_render = self.storage.with_preapplied_changes(|| {
+            self.view.render(&Context::new(self.storage.clone()))
+        });
         self.storage.apply_changes();
-        self.view.render(&Context::new(self.storage.clone()))
+        self.last_render = new_render.clone();
+        new_render
     }
 
     pub fn render_json(&mut self) -> String {

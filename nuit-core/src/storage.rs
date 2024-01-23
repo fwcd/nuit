@@ -1,4 +1,4 @@
-use std::{collections::HashMap, any::Any, cell::RefCell};
+use std::{collections::HashMap, any::Any, cell::{RefCell, Cell}};
 
 use crate::IdPathBuf;
 
@@ -7,6 +7,7 @@ use crate::IdPathBuf;
 pub struct Storage {
     state: RefCell<HashMap<(IdPathBuf, usize), Box<dyn Any>>>,
     changes: RefCell<HashMap<(IdPathBuf, usize), Box<dyn Any>>>,
+    preapply: Cell<bool>,
     update_callback: RefCell<Option<Box<dyn Fn()>>>,
 }
 
@@ -15,6 +16,7 @@ impl Storage {
         Self {
             state: RefCell::new(HashMap::new()),
             changes: RefCell::new(HashMap::new()),
+            preapply: Cell::new(false),
             update_callback: RefCell::new(None),
         }
     }
@@ -31,8 +33,19 @@ impl Storage {
     }
 
     pub(crate) fn get<T>(&self, key: &(IdPathBuf, usize)) -> T where T: Clone + 'static {
-        let state = &self.state.borrow()[key];
-        state.downcast_ref::<T>().expect("State has invalid type").clone()
+        if self.preapply.get() && let Some(changed) = self.changes.borrow().get(key) {
+            changed.downcast_ref::<T>().cloned()
+        } else {
+            self.state.borrow()[key].downcast_ref::<T>().cloned()
+        }
+        .expect("State has invalid type")
+    }
+
+    pub(crate) fn with_preapplied_changes<T>(&self, action: impl FnOnce() -> T) -> T {
+        self.preapply.set(true);
+        let result = action();
+        self.preapply.set(false);
+        result
     }
 
     pub(crate) fn apply_changes(&self) {
