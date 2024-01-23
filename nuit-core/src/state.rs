@@ -24,19 +24,17 @@ impl<T> State<T> where T: 'static + Clone {
         self.storage = Some(storage.clone());
         self.key = Some(key.clone());
 
-        if !storage.contains_state(&key) {
-            storage.insert_state(key, self.initial_value.clone());
-        }
+        storage.initialize_if_needed(key, || self.initial_value.clone());
     }
 
     pub fn get(&self) -> T {
         let storage = self.storage.as_ref().expect("Storage not linked prior to get");
-        storage.state::<T>(self.key.as_ref().unwrap())
+        storage.get::<T>(self.key.as_ref().unwrap())
     }
 
     pub fn set(&self, value: T) {
         let storage = self.storage.as_ref().expect("Storage not linked prior to set");
-        storage.insert_state(self.key.clone().unwrap(), value);
+        storage.add_change(self.key.clone().unwrap(), value);
     }
 
     pub fn binding(&self) -> Binding<T> {

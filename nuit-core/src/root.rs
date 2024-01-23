@@ -23,6 +23,7 @@ impl<T> Root<T> {
 
 impl<T> Root<T> where T: View {
     pub fn render(&mut self) -> Identified<Node> {
+        self.storage.apply_changes();
         self.view.render(&Context::new(self.storage.clone()))
     }
 
