@@ -26,6 +26,7 @@ impl View for EnterNameView {
             ForEach::new(name.get().split(" ").map(|s| s.trim().to_owned()).collect::<Vec<_>>(), |name| {
                 Text::new(format!("Hi {}!", name))
                     .on_appear(clone!(name => move || println!("A wild {} appeared!", name)))
+                    .on_disappear(clone!(name => move || println!("{} disappeared!", name)))
             }),
         ))
         .padding(Insets::default())
