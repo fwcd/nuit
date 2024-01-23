@@ -1,12 +1,12 @@
 use std::rc::Rc;
 
-use crate::{Storage, Node, View, Context, Identified, Event, IdPathBuf, NodeDiff};
+use crate::{Storage, Node, View, Context, Event, IdPathBuf, NodeDiff};
 
 /// The central state of a Nuit application.
 pub struct Root<T> {
     view: T,
     storage: Rc<Storage>,
-    last_render: Identified<Node>,
+    last_render: Node,
 }
 
 impl<T> Root<T> {
@@ -14,7 +14,7 @@ impl<T> Root<T> {
         Self {
             view,
             storage: Rc::new(Storage::new()),
-            last_render: Identified::root(Node::Empty {}),
+            last_render: Node::Empty {},
         }
     }
 
@@ -24,7 +24,7 @@ impl<T> Root<T> {
 }
 
 impl<T> Root<T> where T: View {
-    pub fn render(&mut self) -> Identified<Node> {
+    pub fn render(&mut self) -> Node {
         let new_render = self.storage.with_preapplied_changes(|| {
             self.view.render(&Context::new(self.storage.clone()))
         });

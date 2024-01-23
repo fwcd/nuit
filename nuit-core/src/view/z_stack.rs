@@ -1,4 +1,4 @@
-use crate::{View, Node, Bind, Context, Identified, IdPath, Event, Id};
+use crate::{View, Node, Bind, Context, IdPath, Event, Id, IdentifyExt};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct ZStack<T> {
@@ -25,7 +25,7 @@ impl<T> View for ZStack<T> where T: View {
         }
     }
 
-    fn render(&mut self, context: &Context) -> Identified<Node> {
-        context.identify(Node::ZStack { wrapped: Box::new(self.wrapped.render(&context.child(0))) })
+    fn render(&mut self, context: &Context) -> Node {
+        Node::ZStack { wrapped: Box::new(self.wrapped.render(&context.child(0)).identify(0)) }
     }
 }

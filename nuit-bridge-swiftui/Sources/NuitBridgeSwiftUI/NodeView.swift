@@ -1,12 +1,13 @@
 import SwiftUI
 
 struct NodeView: View {
-    let node: Identified<Node>
+    let node: Node
+    let idPath: [Id]
 
     @EnvironmentObject private var root: Root
 
     var body: some View {
-        switch node.value {
+        switch node {
         // MARK: Primitive
         case .empty:
             EmptyView()
@@ -15,44 +16,46 @@ struct NodeView: View {
         case let .textField(content: content):
             TextField(text: Binding(
                 get: { content },
-                set: { root.fire(event: .updateText(content: $0), for: node.idPath) }
+                set: { root.fire(event: .updateText(content: $0), for: idPath) }
             )) {
                 // TODO: Investigate adding a label
             }
         case let .button(label: label):
             Button {
-                root.fire(event: .click, for: node.idPath)
+                root.fire(event: .click, for: idPath)
             } label: {
-                NodeView(node: label)
+                NodeView(node: label.value, idPath: idPath + [label.id])
             }
 
         // MARK: Aggregation
+        case let .child(wrapped: wrapped):
+            NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
         case let .group(children: children):
             ForEach(children) { child in
-                NodeView(node: child)
+                NodeView(node: child.value, idPath: idPath + [child.id])
             }
 
         // MARK: Layout
         case let .vStack(wrapped: wrapped):
             VStack {
-                NodeView(node: wrapped)
+                NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
             }
         case let .hStack(wrapped: wrapped):
             HStack {
-                NodeView(node: wrapped)
+                NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
             }
         case let .zStack(wrapped: wrapped):
             ZStack {
-                NodeView(node: wrapped)
+                NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
             }
         case let .list(wrapped: wrapped):
             List {
-                NodeView(node: wrapped)
+                NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
             }
 
         // MARK Modifier
         case let .modified(wrapped: wrapped, modifier: modifier):
-            NodeView(node: wrapped)
+            NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
                 .modifier(ModifierViewModifier(modifier: modifier))
         }
     }

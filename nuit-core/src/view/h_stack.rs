@@ -1,4 +1,4 @@
-use crate::{View, Node, Bind, Context, Identified, Event, IdPath, Id};
+use crate::{View, Node, Bind, Context, Event, IdPath, Id, IdentifyExt};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct HStack<T> {
@@ -25,7 +25,7 @@ impl<T> View for HStack<T> where T: View {
         }
     }
 
-    fn render(&mut self, context: &Context) -> Identified<Node> {
-        context.identify(Node::HStack { wrapped: Box::new(self.wrapped.render(&context.child(0))) })
+    fn render(&mut self, context: &Context) -> Node {
+        Node::HStack { wrapped: Box::new(self.wrapped.render(&context.child(0)).identify(0)) }
     }
 }

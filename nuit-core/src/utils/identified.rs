@@ -1,28 +1,34 @@
 use serde::{Serialize, Deserialize};
 
-use crate::{IdPath, IdPathBuf};
+use crate::Id;
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Identified<T> {
-    id_path: IdPathBuf,
+    id: Id,
     value: T,
 }
 
 impl<T> Identified<T> {
-    pub fn root(value: T) -> Self {
-        Self { id_path: IdPathBuf::root(), value }
+    pub fn new(id: &Id, value: T) -> Self {
+        Self { id: id.clone(), value }
     }
 
-    pub fn new(id_path: &IdPath, value: T) -> Self {
-        Self { id_path: id_path.to_owned(), value }
-    }
-
-    pub fn id_path(&self) -> &IdPath {
-        &self.id_path
+    pub fn id(&self) -> &Id {
+        &self.id
     }
 
     pub fn value(&self) -> &T {
         &self.value
+    }
+}
+
+pub trait IdentifyExt where Self: Sized {
+    fn identify(self, id: impl Into<Id>) -> Identified<Self>;
+}
+
+impl<T> IdentifyExt for T {
+    fn identify(self, id: impl Into<Id>) -> Identified<Self> {
+        Identified { id: id.into(), value: self }
     }
 }

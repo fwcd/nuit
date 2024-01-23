@@ -1,4 +1,4 @@
-use crate::{View, Node, Bind, Context, Identified, Event, IdPath, Id};
+use crate::{View, Node, Bind, Context, Event, IdPath, Id, IdentifyExt};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Button<T, F> {
@@ -15,9 +15,7 @@ impl<T, F> Button<T, F> {
     }
 }
 
-impl<T, F> Bind for Button<T, F> where T: Bind, F: Fn() + 'static {
-    fn bind(&mut self, _context: &Context) {}
-}
+impl<T, F> Bind for Button<T, F> where T: Bind, F: Fn() + 'static {}
 
 impl<T, F> View for Button<T, F> where T: View, F: Fn() + 'static {
     fn fire(&self, event: &Event, id_path: &IdPath) {
@@ -33,8 +31,7 @@ impl<T, F> View for Button<T, F> where T: View, F: Fn() + 'static {
         }
     }
 
-    fn render(&mut self, context: &Context) -> Identified<Node> {
-        self.bind(context);
-        context.identify(Node::Button { label: Box::new(self.label.render(&context.child(0))) })
+    fn render(&mut self, context: &Context) -> Node {
+        Node::Button { label: Box::new(self.label.render(&context.child(0)).identify(0)) }
     }
 }

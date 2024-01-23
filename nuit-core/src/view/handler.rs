@@ -1,4 +1,4 @@
-use crate::{View, Node, Bind, Context, Identified, Event, IdPath, Id};
+use crate::{View, Node, Bind, Context, Event, IdPath};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Handler<T, F> {
@@ -19,17 +19,14 @@ impl<T, F> Bind for Handler<T, F> where T: Bind, F: Fn(Event) {}
 
 impl<T, F> View for Handler<T, F> where T: View, F: Fn(Event) {
     fn fire(&self, event: &Event, id_path: &IdPath) {
-        if let Some(head) = id_path.head() {
-            match head {
-                Id::Index(0) => self.wrapped.fire(event, &id_path.tail()),
-                i => panic!("Cannot fire event for child id {} on Handler which only has one child", i)
-            }
-        } else {
+        if id_path.is_root() {
             (self.handle_event)(event.clone());
+        } else {
+            self.wrapped.fire(event, id_path);
         }
     }
 
-    fn render(&mut self, context: &Context) -> Identified<Node> {
-        self.wrapped.render(&context.child(0))
+    fn render(&mut self, context: &Context) -> Node {
+        self.wrapped.render(&context)
     }
 }

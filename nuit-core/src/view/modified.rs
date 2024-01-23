@@ -1,4 +1,4 @@
-use crate::{View, Node, Bind, Context, Identified, modifier::Modifier, IdPath, Event, Id};
+use crate::{View, Node, Bind, Context, modifier::Modifier, IdPath, Event, Id, IdentifyExt};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Modified<T> {
@@ -27,10 +27,10 @@ impl<T> View for Modified<T> where T: View {
         }
     }
 
-    fn render(&mut self, context: &Context) -> Identified<Node> {
-        context.identify(Node::Modified {
-            wrapped: Box::new(self.wrapped.render(&context.child(0))),
+    fn render(&mut self, context: &Context) -> Node {
+        Node::Modified {
+            wrapped: Box::new(self.wrapped.render(&context.child(0)).identify(0)),
             modifier: self.modifier,
-        })
+        }
     }
 }

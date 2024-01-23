@@ -1,4 +1,4 @@
-use crate::{View, Node, Bind, Context, Identified, Event, IdPath, Id};
+use crate::{View, Node, Bind, Context, Event, IdPath, Id, IdentifyExt};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct If<T, F> {
@@ -45,13 +45,13 @@ impl<T, F> View for If<T, F> where T: View, F: View {
         }
     }
 
-    fn render(&mut self, context: &Context) -> Identified<Node> {
+    fn render(&mut self, context: &Context) -> Node {
         if let Some(ref mut then_view) = self.then_view {
-            then_view.render(&context.child(0))
+            Node::Child { wrapped: Box::new(then_view.render(&context.child(0)).identify(0)) }
         } else if let Some(ref mut else_view) = self.else_view {
-            else_view.render(&context.child(1))
+            Node::Child { wrapped: Box::new(else_view.render(&context.child(1)).identify(1)) }
         } else {
-            context.identify(Node::Empty {})
+            Node::Empty {}
         }
     }
 }

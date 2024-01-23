@@ -2,7 +2,7 @@ use std::{mem, collections::{HashSet, HashMap}};
 
 use serde::{Serialize, Deserialize};
 
-use crate::{Identified, Modifier, IdPathBuf, IdPath};
+use crate::{Identified, Modifier, IdPathBuf, IdPath, Id};
 
 /// A UI component tree.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -15,6 +15,7 @@ pub enum Node {
     Button { label: Box<Identified<Node>> },
 
     // Aggregation
+    Child { wrapped: Box<Identified<Node>> },
     Group { children: Vec<Identified<Node>> },
 
     // Layout
@@ -47,53 +48,62 @@ impl NodeDiff {
         }
     }
 
-    pub(crate) fn between(new: &Identified<Node>, old: &Identified<Node>) -> Self {
+    pub(crate) fn between(new: &Node, old: &Node) -> Self {
         let mut diff = Self::new();
-        diff.traverse(new, old);
+        diff.traverse(&IdPathBuf::root(), new, old);
         diff
     }
 
-    fn traverse(&mut self, new: &Identified<Node>, old: &Identified<Node>) {
-        if new.id_path() != old.id_path() || mem::discriminant(new.value()) != mem::discriminant(old.value()) {
-            self.added.push(new.id_path().to_owned());
-            self.removed.push(old.id_path().to_owned());
+    fn traverse_identified(&mut self, id_path: &IdPath, new: &Identified<Node>, old: &Identified<Node>) {
+        if new.id() != old.id() {
+            self.added.push(id_path.child(new.id().clone()));
+            self.removed.push(id_path.child(old.id().clone()));
             return;
         }
-        let id_path = new.id_path(); // == old.id_path()
-        match (new.value(), old.value()) {
+        self.traverse(&id_path.child(new.id().clone()), new.value(), old.value());
+    }
+
+    fn traverse(&mut self, id_path: &IdPath, new: &Node, old: &Node) {
+        if mem::discriminant(new) != mem::discriminant(old) {
+            self.added.push(id_path.to_owned());
+            self.removed.push(id_path.to_owned());
+            return;
+        }
+        match (new, old) {
             (Node::Empty {}, Node::Empty {}) => {},
             (Node::Text { content: c1 }, Node::Text { content: c2 }) |
             (Node::TextField { content: c1 }, Node::TextField { content: c2 }) => if c1 != c2 {
                 self.changed.push(id_path.to_owned());
             },
-            (Node::Button { label: l1 }, Node::Button { label: l2 }) => self.traverse(l1, l2),
+            (Node::Button { label: l1 }, Node::Button { label: l2 }) => self.traverse_identified(id_path, l1, l2),
+            (Node::Child { wrapped: w1 }, Node::Child { wrapped: w2 }) |
             (Node::VStack { wrapped: w1 }, Node::VStack { wrapped: w2 }) |
             (Node::HStack { wrapped: w1 }, Node::HStack { wrapped: w2 }) |
             (Node::ZStack { wrapped: w1 }, Node::ZStack { wrapped: w2 }) |
-            (Node::List { wrapped: w1 }, Node::List { wrapped: w2 }) => self.traverse(w1, w2),
+            (Node::List { wrapped: w1 }, Node::List { wrapped: w2 }) => self.traverse_identified(id_path, w1, w2),
             (Node::Modified { wrapped: w1, modifier: m1 }, Node::Modified { wrapped: w2, modifier: m2 }) => {
                 if m1 != m2 {
                     self.changed.push(id_path.to_owned());
                 }
-                self.traverse(w1, w2);
+                self.traverse_identified(id_path, w1, w2);
             },
             (Node::Group { children: cs1 }, Node::Group { children: cs2 }) => {
-                let new_children: HashMap<&IdPath, &Identified<Node>> = cs1.iter().map(|c| (c.id_path(), c)).collect();
-                let old_children: HashMap<&IdPath, &Identified<Node>> = cs2.iter().map(|c| (c.id_path(), c)).collect();
+                let new_children: HashMap<&Id, &Identified<Node>> = cs1.iter().map(|c| (c.id(), c)).collect();
+                let old_children: HashMap<&Id, &Identified<Node>> = cs2.iter().map(|c| (c.id(), c)).collect();
 
-                let new_paths: HashSet<&IdPath> = new_children.keys().cloned().collect();
-                let old_paths: HashSet<&IdPath> = old_children.keys().cloned().collect();
+                let new_ids: HashSet<&Id> = new_children.keys().cloned().collect();
+                let old_ids: HashSet<&Id> = old_children.keys().cloned().collect();
 
-                for &child_path in new_paths.difference(&old_paths) {
-                    self.added.push(child_path.to_owned());
+                for &child_id in new_ids.difference(&old_ids) {
+                    self.added.push(id_path.child(child_id.clone()));
                 }
 
-                for &child_path in old_paths.difference(&new_paths) {
-                    self.removed.push(child_path.to_owned());
+                for &child_id in old_ids.difference(&new_ids) {
+                    self.removed.push(id_path.child(child_id.clone()));
                 }
 
-                for &child_path in new_paths.intersection(&old_paths) {
-                    self.traverse(new_children[child_path], old_children[child_path]);
+                for &child_id in new_ids.intersection(&old_ids) {
+                    self.traverse_identified(id_path, new_children[child_id], old_children[child_id]);
                 }
             },
             (x, y) => if x == y {

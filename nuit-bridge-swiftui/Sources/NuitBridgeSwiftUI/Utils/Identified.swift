@@ -1,8 +1,6 @@
 struct Identified<Value>: Identifiable {
-    let idPath: [Id]
+    let id: Id
     let value: Value
-
-    var id: [Id] { idPath }
 }
 
 extension Identified: Equatable where Value: Equatable {}

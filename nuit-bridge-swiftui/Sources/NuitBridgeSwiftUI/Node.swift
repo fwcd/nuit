@@ -6,6 +6,7 @@ indirect enum Node: Codable, Hashable {
     case button(label: Identified<Node>)
 
     // MARK: Aggregation
+    case child(wrapped: Identified<Node>)
     case group(children: [Identified<Node>])
 
     // MARK: Layout
