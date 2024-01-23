@@ -1,4 +1,4 @@
-use crate::{View, Node, Bind, Context, Identified};
+use crate::{View, Node, Bind, Context, Identified, Event, IdPath, Id};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct If<T, F> {
@@ -27,6 +27,24 @@ impl<T, F> If<T, F> {
 impl<T, F> Bind for If<T, F> where T: Bind, F: Bind {}
 
 impl<T, F> View for If<T, F> where T: View, F: View {
+    fn fire(&self, event: &Event, id_path: &IdPath) {
+        if let Some(head) = id_path.head() {
+            match head {
+                Id::Index(0) => {
+                    if let Some(ref then_view) = self.then_view {
+                        then_view.fire(event, &id_path.tail())
+                    }
+                },
+                Id::Index(1) => {
+                    if let Some(ref else_view) = self.else_view {
+                        else_view.fire(event, &id_path.tail())
+                    }
+                },
+                i => panic!("Cannot fire event for child id {} on HStack which only has one child", i)
+            }
+        }
+    }
+
     fn render(&mut self, context: &Context) -> Identified<Node> {
         if let Some(ref mut then_view) = self.then_view {
             then_view.render(&context.child(0))

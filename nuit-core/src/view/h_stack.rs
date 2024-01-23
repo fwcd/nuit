@@ -1,4 +1,4 @@
-use crate::{View, Node, Bind, Context, Identified};
+use crate::{View, Node, Bind, Context, Identified, Event, IdPath, Id};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct HStack<T> {
@@ -16,6 +16,15 @@ impl<T> HStack<T> {
 impl<T> Bind for HStack<T> where T: Bind {}
 
 impl<T> View for HStack<T> where T: View {
+    fn fire(&self, event: &Event, id_path: &IdPath) {
+        if let Some(head) = id_path.head() {
+            match head {
+                Id::Index(0) => self.wrapped.fire(event, &id_path.tail()),
+                i => panic!("Cannot fire event for child id {} on HStack which only has one child", i)
+            }
+        }
+    }
+
     fn render(&mut self, context: &Context) -> Identified<Node> {
         context.identify(Node::HStack { wrapped: Box::new(self.wrapped.render(&context.child(0))) })
     }

@@ -1,6 +1,6 @@
 use std::marker::PhantomData;
 
-use crate::{View, Node, Bind, Context, Identify, Identified};
+use crate::{View, Node, Bind, Context, Identify, Identified, Event, IdPath};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct ForEach<C, I, F, V> {
@@ -38,9 +38,17 @@ where
     F: Fn(&I) -> V,
     V: View
 {
+    fn fire(&self, event: &Event, id_path: &IdPath) {
+        if let Some(head) = id_path.head() {
+            if let Some(item) = self.collection.into_iter().find(|item| item.id() == head) {
+                (self.view_func)(item).fire(event, &id_path.child(item.id()));
+            }
+        }
+    }
+
     fn render(&mut self, context: &Context) -> Identified<Node> {
         context.identify(Node::Group {
-            children: (&self.collection)
+            children: self.collection
                 .into_iter()
                 .map(|item| {
                     let id = item.id();

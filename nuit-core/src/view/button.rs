@@ -1,4 +1,4 @@
-use crate::{View, Node, Bind, Context, Identified, Event};
+use crate::{View, Node, Bind, Context, Identified, Event, IdPath, Id};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Button<T, F> {
@@ -16,19 +16,23 @@ impl<T, F> Button<T, F> {
 }
 
 impl<T, F> Bind for Button<T, F> where T: Bind, F: Fn() + 'static {
-    fn bind(&mut self, context: &Context) {
-        let storage = context.storage();
-        if let Some(action) = self.action.take() {
-            storage.insert_event_handler(context.id_path().clone(), move |event| {
-                if let Event::Click {} = event {
-                    action();
-                }
-            });
-        }
-    }
+    fn bind(&mut self, _context: &Context) {}
 }
 
 impl<T, F> View for Button<T, F> where T: View, F: Fn() + 'static {
+    fn fire(&self, event: &Event, id_path: &IdPath) {
+        if let Some(head) = id_path.head() {
+            match head {
+                Id::Index(0) => self.label.fire(event, &id_path.tail()),
+                i => panic!("Cannot fire event for child id {} on Button which only has one child", i)
+            }
+        } else if let Event::Click {} = event {
+            if let Some(ref action) = self.action {
+                action();
+            }
+        }
+    }
+
     fn render(&mut self, context: &Context) -> Identified<Node> {
         self.bind(context);
         context.identify(Node::Button { label: Box::new(self.label.render(&context.child(0))) })

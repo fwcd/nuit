@@ -1,3 +1,5 @@
+use std::fmt;
+
 use serde::{Serialize, Deserialize};
 
 #[derive(Debug, Clone, Hash, PartialEq, Eq, Serialize, Deserialize)]
@@ -14,6 +16,15 @@ impl Id {
 
     pub fn string(value: String) -> Self {
         Self::String(value)
+    }
+}
+
+impl fmt::Display for Id {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::Index(value) => write!(f, "{}", value),
+            Self::String(value) => write!(f, "{}", value),
+        }
     }
 }
 

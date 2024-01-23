@@ -1,4 +1,4 @@
-use crate::{Bind, View, Node, Context, Identified};
+use crate::{Bind, View, Node, Context, Identified, IdPath, Event, Id};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct List<T> {
@@ -16,6 +16,15 @@ impl<T> List<T> {
 impl<T> Bind for List<T> where T: Bind {}
 
 impl<T> View for List<T> where T: View {
+    fn fire(&self, event: &Event, id_path: &IdPath) {
+        if let Some(head) = id_path.head() {
+            match head {
+                Id::Index(0) => self.wrapped.fire(event, &id_path.tail()),
+                i => panic!("Cannot fire event for child id {} on List which only has one child", i)
+            }
+        }
+    }
+
     fn render(&mut self, context: &Context) -> Identified<Node> {
         context.identify(Node::List { wrapped: Box::new(self.wrapped.render(&context.child(0))) })
     }

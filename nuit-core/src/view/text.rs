@@ -1,4 +1,4 @@
-use crate::{View, Node, Bind, Context, Identified};
+use crate::{View, Node, Bind, Context, Identified, Event, IdPath};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Text {
@@ -16,6 +16,8 @@ impl Text {
 impl Bind for Text {}
 
 impl View for Text {
+    fn fire(&self, _event: &Event, _id_path: &IdPath) {}
+
     fn render(&mut self, context: &Context) -> Identified<Node> {
         context.identify(Node::Text { content: self.content.clone() })
     }

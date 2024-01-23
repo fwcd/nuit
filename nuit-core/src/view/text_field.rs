@@ -1,4 +1,4 @@
-use crate::{View, Node, Bind, Context, Identified, Binding, Event};
+use crate::{View, Node, Bind, Context, Identified, Binding, Event, IdPath};
 
 #[derive(Debug, Clone)]
 pub struct TextField {
@@ -12,18 +12,17 @@ impl TextField {
 }
 
 impl Bind for TextField {
-    fn bind(&mut self, context: &Context) {
-        let storage = context.storage();
-        let content = self.content.clone();
-        storage.insert_event_handler(context.id_path().clone(), move |event| {
-            if let Event::UpdateText { content: new_content } = event {
-                content.set(new_content);
-            }
-        });
-    }
+    fn bind(&mut self, _context: &Context) {}
 }
 
 impl View for TextField {
+    fn fire(&self, event: &Event, id_path: &IdPath) {
+        assert!(id_path.is_root());
+        if let Event::UpdateText { content } = event {
+            self.content.set(content.to_owned());
+        }
+    }
+
     fn render(&mut self, context: &Context) -> Identified<Node> {
         self.bind(context);
         context.identify(Node::TextField { content: self.content.get() })

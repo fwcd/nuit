@@ -1,12 +1,11 @@
 use std::{collections::HashMap, any::Any, cell::RefCell};
 
-use crate::{IdPath, Event};
+use crate::IdPath;
 
 // TODO: Use trees to model these id path keys (this should also allow us to take them by ref and delete subtrees easily)
 
 pub struct Storage {
     state: RefCell<HashMap<(IdPath, usize), Box<dyn Any>>>,
-    event_handlers: RefCell<HashMap<IdPath, Box<dyn Fn(Event)>>>,
     update_callback: RefCell<Option<Box<dyn Fn()>>>,
 }
 
@@ -14,7 +13,6 @@ impl Storage {
     pub fn new() -> Self {
         Self {
             state: RefCell::new(HashMap::new()),
-            event_handlers: RefCell::new(HashMap::new()),
             update_callback: RefCell::new(None),
         }
     }
@@ -31,17 +29,6 @@ impl Storage {
     pub fn state<T>(&self, key: &(IdPath, usize)) -> T where T: Clone + 'static {
         let state = &self.state.borrow()[key];
         state.downcast_ref::<T>().expect("State has invalid type").clone()
-    }
-
-    pub fn insert_event_handler(&self, key: IdPath, handler: impl Fn(Event) + 'static) {
-        self.event_handlers.borrow_mut().insert(key, Box::new(handler));
-    }
-
-    pub fn fire_event(&self, key: &IdPath, event: Event) {
-        if let Some(handler) = self.event_handlers.borrow().get(key) {
-            handler(event);
-            self.fire_update_callback();
-        }
     }
 
     fn fire_update_callback(&self) {
