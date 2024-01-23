@@ -51,7 +51,7 @@ where
     fn fire(&self, event: &Event, id_path: &IdPath) {
         if let Some(head) = id_path.head() {
             if let Some(item) = self.collection.into_iter().find(|item| item.id() == head) {
-                (self.view_func)(item).fire(event, &id_path.child(item.id()));
+                (self.view_func)(item).fire(event, &id_path.tail());
             }
         }
     }
