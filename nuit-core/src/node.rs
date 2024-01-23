@@ -103,4 +103,16 @@ impl NodeDiff {
             }
         }
     }
+
+    pub(crate) fn added(&self) -> impl Iterator<Item = &IdPath> {
+        self.added.iter().map(|a| a.as_ref())
+    }
+
+    pub(crate) fn removed(&self) -> impl Iterator<Item = &IdPath> {
+        self.removed.iter().map(|a| a.as_ref())
+    }
+
+    pub(crate) fn changed(&self) -> impl Iterator<Item = &IdPath> {
+        self.changed.iter().map(|a| a.as_ref())
+    }
 }
