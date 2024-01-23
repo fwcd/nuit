@@ -1,6 +1,6 @@
 #![feature(type_alias_impl_trait, impl_trait_in_assoc_type)]
 
-use nuit::{Text, VStack, View, ViewExt, State, HStack, TextField, Bind, Insets, Frame, ForEach};
+use nuit::{Text, VStack, View, ViewExt, State, HStack, TextField, Bind, Insets, Frame, ForEach, clone};
 
 #[derive(Bind)]
 struct EnterNameView {
@@ -25,6 +25,7 @@ impl View for EnterNameView {
             )),
             ForEach::new(name.get().split(" ").map(|s| s.trim().to_owned()).collect::<Vec<_>>(), |name| {
                 Text::new(format!("Hi {}!", name))
+                    .on_appear(clone!(name => move || println!("A wild {} appeared!", name)))
             }),
         ))
         .padding(Insets::default())
