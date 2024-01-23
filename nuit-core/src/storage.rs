@@ -17,16 +17,16 @@ impl Storage {
         }
     }
 
-    pub fn contains_state(&self, key: &(IdPathBuf, usize)) -> bool {
+    pub(crate) fn contains_state(&self, key: &(IdPathBuf, usize)) -> bool {
         self.state.borrow().contains_key(&key)
     }
 
-    pub fn insert_state(&self, key: (IdPathBuf, usize), value: impl Any) {
+    pub(crate) fn insert_state(&self, key: (IdPathBuf, usize), value: impl Any) {
         self.state.borrow_mut().insert(key, Box::new(value));
         self.fire_update_callback();
     }
 
-    pub fn state<T>(&self, key: &(IdPathBuf, usize)) -> T where T: Clone + 'static {
+    pub(crate) fn state<T>(&self, key: &(IdPathBuf, usize)) -> T where T: Clone + 'static {
         let state = &self.state.borrow()[key];
         state.downcast_ref::<T>().expect("State has invalid type").clone()
     }
