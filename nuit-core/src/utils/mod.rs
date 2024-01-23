@@ -8,7 +8,6 @@ mod insets;
 mod vec2;
 mod zero;
 
-pub use clone::*;
 pub use frame::*;
 pub use id_path::*;
 pub use id::*;
