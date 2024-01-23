@@ -10,7 +10,17 @@ pub struct ForEach<C, I, F, V> {
     phantom_view: PhantomData<V>,
 }
 
-impl<C, I, F, V> ForEach<C, I, F, V> {
+// Note: We need the trait bounds here already since the collection types may
+// otherwise get inferred incorrectly, resulting in potentially obscure errors
+// where the composite type appears not to implement View.
+
+impl<C, I, F, V> ForEach<C, I, F, V>
+where
+    for<'a> &'a C: IntoIterator<Item = &'a I> + Clone,
+    I: Identify,
+    F: Fn(&I) -> V,
+    V: Bind
+{
     pub fn new(collection: C, view_func: F) -> Self {
         Self {
             collection,
