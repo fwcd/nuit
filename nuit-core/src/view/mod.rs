@@ -31,7 +31,9 @@ pub trait View: Bind {
     fn body(&self) -> Self::Body {
         panic!("View does not have a body!")
     }
-    
+
+    // TODO: Return an error type from fire to avoid panicking on wrong paths?
+
     fn fire(&self, event: &Event, id_path: &IdPath) {
         self.body().fire(event, id_path);
     }
@@ -42,9 +44,31 @@ pub trait View: Bind {
     }
 }
 
-// TODO: Generate tuple variants with a macro (or variadic generics once possible)
+macro_rules! impl_tuple_view {
+    ($($tvs:ident),*) => {
+        impl<$($tvs),*> View for ($($tvs,)*) where $($tvs: View),* {
+            fn fire(&self, event: &Event, id_path: &IdPath) {
+                if let Some(head) = id_path.head() {
+                    match head {
+                        $(${ignore(tvs)} Id::Index(${index()}) => self.${index()}.fire(event, &id_path.tail()),)*
+                        i => panic!("Cannot fire event for child id {} on a {}-tuple", i, ${count(tvs, 0)})
+                    }
+                }
+            }
+
+            fn render(&mut self, context: &Context) -> Identified<Node> {
+                context.identify(Node::Group { children: vec![
+                    $(${ignore(tvs)} self.${index()}.render(&context.child(${index()})),)*
+                ] })
+            }
+        }
+    };
+}
 
 impl View for ! {}
+
+// Note: We explicitly implement the 0 (unit) and 1 tuples to avoid e.g. the
+// overhead of using a Group requiring a Vec.
 
 impl View for () {
     fn fire(&self, _event: &Event, _id_path: &IdPath) {}
@@ -75,90 +99,14 @@ impl<T> View for (T,) where T: View {
     }
 }
 
-impl<T, U> View for (T, U) where T: View, U: View {
-    fn fire(&self, event: &Event, id_path: &IdPath) {
-        if let Some(head) = id_path.head() {
-            match head {
-                Id::Index(0) => self.0.fire(event, &id_path.tail()),
-                Id::Index(1) => self.1.fire(event, &id_path.tail()),
-                i => panic!("Cannot fire event for child id {} on 2-tuple", i)
-            }
-        }
-    }
+// TODO: Generate with variadic generics once available
 
-    fn render(&mut self, context: &Context) -> Identified<Node> {
-        context.identify(Node::Group { children: vec![
-            self.0.render(&context.child(0)),
-            self.1.render(&context.child(1)),
-        ] })
-    }
-}
-
-impl<T, U, V> View for (T, U, V) where T: View, U: View, V: View {
-    fn fire(&self, event: &Event, id_path: &IdPath) {
-        if let Some(head) = id_path.head() {
-            match head {
-                Id::Index(0) => self.0.fire(event, &id_path.tail()),
-                Id::Index(1) => self.1.fire(event, &id_path.tail()),
-                Id::Index(2) => self.2.fire(event, &id_path.tail()),
-                i => panic!("Cannot fire event for child id {} on 3-tuple", i)
-            }
-        }
-    }
-
-    fn render(&mut self, context: &Context) -> Identified<Node> {
-        context.identify(Node::Group { children: vec![
-            self.0.render(&context.child(0)),
-            self.1.render(&context.child(1)),
-            self.2.render(&context.child(2)),
-        ] })
-    }
-}
-
-impl<T, U, V, W> View for (T, U, V, W) where T: View, U: View, V: View, W: View {
-    fn fire(&self, event: &Event, id_path: &IdPath) {
-        if let Some(head) = id_path.head() {
-            match head {
-                Id::Index(0) => self.0.fire(event, &id_path.tail()),
-                Id::Index(1) => self.1.fire(event, &id_path.tail()),
-                Id::Index(2) => self.2.fire(event, &id_path.tail()),
-                Id::Index(3) => self.3.fire(event, &id_path.tail()),
-                i => panic!("Cannot fire event for child id {} on 4-tuple", i)
-            }
-        }
-    }
-
-    fn render(&mut self, context: &Context) -> Identified<Node> {
-        context.identify(Node::Group { children: vec![
-            self.0.render(&context.child(0)),
-            self.1.render(&context.child(1)),
-            self.2.render(&context.child(2)),
-            self.3.render(&context.child(3)),
-        ] })
-    }
-}
-
-impl<T, U, V, W, X> View for (T, U, V, W, X) where T: View, U: View, V: View, W: View, X: View {
-    fn fire(&self, event: &Event, id_path: &IdPath) {
-        if let Some(head) = id_path.head() {
-            match head {
-                Id::Index(0) => self.0.fire(event, &id_path.tail()),
-                Id::Index(1) => self.1.fire(event, &id_path.tail()),
-                Id::Index(2) => self.2.fire(event, &id_path.tail()),
-                Id::Index(3) => self.3.fire(event, &id_path.tail()),
-                Id::Index(4) => self.4.fire(event, &id_path.tail()),
-                i => panic!("Cannot fire event for child id {} on 5-tuple", i)
-            }
-        }
-    }
-
-    fn render(&mut self, context: &Context) -> Identified<Node> {
-        context.identify(Node::Group { children: vec![
-            self.0.render(&context.child(0)),
-            self.1.render(&context.child(1)),
-            self.2.render(&context.child(2)),
-            self.3.render(&context.child(3)),
-            self.4.render(&context.child(4)),
-        ] })
-    }
-}
+impl_tuple_view!(T1, T2);
+impl_tuple_view!(T1, T2, T3);
+impl_tuple_view!(T1, T2, T3, T4);
+impl_tuple_view!(T1, T2, T3, T4, T5);
+impl_tuple_view!(T1, T2, T3, T4, T5, T6);
+impl_tuple_view!(T1, T2, T3, T4, T5, T6, T7);
+impl_tuple_view!(T1, T2, T3, T4, T5, T6, T7, T8);
+impl_tuple_view!(T1, T2, T3, T4, T5, T6, T7, T8, T9);
+impl_tuple_view!(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10);

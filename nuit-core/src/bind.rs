@@ -7,16 +7,22 @@ pub trait Bind {
     }
 }
 
+macro_rules! impl_tuple_bind {
+    ($($tvs:ident),*) => {
+        impl<$($tvs),*> Bind for ($($tvs,)*) where $($tvs: Bind),* {}
+    };
+}
+
 impl Bind for ! {}
 
-impl Bind for () {}
-
-impl<T> Bind for (T,) where T: Bind {}
-
-impl<T, U> Bind for (T, U) where T: Bind, U: Bind {}
-
-impl<T, U, V> Bind for (T, U, V) where T: Bind, U: Bind, V: Bind {}
-
-impl<T, U, V, W> Bind for (T, U, V, W) where T: Bind, U: Bind, V: Bind, W: Bind {}
-
-impl<T, U, V, W, X> Bind for (T, U, V, W, X) where T: Bind, U: Bind, V: Bind, W: Bind, X: Bind {}
+impl_tuple_bind!();
+impl_tuple_bind!(T1);
+impl_tuple_bind!(T1, T2);
+impl_tuple_bind!(T1, T2, T3);
+impl_tuple_bind!(T1, T2, T3, T4);
+impl_tuple_bind!(T1, T2, T3, T4, T5);
+impl_tuple_bind!(T1, T2, T3, T4, T5, T6);
+impl_tuple_bind!(T1, T2, T3, T4, T5, T6, T7);
+impl_tuple_bind!(T1, T2, T3, T4, T5, T6, T7, T8);
+impl_tuple_bind!(T1, T2, T3, T4, T5, T6, T7, T8, T9);
+impl_tuple_bind!(T1, T2, T3, T4, T5, T6, T7, T8, T9, T10);

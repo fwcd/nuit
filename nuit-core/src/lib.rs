@@ -1,4 +1,4 @@
-#![feature(associated_type_defaults, never_type)]
+#![feature(associated_type_defaults, macro_metavar_expr, never_type)]
 
 mod bind;
 mod binding;
