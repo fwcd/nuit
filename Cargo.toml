@@ -1,6 +1,6 @@
 [package]
 name = "nuit"
-version = "0.0.4"
+version = "0.0.5"
 edition = "2021"
 description = "Declarative, cross-platform UI library for Rust that uses native controls"
 homepage = "https://github.com/fwcd/nuit"
@@ -9,11 +9,11 @@ license = "GPL-3.0-or-later"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-nuit-derive = { version = "0.0.4", path = "nuit-derive" }
-nuit-core = { version = "0.0.4", path = "nuit-core" }
+nuit-derive = { version = "0.0.5", path = "nuit-derive" }
+nuit-core = { version = "0.0.5", path = "nuit-core" }
 
 [target.'cfg(target_os = "macos")'.dependencies]
-nuit-bridge-swiftui = { version = "0.0.4", path = "nuit-bridge-swiftui" }
+nuit-bridge-swiftui = { version = "0.0.5", path = "nuit-bridge-swiftui" }
 
 [workspace]
 members = [
