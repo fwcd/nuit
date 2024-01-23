@@ -1,6 +1,6 @@
 use std::rc::Rc;
 
-use crate::{Storage, Node, View, Context, Identified, Event, IdPath};
+use crate::{Storage, Node, View, Context, Identified, Event, IdPathBuf};
 
 /// The central state of a Nuit application.
 pub struct Root<T> {
@@ -32,7 +32,7 @@ impl<T> Root<T> where T: View {
     }
 
     pub fn fire_event_json(&mut self, id_path_json: &str, event_json: &str) {
-        let id_path: IdPath = serde_json::from_str(id_path_json).expect("Could not deserialize id path");
+        let id_path: IdPathBuf = serde_json::from_str(id_path_json).expect("Could not deserialize id path");
         let event: Event = serde_json::from_str(event_json).expect("Could not deserialize event");
         self.view.fire(&event, &id_path);
     }

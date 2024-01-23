@@ -9,3 +9,4 @@ license = "GPL-3.0-or-later"
 [dependencies]
 serde = { workspace = true }
 serde_json = { workspace = true }
+ref-cast = "1.0"

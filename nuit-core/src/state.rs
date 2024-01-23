@@ -1,12 +1,12 @@
 use std::rc::Rc;
 
-use crate::{Storage, IdPath, Binding};
+use crate::{Storage, IdPath, Binding, IdPathBuf};
 
 #[derive(Clone)]
 pub struct State<T> {
     initial_value: T,
     storage: Option<Rc<Storage>>,
-    key: Option<(IdPath, usize)>,
+    key: Option<(IdPathBuf, usize)>,
 }
 
 impl<T> State<T> where T: 'static + Clone {
@@ -18,8 +18,8 @@ impl<T> State<T> where T: 'static + Clone {
         }
     }
 
-    pub fn link(&mut self, storage: Rc<Storage>, id_path: IdPath, i: usize) {
-        let key = (id_path.clone(), i);
+    pub fn link(&mut self, storage: Rc<Storage>, id_path: &IdPath, i: usize) {
+        let key = (id_path.to_owned(), i);
 
         self.storage = Some(storage.clone());
         self.key = Some(key.clone());

@@ -1,11 +1,11 @@
 use std::{collections::HashMap, any::Any, cell::RefCell};
 
-use crate::IdPath;
+use crate::IdPathBuf;
 
 // TODO: Use trees to model these id path keys (this should also allow us to take them by ref and delete subtrees easily)
 
 pub struct Storage {
-    state: RefCell<HashMap<(IdPath, usize), Box<dyn Any>>>,
+    state: RefCell<HashMap<(IdPathBuf, usize), Box<dyn Any>>>,
     update_callback: RefCell<Option<Box<dyn Fn()>>>,
 }
 
@@ -17,16 +17,16 @@ impl Storage {
         }
     }
 
-    pub fn contains_state(&self, key: &(IdPath, usize)) -> bool {
+    pub fn contains_state(&self, key: &(IdPathBuf, usize)) -> bool {
         self.state.borrow().contains_key(&key)
     }
 
-    pub fn insert_state(&self, key: (IdPath, usize), value: impl Any) {
+    pub fn insert_state(&self, key: (IdPathBuf, usize), value: impl Any) {
         self.state.borrow_mut().insert(key, Box::new(value));
         self.fire_update_callback();
     }
 
-    pub fn state<T>(&self, key: &(IdPath, usize)) -> T where T: Clone + 'static {
+    pub fn state<T>(&self, key: &(IdPathBuf, usize)) -> T where T: Clone + 'static {
         let state = &self.state.borrow()[key];
         state.downcast_ref::<T>().expect("State has invalid type").clone()
     }
