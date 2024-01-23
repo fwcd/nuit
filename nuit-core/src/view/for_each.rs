@@ -25,23 +25,22 @@ impl<C, I, F, V> ForEach<C, I, F, V> {
 
 impl<C, I, F, V> Bind for ForEach<C, I, F, V>
 where
-    C: IntoIterator<Item = I> + Clone,
+    for<'a> &'a C: IntoIterator<Item = &'a I> + Clone,
     I: Identify,
-    F: Fn(I) -> V,
+    F: Fn(&I) -> V,
     V: Bind
 {}
 
 impl<C, I, F, V> View for ForEach<C, I, F, V>
 where
-    C: IntoIterator<Item = I> + Clone,
+    for<'a> &'a C: IntoIterator<Item = &'a I> + Clone,
     I: Identify,
-    F: Fn(I) -> V,
+    F: Fn(&I) -> V,
     V: View
 {
     fn render(&mut self, context: &Context) -> Identified<Node> {
         context.identify(Node::Group {
-            children: self.collection
-                .clone()
+            children: (&self.collection)
                 .into_iter()
                 .map(|item| {
                     let id = item.id();
