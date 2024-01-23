@@ -17,4 +17,12 @@ impl<T> Identified<T> {
     pub fn new(id_path: &IdPath, value: T) -> Self {
         Self { id_path: id_path.to_owned(), value }
     }
+
+    pub fn id_path(&self) -> &IdPath {
+        &self.id_path
+    }
+
+    pub fn value(&self) -> &T {
+        &self.value
+    }
 }
