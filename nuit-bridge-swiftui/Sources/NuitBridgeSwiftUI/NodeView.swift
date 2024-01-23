@@ -8,9 +8,10 @@ struct NodeView: View {
 
     var body: some View {
         switch node {
-        // MARK: Primitive
         case .empty:
             EmptyView()
+
+        // MARK: Widget
         case let .text(content: content):
             Text(content)
         case let .textField(content: content):
@@ -25,6 +26,13 @@ struct NodeView: View {
                 root.fire(event: .click, for: idPath)
             } label: {
                 NodeView(node: label.value, idPath: idPath + [label.id])
+            }
+        case let .picker(title: title, selection: selection, content: content):
+            Picker(title, selection: Binding(
+                get: { selection },
+                set: { root.fire(event: .updatePickerSelection(id: $0), for: idPath) }
+            )) {
+                NodeView(node: content.value, idPath: idPath + [content.id])
             }
 
         // MARK: Aggregation

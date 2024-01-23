@@ -1,9 +1,11 @@
 indirect enum Node: Codable, Hashable {
-    // MARK: Primitive
     case empty
+
+    // MARK: Widget
     case text(content: String)
     case textField(content: String)
     case button(label: Identified<Node>)
+    case picker(title: String, selection: Id, content: Identified<Node>)
 
     // MARK: Aggregation
     case child(wrapped: Identified<Node>)

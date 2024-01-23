@@ -8,11 +8,13 @@ use crate::{Identified, Modifier, IdPathBuf, IdPath, Id};
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub enum Node {
-    // Primitive
     Empty {}, // Intentionally not a unit variant for uniform serialization
+
+    // Widget
     Text { content: String },
     TextField { content: String },
     Button { label: Box<Identified<Node>> },
+    Picker { title: String, selection: Id, content: Box<Identified<Node>> },
 
     // Aggregation
     Child { wrapped: Box<Identified<Node>> },
@@ -72,8 +74,16 @@ impl NodeDiff {
         match (new, old) {
             (Node::Empty {}, Node::Empty {}) => {},
             (Node::Text { content: c1 }, Node::Text { content: c2 }) |
-            (Node::TextField { content: c1 }, Node::TextField { content: c2 }) => if c1 != c2 {
-                self.changed.push(id_path.to_owned());
+            (Node::TextField { content: c1 }, Node::TextField { content: c2 }) => {
+                if c1 != c2 {
+                    self.changed.push(id_path.to_owned());
+                }
+            },
+            (Node::Picker { title: t1, selection: s1, content: c1 }, Node::Picker { title: t2, selection: s2, content: c2 }) => {
+                if t1 != t2 || s1 != s2 {
+                    self.changed.push(id_path.to_owned());
+                }
+                self.traverse_identified(id_path, c1, c2);
             },
             (Node::Button { label: l1 }, Node::Button { label: l2 }) => self.traverse_identified(id_path, l1, l2),
             (Node::Child { wrapped: w1 }, Node::Child { wrapped: w2 }) |
