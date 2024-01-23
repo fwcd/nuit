@@ -1,16 +1,16 @@
 use crate::Id;
 
-pub trait Identify {
+pub trait HasId {
     fn id(&self) -> Id;
 }
 
-impl Identify for usize {
+impl HasId for usize {
     fn id(&self) -> Id {
         Id::index(*self)
     }
 }
 
-impl Identify for String {
+impl HasId for String {
     fn id(&self) -> Id {
         Id::string(self.clone())
     }

@@ -1,6 +1,6 @@
 use std::marker::PhantomData;
 
-use crate::{View, Node, Bind, Context, Identify, Identified, Event, IdPath};
+use crate::{View, Node, Bind, Context, HasId, Identified, Event, IdPath};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct ForEach<C, I, F, V> {
@@ -17,7 +17,7 @@ pub struct ForEach<C, I, F, V> {
 impl<C, I, F, V> ForEach<C, I, F, V>
 where
     for<'a> &'a C: IntoIterator<Item = &'a I> + Clone,
-    I: Identify,
+    I: HasId,
     F: Fn(&I) -> V,
     V: Bind
 {
@@ -36,7 +36,7 @@ where
 impl<C, I, F, V> Bind for ForEach<C, I, F, V>
 where
     for<'a> &'a C: IntoIterator<Item = &'a I> + Clone,
-    I: Identify,
+    I: HasId,
     F: Fn(&I) -> V,
     V: Bind
 {}
@@ -44,7 +44,7 @@ where
 impl<C, I, F, V> View for ForEach<C, I, F, V>
 where
     for<'a> &'a C: IntoIterator<Item = &'a I> + Clone,
-    I: Identify,
+    I: HasId,
     F: Fn(&I) -> V,
     V: View
 {
