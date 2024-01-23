@@ -25,7 +25,7 @@ pub fn derive_bind(input: TokenStream) -> TokenStream {
     let impl_block = quote! {
         impl ::nuit::Bind for #name {
             fn bind(&mut self, context: &::nuit::Context) {
-                #(self.#state_fields.link(context.storage().clone(), context.id_path().clone(), #indices);)*
+                #(self.#state_fields.link(context.storage().clone(), context.id_path(), #indices);)*
             }
         }
     };

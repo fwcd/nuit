@@ -37,7 +37,7 @@ impl CounterView {
 
 impl Bind for CounterView {
     fn bind(&mut self, context: &Context) {
-        self.count.link(context.storage().clone(), context.id_path().clone(), 0);
+        self.count.link(context.storage().clone(), context.id_path(), 0);
     }
 }
 
