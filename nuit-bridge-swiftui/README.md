@@ -1,3 +1,3 @@
-# Nuit SwiftUI Bridge
+# Nuit Bridge SwiftUI
 
-The SwiftUI implementation of Nuit.
+A SwiftUI backend for Nuit.
