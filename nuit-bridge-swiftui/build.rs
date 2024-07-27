@@ -37,8 +37,8 @@ fn target_arch() -> String {
     }
 }
 
-fn target_os() -> String {
-    env::var("CARGO_CFG_TARGET_OS").unwrap()
+fn target_vendor() -> String {
+    env::var("CARGO_CFG_TARGET_VENDOR").unwrap()
 }
 
 fn find_swift_runtime_libs() {
@@ -94,7 +94,7 @@ fn build_nuit_bridge_swiftui() {
 }
 
 fn main() {
-    if target_os() == "macos" {
+    if target_vendor() == "apple" {
         find_swift_runtime_libs();
         build_nuit_bridge_swiftui();
     }

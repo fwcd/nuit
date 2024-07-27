@@ -9,9 +9,9 @@ pub use nuit_derive::*;
 
 impl Default for Backend {
     fn default() -> Self {
-        #[cfg(target_os = "macos")]
+        #[cfg(target_vendor = "apple")]
         return Backend::SwiftUI;
-        #[cfg(not(target_os = "macos"))]
+        #[cfg(not(target_vendor = "apple"))]
         return Backend::Relm;
     }
 }
@@ -26,10 +26,10 @@ pub fn run_app<T>(config: impl Into<Config<T>>) where T: View {
     match backend {
         Backend::SwiftUI => {
             let c_root = CRoot::from(Box::new(root));
-            #[cfg(target_os = "macos")]
+            #[cfg(target_vendor = "apple")]
             unsafe { nuit_bridge_swiftui::run_app(&c_root); }
-            #[cfg(not(target_os = "macos"))]
-            panic!("SwiftUI is not supported outside of macOS!")
+            #[cfg(not(target_vendor = "apple"))]
+            panic!("SwiftUI is not supported outside of Apple platforms!")
         }
         Backend::Relm => {
             panic!("Relm is not supported (yet)")
