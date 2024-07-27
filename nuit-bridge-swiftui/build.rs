@@ -1,7 +1,7 @@
 // https://haim.dev/posts/2020-09-10-linking-swift-code-into-rust-app/
 
 use serde::Deserialize;
-use std::env;
+use std::{env, str};
 use std::process::Command;
 
 const MACOS_TARGET_VERSION: &str = "13";
@@ -64,7 +64,19 @@ fn build_nuit_bridge_swiftui() {
     let profile = profile();
 
     let build_succeeded = Command::new("swift")
-        .args(&["build", "--build-path", &out_dir, "-c", &profile])
+        .args(&[
+            "build",
+            "--build-path", &out_dir,
+            "-c", &profile,
+            "-Xswiftc", "-sdk", "-Xswiftc", str::from_utf8(
+                &Command::new("xcrun")
+                    .args(&["--sdk", "iphoneos", "--show-sdk-path"]) // FIXME: This should be parsed from the target
+                    .output()
+                    .unwrap()
+                    .stdout
+            ).unwrap(),
+            "-Xswiftc", "-target", "-Xswiftc", "arm64-apple-ios17.0" // TODO: This should not be hardcoded
+        ])
         .status()
         .unwrap()
         .success();
