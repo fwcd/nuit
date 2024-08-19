@@ -113,7 +113,6 @@ fn build_nuit_bridge_swiftui() {
             "--sdk", "macosx",
             "swift",
             "build",
-            "-vv",
             "--sdk", &sdk_path,
             "--triple", &target,
             "--build-path", &out_dir,
