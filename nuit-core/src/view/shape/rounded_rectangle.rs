@@ -10,7 +10,7 @@ impl RoundedRectangle {
         Self { corner_size }
     }
 
-    pub fn from_corner_radius(corner_radius: f64) -> Self {
+    pub fn with_corner_radius(corner_radius: f64) -> Self {
         Self::new(Vec2::new(corner_radius, corner_radius))
     }
 }
