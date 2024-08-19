@@ -106,8 +106,12 @@ fn build_nuit_bridge_swiftui() {
             .stdout
     ).unwrap().trim().to_owned();
 
-    let build_succeeded = Command::new("swift")
+    let build_succeeded = Command::new("xcrun")
         .args(&[
+            // We need for make sure that we always use the macOS version of the
+            // Swift Package Manager, even when cross-compiling for iOS.
+            "--sdk", "macosx",
+            "swift",
             "build",
             "-vv",
             "--sdk", &sdk_path,
