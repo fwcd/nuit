@@ -95,7 +95,6 @@ fn build_nuit_bridge_swiftui() {
     let out_dir = out_dir();
     let profile = profile();
 
-    let target_with_version = target_with_version();
     let target = target();
 
     let sdk = target_sdk();
@@ -111,11 +110,10 @@ fn build_nuit_bridge_swiftui() {
         .args(&[
             "build",
             "-vv",
+            "--sdk", &sdk_path,
+            "--triple", &target,
             "--build-path", &out_dir,
             "-c", &profile,
-            "-Xcc", "-isysroot", "-Xcc", &sdk_path,
-            "-Xswiftc", "-sdk", "-Xswiftc", &sdk_path,
-            "-Xswiftc", "-target", "-Xswiftc", &target_with_version,
         ])
         .status()
         .unwrap()
