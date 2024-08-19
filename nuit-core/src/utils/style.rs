@@ -10,11 +10,11 @@ pub enum Style {
 }
 
 impl Style {
-    pub fn color(color: Color) -> Self {
+    pub const fn color(color: Color) -> Self {
         Self::Color { color }
     }
 
-    pub fn hierarchical(level: usize) -> Self {
+    pub const fn hierarchical(level: usize) -> Self {
         Self::Hierarchical { level }
     }
 }
