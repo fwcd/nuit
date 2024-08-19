@@ -132,6 +132,7 @@ impl NodeDiff {
         self.removed.iter().map(|a| a.as_ref())
     }
 
+    #[allow(dead_code)]
     pub(crate) fn changed(&self) -> impl Iterator<Item = &IdPath> {
         self.changed.iter().map(|a| a.as_ref())
     }
