@@ -1,10 +1,8 @@
 // https://haim.dev/posts/2020-09-10-linking-swift-code-into-rust-app/
 
 use serde::Deserialize;
-use std::env;
+use std::{env, str};
 use std::process::Command;
-
-const MACOS_TARGET_VERSION: &str = "13";
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -38,15 +36,49 @@ fn target_arch() -> String {
 }
 
 fn target_os() -> String {
-    env::var("CARGO_CFG_TARGET_OS").unwrap()
+    let os = env::var("CARGO_CFG_TARGET_OS").unwrap();
+    match os.as_str() {
+        "macos" => "macosx".to_owned(),
+        "ios" => "ios".to_owned(),
+        _ => os,
+    }
+}
+
+fn target_os_version() -> String {
+    let os = env::var("CARGO_CFG_TARGET_OS").unwrap();
+    match os.as_str() {
+        "macos" => "13".to_owned(),
+        "ios" => "17.0".to_owned(),
+        _ => os,
+    }
+}
+
+fn target_sdk() -> String {
+    let os = env::var("CARGO_CFG_TARGET_OS").unwrap();
+    match os.as_str() {
+        "macos" => "macosx".to_owned(),
+        "ios" => "iphoneos".to_owned(),
+        _ => os,
+    }
+}
+
+fn target_vendor() -> String {
+    env::var("CARGO_CFG_TARGET_VENDOR").unwrap()
+}
+
+fn target() -> String {
+    format!("{}-{}-{}", target_arch(), target_vendor(), target_os())
+}
+
+fn target_with_version() -> String {
+    format!("{}{}", target(), target_os_version())
 }
 
 fn find_swift_runtime_libs() {
-    let arch = target_arch();
-    let target = format!("{}-apple-macosx{}", arch, MACOS_TARGET_VERSION);
+    let target_with_version = target_with_version();
 
     let raw_target_info = Command::new("swift")
-        .args(&["-target", &target, "-print-target-info"])
+        .args(&["-target", &target_with_version, "-print-target-info"])
         .output()
         .unwrap()
         .stdout;
@@ -63,8 +95,30 @@ fn build_nuit_bridge_swiftui() {
     let out_dir = out_dir();
     let profile = profile();
 
-    let build_succeeded = Command::new("swift")
-        .args(&["build", "--build-path", &out_dir, "-c", &profile])
+    let target = target();
+
+    let sdk = target_sdk();
+    let sdk_path = str::from_utf8(
+        &Command::new("xcrun")
+            .args(&["--sdk", &sdk, "--show-sdk-path"])
+            .output()
+            .unwrap()
+            .stdout
+    ).unwrap().trim().to_owned();
+
+    let build_succeeded = Command::new("xcrun")
+        .args(&[
+            // We need for make sure that we always use the macOS version of the
+            // Swift Package Manager, even when cross-compiling for iOS.
+            "--sdk", "macosx",
+            "swift",
+            "build",
+            "-vv",
+            "--sdk", &sdk_path,
+            "--triple", &target,
+            "--build-path", &out_dir,
+            "-c", &profile,
+        ])
         .status()
         .unwrap()
         .success();
@@ -74,15 +128,14 @@ fn build_nuit_bridge_swiftui() {
     }
 
     let root = manifest_dir();
-    let arch = target_arch();
 
-    println!("cargo:rustc-link-search=native={}/{}-apple-macosx/{}", out_dir, arch, profile);
+    println!("cargo:rustc-link-search=native={}/{}/{}", out_dir, target, profile);
     println!("cargo:rustc-link-lib=static=nuit-bridge-swiftui");
     println!("cargo:rerun-if-changed={}/Sources/**/*.swift", root);
 }
 
 fn main() {
-    if target_os() == "macos" {
+    if target_vendor() == "apple" {
         find_swift_runtime_libs();
         build_nuit_bridge_swiftui();
     }
