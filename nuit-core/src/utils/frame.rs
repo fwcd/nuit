@@ -31,8 +31,8 @@ impl Frame {
     }
 }
 
-impl From<(f64, f64)> for Frame {
-    fn from((width, height): (f64, f64)) -> Self {
+impl<W, H> From<(W, H)> for Frame where W: Into<f64>, H: Into<f64> {
+    fn from((width, height): (W, H)) -> Self {
         Self::exact(width, height)
     }
 }
