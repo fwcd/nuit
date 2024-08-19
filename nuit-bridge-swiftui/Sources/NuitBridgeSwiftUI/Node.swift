@@ -25,5 +25,5 @@ indirect enum Node: Codable, Hashable {
     case list(wrapped: Identified<Node>)
 
     // MARK: Modifier
-    case modified(wrapped: Identified<Node>, modifier: Modifier)
+    case modified(wrapped: Identified<Node>, modifier: ModifierNode)
 }

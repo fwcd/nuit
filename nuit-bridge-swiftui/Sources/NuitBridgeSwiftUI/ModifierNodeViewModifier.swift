@@ -1,7 +1,7 @@
 import SwiftUI
 
-struct ModifierViewModifier: ViewModifier {
-    let modifier: Modifier
+struct ModifierNodeViewModifier: ViewModifier {
+    let modifier: ModifierNode
 
     func body(content: Content) -> some View {
         switch modifier {

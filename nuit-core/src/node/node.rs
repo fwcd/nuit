@@ -1,6 +1,8 @@
 use serde::{Serialize, Deserialize};
 
-use crate::{Id, Identified, Modifier, Vec2};
+use crate::{Id, Identified, Vec2};
+
+use super::ModifierNode;
 
 /// A UI component tree.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -32,5 +34,5 @@ pub enum Node {
     List { wrapped: Box<Identified<Node>> },
 
     // Modifier
-    Modified { wrapped: Box<Identified<Node>>, modifier: Modifier, }
+    Modified { wrapped: Box<Identified<Node>>, modifier: ModifierNode, }
 }

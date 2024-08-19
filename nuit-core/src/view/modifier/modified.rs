@@ -1,13 +1,13 @@
-use crate::{View, Node, Bind, Context, modifier::Modifier, IdPath, Event, Id, IdentifyExt};
+use crate::{Bind, Context, Event, Id, IdPath, IdentifyExt, ModifierNode, Node, View};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct Modified<T> {
     wrapped: T,
-    modifier: Modifier,
+    modifier: ModifierNode,
 }
 
 impl<T> Modified<T> {
-    pub fn new(wrapped: T, modifier: Modifier) -> Self {
+    pub fn new(wrapped: T, modifier: ModifierNode) -> Self {
         Self {
             wrapped,
             modifier,
