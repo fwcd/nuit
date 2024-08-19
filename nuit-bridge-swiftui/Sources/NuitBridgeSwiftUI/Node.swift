@@ -2,11 +2,7 @@ indirect enum Node: Codable, Hashable {
     case empty
 
     // MARK: Shape
-    case capsule
-    case circle
-    case ellipse
-    case rectangle
-    case roundedRectangle(cornerSize: Vec2<Double>)
+    case shape(shape: ShapeNode)
 
     // MARK: Widget
     case text(content: String)

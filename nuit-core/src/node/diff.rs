@@ -47,11 +47,11 @@ impl NodeDiff {
         }
         match (new, old) {
             (Node::Empty {}, Node::Empty {}) => {},
-            (Node::Capsule {}, Node::Capsule {}) => {},
-            (Node::Circle {}, Node::Circle {}) => {},
-            (Node::Ellipse {}, Node::Ellipse {}) => {},
-            (Node::Rectangle {}, Node::Rectangle {}) => {},
-            (Node::RoundedRectangle { .. }, Node::Rectangle { .. }) => {},
+            (Node::Shape { shape: s1 }, Node::Shape { shape: s2 }) => {
+                if s1 != s2 {
+                    self.changed.push(id_path.to_owned());
+                }
+            },
             (Node::Text { content: c1 }, Node::Text { content: c2 }) |
             (Node::TextField { content: c1 }, Node::TextField { content: c2 }) => {
                 if c1 != c2 {

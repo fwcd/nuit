@@ -1,4 +1,4 @@
-use crate::{View, Node, Bind, Context, Event, IdPath};
+use crate::{Bind, Context, Event, IdPath, Node, ShapeNode, View};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Capsule;
@@ -15,6 +15,8 @@ impl View for Capsule {
     fn fire(&self, _event: &Event, _id_path: &IdPath) {}
 
     fn render(&mut self, _context: &Context) -> Node {
-        Node::Capsule {}
+        Node::Shape {
+            shape: ShapeNode::Capsule {},
+        }
     }
 }

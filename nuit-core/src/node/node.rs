@@ -1,8 +1,8 @@
 use serde::{Serialize, Deserialize};
 
-use crate::{Id, Identified, Vec2};
+use crate::{Id, Identified};
 
-use super::ModifierNode;
+use super::{ModifierNode, ShapeNode};
 
 /// A UI component tree.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -11,11 +11,7 @@ pub enum Node {
     Empty {}, // Intentionally not a unit variant for uniform serialization
 
     // Shape
-    Capsule {},
-    Circle {},
-    Ellipse {},
-    Rectangle {},
-    RoundedRectangle { corner_size: Vec2<f64> },
+    Shape { shape: ShapeNode },
 
     // Widget
     Text { content: String },

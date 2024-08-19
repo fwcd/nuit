@@ -1,4 +1,4 @@
-use crate::{Bind, Context, Event, IdPath, Node, Vec2, View};
+use crate::{Bind, Context, Event, IdPath, Node, ShapeNode, Vec2, View};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct RoundedRectangle {
@@ -21,8 +21,10 @@ impl View for RoundedRectangle {
     fn fire(&self, _event: &Event, _id_path: &IdPath) {}
 
     fn render(&mut self, _context: &Context) -> Node {
-        Node::RoundedRectangle {
-            corner_size: self.corner_size
+        Node::Shape {
+            shape: ShapeNode::RoundedRectangle {
+                corner_size: self.corner_size
+            },
         }
     }
 }

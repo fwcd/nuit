@@ -12,16 +12,8 @@ struct NodeView: View {
             EmptyView()
         
         // MARK: Shape
-        case .capsule:
-            Capsule()
-        case .circle:
-            Circle()
-        case .ellipse:
-            Ellipse()
-        case .rectangle:
-            Rectangle()
-        case let .roundedRectangle(cornerSize: cornerSize):
-            RoundedRectangle(cornerSize: CGSize(cornerSize))
+        case let .shape(shape: shape):
+            ShapeNodeView(shape: shape)
 
         // MARK: Widget
         case let .text(content: content):
