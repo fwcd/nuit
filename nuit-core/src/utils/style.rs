@@ -29,3 +29,15 @@ impl Style {
         Self::Material { material }
     }
 }
+
+impl From<Color> for Style {
+    fn from(color: Color) -> Self {
+        Self::Color { color }
+    }
+}
+
+impl From<Material> for Style {
+    fn from(material: Material) -> Self {
+        Self::Material { material }
+    }
+}
