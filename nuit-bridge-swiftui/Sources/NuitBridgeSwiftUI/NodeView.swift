@@ -73,7 +73,7 @@ struct NodeView: View {
                 NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
             }
 
-        // MARK Modifier
+        // MARK: Modifier
         case let .modified(wrapped: wrapped, modifier: modifier):
             NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
                 .modifier(ModifierViewModifier(modifier: modifier))
