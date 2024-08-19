@@ -30,3 +30,9 @@ impl Frame {
         Self::Exact { width: Some(width.into()), height: Some(height.into()) }
     }
 }
+
+impl From<(f64, f64)> for Frame {
+    fn from((width, height): (f64, f64)) -> Self {
+        Self::exact(width, height)
+    }
+}
