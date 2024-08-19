@@ -8,3 +8,12 @@ extension CGPoint {
         )
     }
 }
+
+extension CGSize {
+    init(_ vec2: Vec2<Double>) {
+        self.init(
+            width: CGFloat(vec2.x),
+            height: CGFloat(vec2.y)
+        )
+    }
+}

@@ -2,13 +2,20 @@ use std::{mem, collections::{HashSet, HashMap}};
 
 use serde::{Serialize, Deserialize};
 
-use crate::{Identified, Modifier, IdPathBuf, IdPath, Id};
+use crate::{Id, IdPath, IdPathBuf, Identified, Modifier, Vec2};
 
 /// A UI component tree.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub enum Node {
     Empty {}, // Intentionally not a unit variant for uniform serialization
+
+    // Shape
+    Capsule {},
+    Circle {},
+    Ellipse {},
+    Rectangle {},
+    RoundedRectangle { corner_size: Vec2<f64> },
 
     // Widget
     Text { content: String },
@@ -73,6 +80,11 @@ impl NodeDiff {
         }
         match (new, old) {
             (Node::Empty {}, Node::Empty {}) => {},
+            (Node::Capsule {}, Node::Capsule {}) => {},
+            (Node::Circle {}, Node::Circle {}) => {},
+            (Node::Ellipse {}, Node::Ellipse {}) => {},
+            (Node::Rectangle {}, Node::Rectangle {}) => {},
+            (Node::RoundedRectangle { .. }, Node::Rectangle { .. }) => {},
             (Node::Text { content: c1 }, Node::Text { content: c2 }) |
             (Node::TextField { content: c1 }, Node::TextField { content: c2 }) => {
                 if c1 != c2 {
