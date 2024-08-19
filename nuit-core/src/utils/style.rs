@@ -10,6 +10,12 @@ pub enum Style {
 }
 
 impl Style {
+    pub const PRIMARY: Self = Self::hierarchical(0);
+    pub const SECONDARY: Self = Self::hierarchical(1);
+    pub const TERTIARY: Self = Self::hierarchical(2);
+    pub const QUATERNARY: Self = Self::hierarchical(3);
+    pub const QUINARY: Self = Self::hierarchical(4);
+
     pub const fn color(color: Color) -> Self {
         Self::Color { color }
     }
