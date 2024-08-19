@@ -7,6 +7,7 @@
 
 mod bind;
 mod binding;
+mod compose;
 mod context;
 mod event;
 mod ffi;
@@ -15,10 +16,10 @@ mod root;
 mod state;
 mod storage;
 mod utils;
-mod view;
 
 pub use bind::*;
 pub use binding::*;
+pub use compose::*;
 pub use context::*;
 pub use event::*;
 pub use ffi::*;
@@ -27,4 +28,3 @@ pub use root::*;
 pub use state::*;
 pub use storage::*;
 pub use utils::*;
-pub use view::*;
