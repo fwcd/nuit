@@ -6,7 +6,7 @@ use crate::{Id, IdPath, IdPathBuf, Identified, Modifier, Vec2};
 
 /// A UI component tree.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
+#[serde(rename_all = "camelCase", rename_all_fields = "camelCase")]
 pub enum Node {
     Empty {}, // Intentionally not a unit variant for uniform serialization
 
