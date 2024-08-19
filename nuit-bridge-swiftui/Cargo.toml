@@ -1,6 +1,6 @@
 [package]
 name = "nuit-bridge-swiftui"
-version = "0.0.5"
+version = "0.0.6"
 edition = "2021"
 description = "SwiftUI bindings for Nuit"
 homepage = "https://github.com/fwcd/nuit"
@@ -15,4 +15,4 @@ serde_json = "1.0"
 path = "rust/lib.rs"
 
 [dependencies]
-nuit-core = { version = "0.0.5", path = "../nuit-core" }
+nuit-core = { version = "0.0.6", path = "../nuit-core" }
