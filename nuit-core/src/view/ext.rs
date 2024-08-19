@@ -1,8 +1,12 @@
-use crate::{Insets, Modified, Modifier, View, Frame, Vec2, Handler, Event};
+use crate::{Event, Frame, Handler, Insets, Modified, Modifier, Style, Vec2, View};
 
 pub trait ViewExt: Sized {
     fn modifier(self, modifier: Modifier) -> Modified<Self> {
         Modified::new(self, modifier)
+    }
+
+    fn fill(self, style: Style) -> Modified<Self> {
+        self.modifier(Modifier::Fill { style })
     }
 
     fn padding(self, insets: Insets) -> Modified<Self> {

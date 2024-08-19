@@ -26,6 +26,17 @@ struct ModifierViewModifier: ViewModifier {
                     height: height.map { CGFloat($0) }
                 )
             }
+        case let .fill(style: style):
+            // FIXME: This doesn't work yet
+            if let content = content as? any Shape {
+                AnyShape(content).fill(AnyShapeStyle(style))
+            } else {
+                content
+            }
         }
     }
+}
+
+private func open<T: View>(_ view: T) -> some View {
+    view
 }
