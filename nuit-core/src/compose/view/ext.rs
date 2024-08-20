@@ -1,4 +1,4 @@
-use crate::{Event, Frame, Handler, Insets, Modified, ModifierNode, Style, Vec2, View};
+use crate::{Event, Frame, Handler, Insets, Modified, ModifierNode, Vec2, View};
 
 pub trait ViewExt: Sized {
     fn modifier(self, modifier: ModifierNode) -> Modified<Self> {
