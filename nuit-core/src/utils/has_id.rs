@@ -1,5 +1,6 @@
 use crate::Id;
 
+/// An identifiable value.
 pub trait HasId {
     fn id(&self) -> Id;
 }

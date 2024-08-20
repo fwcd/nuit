@@ -24,6 +24,7 @@ impl<T> Identified<T> {
     }
 }
 
+/// An extension trait for conveniently creating `Identified` values.
 pub trait IdentifyExt where Self: Sized {
     fn identify(self, id: impl Into<Id>) -> Identified<Self>;
 }

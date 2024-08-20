@@ -2,6 +2,7 @@ use crate::Style;
 
 use super::{Fill, Shape, Stroke};
 
+/// An extension trait with various convenience methods for shapes.
 pub trait ShapeExt: Sized {
     fn fill(self, style: impl Into<Style>) -> Fill<Self> {
         Fill::new(self, style.into())

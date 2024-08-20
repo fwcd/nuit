@@ -1,5 +1,6 @@
 use crate::{Event, Frame, Handler, Insets, Modified, ModifierNode, Vec2, View};
 
+/// An extension trait with various convenience methods for views.
 pub trait ViewExt: Sized {
     fn modifier(self, modifier: ModifierNode) -> Modified<Self> {
         Modified::new(self, modifier)
