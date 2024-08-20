@@ -1,10 +1,10 @@
 [package]
 name = "nuit-derive"
-version = "0.0.6"
-edition = "2021"
 description = "Derive macros for Nuit"
-homepage = "https://github.com/fwcd/nuit"
-license = "GPL-3.0-or-later"
+version.workspace = true
+edition.workspace = true
+homepage.workspace = true
+license.workspace = true
 
 [lib]
 proc-macro = true

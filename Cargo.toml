@@ -1,19 +1,19 @@
 [package]
 name = "nuit"
-version = "0.0.6"
-edition = "2021"
 description = "Declarative, cross-platform UI library for Rust that uses native controls"
-homepage = "https://github.com/fwcd/nuit"
-license = "GPL-3.0-or-later"
+version.workspace = true
+edition.workspace = true
+homepage.workspace = true
+license.workspace = true
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-nuit-derive = { version = "0.0.6", path = "nuit-derive" }
-nuit-core = { version = "0.0.6", path = "nuit-core" }
+nuit-derive.workspace = true
+nuit-core.workspace = true
 
 [target.'cfg(target_vendor = "apple")'.dependencies]
-nuit-bridge-swiftui = { version = "0.0.6", path = "nuit-bridge-swiftui" }
+nuit-bridge-swiftui.workspace = true
 
 [workspace]
 members = [
@@ -22,6 +22,15 @@ members = [
     "nuit-derive",
 ]
 
+[workspace.package]
+version = "0.0.6"
+edition = "2021"
+license = "GPL-3.0-or-later"
+homepage = "https://github.com/fwcd/nuit"
+
 [workspace.dependencies]
+nuit-bridge-swiftui = { version = "0.0.6", path = "nuit-bridge-swiftui" }
+nuit-core = { version = "0.0.6", path = "nuit-core" }
+nuit-derive = { version = "0.0.6", path = "nuit-derive" }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
