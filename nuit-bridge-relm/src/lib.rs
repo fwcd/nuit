@@ -21,8 +21,8 @@ impl<T> SimpleComponent for NuitApp<T> where T: View + 'static {
 
     fn init(
         nuit_root: Root<T>,
-        root: &Self::Root,
-        sender: ComponentSender<Self>,
+        root: Self::Root,
+        _sender: ComponentSender<Self>,
     ) -> ComponentParts<Self> {
         let model = NuitApp { root: nuit_root };
         let widgets = view_output!();

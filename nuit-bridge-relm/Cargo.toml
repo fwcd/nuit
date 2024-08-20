@@ -8,4 +8,4 @@ license.workspace = true
 
 [dependencies]
 nuit-core.workspace = true
-relm4 = "0.6.0"
+relm4 = "0.9.0"
