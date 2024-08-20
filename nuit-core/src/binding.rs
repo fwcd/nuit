@@ -1,5 +1,6 @@
 use std::{rc::Rc, fmt};
 
+/// A pair of a getter and a setter, encapsulating a reference to some value.
 #[derive(Clone)]
 pub struct Binding<T> {
     get: Rc<dyn Fn() -> T>,

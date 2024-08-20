@@ -2,6 +2,7 @@ use std::marker::PhantomData;
 
 use crate::{View, Node, Bind, Context, HasId, Event, IdPath, IdentifyExt};
 
+/// A group of views that is dynamically computed from a given collection.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct ForEach<C, I, F, V> {
     collection: C,

@@ -1,5 +1,6 @@
 use crate::{Shape, ShapeNode};
 
+/// An elliptic shape.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Ellipse;
 

@@ -13,6 +13,7 @@ pub trait Shape {
     }
 }
 
+/// A shape type that can never be constructed.
 pub enum NeverShape {}
 
 impl Shape for NeverShape {}

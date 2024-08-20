@@ -1,5 +1,6 @@
 use crate::{Shape, ShapeNode, Style};
 
+/// A shape that fills its content using a given style.
 #[derive(Debug, Clone, PartialEq)]
 pub struct Fill<T> {
     wrapped: T,

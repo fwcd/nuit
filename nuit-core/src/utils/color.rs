@@ -1,5 +1,6 @@
 use serde::{Serialize, Deserialize};
 
+/// An RGBA color.
 #[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Color {

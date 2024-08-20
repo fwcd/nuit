@@ -1,5 +1,6 @@
 use crate::{View, Node, Bind, Context, Event, IdPath, Id, IdentifyExt};
 
+/// A view that lays out its children horizontally.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct HStack<T> {
     wrapped: T,

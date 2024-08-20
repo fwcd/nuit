@@ -2,6 +2,7 @@ use std::rc::Rc;
 
 use crate::{Storage, IdPath, Binding, IdPathBuf};
 
+/// A wrapper around a value managed by nuit.
 #[derive(Clone)]
 pub struct State<T> {
     initial_value: T,

@@ -1,5 +1,6 @@
 use crate::{Shape, ShapeNode};
 
+/// A rectangular shape.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Rectangle;
 

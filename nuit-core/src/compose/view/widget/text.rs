@@ -1,5 +1,6 @@
 use crate::{View, Node, Bind, Context, Event, IdPath};
 
+/// A text label.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Text {
     content: String,

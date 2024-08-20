@@ -1,5 +1,6 @@
 use crate::{Shape, ShapeNode, Vec2};
 
+/// A rectangular shape with rounded corners.
 #[derive(Debug, Clone, PartialEq)]
 pub struct RoundedRectangle {
     corner_size: Vec2<f64>,

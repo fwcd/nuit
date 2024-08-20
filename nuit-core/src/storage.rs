@@ -4,6 +4,7 @@ use crate::IdPathBuf;
 
 // TODO: Use trees to model these id path keys (this should also allow us to take them by ref and delete subtrees easily)
 
+/// A facility that manages view state internally.
 pub struct Storage {
     state: RefCell<HashMap<(IdPathBuf, usize), Box<dyn Any>>>,
     changes: RefCell<HashMap<(IdPathBuf, usize), Box<dyn Any>>>,

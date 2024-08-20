@@ -2,6 +2,7 @@ use nuit_core::View;
 
 use crate::Backend;
 
+/// A configuration encapsulating an app with its preferred backend.
 pub struct Config<T> {
     view: T,
     preferred_backend: Option<Backend>,
@@ -21,6 +22,7 @@ impl<T> Config<T> {
     }
 }
 
+/// A convenience for building a `Config`.
 pub struct ConfigBuilder<T> {
     view: T,
     preferred_backend: Option<Backend>,

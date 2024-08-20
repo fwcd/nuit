@@ -2,6 +2,8 @@ use std::rc::Rc;
 
 use crate::{Storage, IdPath, Id, IdPathBuf};
 
+/// A context used during rendering that tracks the path to the current view and
+/// holds a reference to internal storage.
 pub struct Context {
     id_path: IdPathBuf,
     storage: Rc<Storage>,

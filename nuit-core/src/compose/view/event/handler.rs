@@ -1,5 +1,6 @@
 use crate::{View, Node, Bind, Context, Event, IdPath};
 
+/// A view that handles events using a provided closure.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Handler<T, F> {
     wrapped: T,

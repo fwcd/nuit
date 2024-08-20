@@ -1,5 +1,6 @@
 use crate::{View, Node, Bind, Context, Binding, Event, IdPath};
 
+/// A user-modifiable text field.
 #[derive(Debug, Clone)]
 pub struct TextField {
     content: Binding<String>,

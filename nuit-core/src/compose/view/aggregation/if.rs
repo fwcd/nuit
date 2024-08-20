@@ -1,5 +1,7 @@
 use crate::{View, Node, Bind, Context, Event, IdPath, Id, IdentifyExt};
 
+/// A conditional view that can take on one of at most two branches, depending
+/// on a boolean condition.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct If<T, F> {
     then_view: Option<T>,

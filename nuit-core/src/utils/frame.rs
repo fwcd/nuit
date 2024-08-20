@@ -1,5 +1,6 @@
 use serde::{Serialize, Deserialize};
 
+/// Geometry for a view.
 #[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", rename_all_fields = "camelCase")]
 pub enum Frame {

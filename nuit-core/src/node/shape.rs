@@ -2,6 +2,7 @@ use serde::{Serialize, Deserialize};
 
 use crate::{Style, Vec2};
 
+/// A rendered shape tree.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", rename_all_fields = "camelCase")]
 pub enum ShapeNode {

@@ -4,7 +4,7 @@ use crate::{Id, Identified};
 
 use super::{ModifierNode, ShapeNode};
 
-/// A UI component tree.
+/// A rendered UI component tree.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", rename_all_fields = "camelCase")]
 pub enum Node {

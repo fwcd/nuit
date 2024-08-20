@@ -1,5 +1,6 @@
 use crate::{View, Node, Bind, Context, Binding, Event, IdPath, Id, IdentifyExt};
 
+/// A view that lets the user choose a value.
 #[derive(Debug, Clone)]
 pub struct Picker<C> {
     title: String,

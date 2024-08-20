@@ -2,6 +2,7 @@ use serde::{Serialize, Deserialize};
 
 use crate::Id;
 
+/// A value with an id.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Identified<T> {

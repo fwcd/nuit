@@ -1,5 +1,6 @@
 use crate::{Shape, ShapeNode, Style};
 
+/// A shape that strokes its outline using a given style.
 #[derive(Debug, Clone, PartialEq)]
 pub struct Stroke<T> {
     wrapped: T,

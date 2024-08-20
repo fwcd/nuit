@@ -1,5 +1,6 @@
 use crate::{Bind, Context, Event, Id, IdPath, IdentifyExt, ModifierNode, Node, View};
 
+/// A view that applies a modifier.
 #[derive(Debug, Clone, PartialEq)]
 pub struct Modified<T> {
     wrapped: T,

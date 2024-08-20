@@ -1,5 +1,6 @@
 use crate::{View, Node, Bind, Context, IdPath, Event, Id, IdentifyExt};
 
+/// A view that lays out its children vertically.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct VStack<T> {
     wrapped: T,

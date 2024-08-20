@@ -5,10 +5,12 @@ use serde::{Serialize, Deserialize};
 
 use crate::Id;
 
+/// A borrowed path of ids.
 #[derive(Debug, Hash, PartialEq, Eq, RefCast)]
 #[repr(transparent)]
 pub struct IdPath([Id]);
 
+/// An owned path of ids.
 #[derive(Debug, Clone, Hash, PartialEq, Eq, Serialize, Deserialize)]
 pub struct IdPathBuf(Vec<Id>);
 

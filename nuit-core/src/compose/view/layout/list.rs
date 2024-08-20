@@ -1,5 +1,6 @@
 use crate::{Bind, View, Node, Context, IdPath, Event, Id, IdentifyExt};
 
+/// A view that arranges its children in a stylized list.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct List<T> {
     wrapped: T,

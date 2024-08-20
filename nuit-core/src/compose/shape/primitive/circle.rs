@@ -1,5 +1,6 @@
 use crate::{Shape, ShapeNode};
 
+/// A circular shape.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Circle;
 

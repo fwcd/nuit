@@ -43,6 +43,7 @@ macro_rules! impl_tuple_view {
     };
 }
 
+/// A view type that can never be constructed.
 pub enum NeverView {}
 
 impl Bind for NeverView {}

@@ -1,5 +1,6 @@
 use crate::{View, Node, Bind, Context, Event, IdPath, Id, IdentifyExt};
 
+/// A widget that performs an action when pressed/tapped.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Button<T, F> {
     label: T,
