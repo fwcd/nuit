@@ -1,8 +1,8 @@
 use serde::{Serialize, Deserialize};
 
-use crate::Vec2;
+use crate::{Style, Vec2};
 
-#[derive(Debug, Copy, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", rename_all_fields = "camelCase")]
 pub enum ShapeNode {
     // Primitive
@@ -11,4 +11,8 @@ pub enum ShapeNode {
     Ellipse {},
     Rectangle {},
     RoundedRectangle { corner_size: Vec2<f64> },
+
+    // Styled
+    Fill { wrapped: Box<ShapeNode>, style: Style },
+    Stroke { wrapped: Box<ShapeNode>, style: Style },
 }
