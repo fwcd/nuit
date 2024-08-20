@@ -23,14 +23,14 @@ members = [
 ]
 
 [workspace.package]
-version = "0.0.6"
+version = "0.0.7"
 edition = "2021"
 license = "GPL-3.0-or-later"
 homepage = "https://github.com/fwcd/nuit"
 
 [workspace.dependencies]
-nuit-bridge-swiftui = { version = "0.0.6", path = "nuit-bridge-swiftui" }
-nuit-core = { version = "0.0.6", path = "nuit-core" }
-nuit-derive = { version = "0.0.6", path = "nuit-derive" }
+nuit-bridge-swiftui = { version = "0.0.7", path = "nuit-bridge-swiftui" }
+nuit-core = { version = "0.0.7", path = "nuit-core" }
+nuit-derive = { version = "0.0.7", path = "nuit-derive" }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
