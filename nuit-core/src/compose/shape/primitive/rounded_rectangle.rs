@@ -1,6 +1,4 @@
-use crate::{ShapeNode, Vec2};
-
-use super::Shape;
+use crate::{Shape, ShapeNode, Vec2};
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct RoundedRectangle {

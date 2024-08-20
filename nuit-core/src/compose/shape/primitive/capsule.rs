@@ -1,18 +1,16 @@
-use crate::ShapeNode;
-
-use super::Shape;
+use crate::{Shape, ShapeNode};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub struct Ellipse;
+pub struct Capsule;
 
-impl Ellipse {
+impl Capsule {
     pub fn new() -> Self {
         Self
     }
 }
 
-impl Shape for Ellipse {
+impl Shape for Capsule {
     fn render(&self) -> ShapeNode {
-        ShapeNode::Ellipse {}
+        ShapeNode::Capsule {}
     }
 }

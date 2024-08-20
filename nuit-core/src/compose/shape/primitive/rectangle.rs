@@ -1,18 +1,16 @@
-use crate::ShapeNode;
-
-use super::Shape;
+use crate::{Shape, ShapeNode};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub struct Circle;
+pub struct Rectangle;
 
-impl Circle {
+impl Rectangle {
     pub fn new() -> Self {
         Self
     }
 }
 
-impl Shape for Circle {
+impl Shape for Rectangle {
     fn render(&self) -> ShapeNode {
-        ShapeNode::Circle {}
+        ShapeNode::Rectangle {}
     }
 }

@@ -1,18 +1,16 @@
-use crate::ShapeNode;
-
-use super::Shape;
+use crate::{Shape, ShapeNode};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub struct Capsule;
+pub struct Circle;
 
-impl Capsule {
+impl Circle {
     pub fn new() -> Self {
         Self
     }
 }
 
-impl Shape for Capsule {
+impl Shape for Circle {
     fn render(&self) -> ShapeNode {
-        ShapeNode::Capsule {}
+        ShapeNode::Circle {}
     }
 }
