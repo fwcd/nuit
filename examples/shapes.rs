@@ -1,6 +1,6 @@
 #![feature(type_alias_impl_trait, impl_trait_in_assoc_type)]
 
-use nuit::{Bind, Capsule, Circle, Color, Ellipse, Rectangle, RoundedRectangle, VStack, View, ViewExt};
+use nuit::{Bind, Capsule, Circle, Color, Ellipse, Rectangle, RoundedRectangle, ShapeExt, VStack, View, ViewExt};
 
 #[derive(Bind)]
 struct ShapesView;
@@ -15,7 +15,8 @@ impl View for ShapesView {
                 Circle::new(),
                 Ellipse::new(),
                 Rectangle::new(),
-                RoundedRectangle::with_corner_radius(15.0).fill(Color::RED),
+                RoundedRectangle::with_corner_radius(15.0)
+                    .fill(Color::RED),
             )
             .frame((100, 50))
         )

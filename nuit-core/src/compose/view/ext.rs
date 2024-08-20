@@ -5,10 +5,6 @@ pub trait ViewExt: Sized {
         Modified::new(self, modifier)
     }
 
-    fn fill(self, style: impl Into<Style>) -> Modified<Self> {
-        self.modifier(ModifierNode::Fill { style: style.into() })
-    }
-
     fn padding(self, insets: impl Into<Insets>) -> Modified<Self> {
         self.modifier(ModifierNode::Padding { insets: insets.into() })
     }
