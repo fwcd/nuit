@@ -4,6 +4,13 @@
 
 A declarative, cross-platform UI library for Rust that uses native controls.
 
+| Crate | Description | Version | Docs |
+| - | - | - | - |
+| [nuit](./nuit) | Umbrella crate for the library | [![crates.io](https://img.shields.io/crates/v/nuit)](https://crates.io/crates/nuit) | [![docs.rs](https://img.shields.io/docsrs/nuit)](https://docs.rs/nuit) |
+| [nuit-bridge-swiftui](./nuit-bridge-swiftui) | SwiftUI bindings (macOS, iOS) | [![crates.io](https://img.shields.io/crates/v/nuit-bridge-swiftui)](https://crates.io/crates/nuit-bridge-swiftui) | [![docs.rs](https://img.shields.io/docsrs/nuit-bridge-swiftui)](https://docs.rs/nuit-bridge-swiftui) |
+| [nuit-core](./nuit-core) | Core structures and traits | [![crates.io](https://img.shields.io/crates/v/nuit-core)](https://crates.io/crates/nuit-core) | [![docs.rs](https://img.shields.io/docsrs/nuit-core)](https://docs.rs/nuit-core) |
+| [nuit-derive](./nuit-derive) | Derive macros | [![crates.io](https://img.shields.io/crates/v/nuit-derive)](https://crates.io/crates/nuit-derive) | [![docs.rs](https://img.shields.io/docsrs/nuit-derive)](https://docs.rs/nuit-derive) |
+
 Nuit's API takes inspiration from SwiftUI, Xilem, React and a number of other frameworks, while itself using SwiftUI under the hood on macOS.
 
 > [!NOTE]
