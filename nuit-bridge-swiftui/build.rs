@@ -47,7 +47,7 @@ fn target_os() -> String {
 fn target_os_version() -> String {
     let os = env::var("CARGO_CFG_TARGET_OS").unwrap();
     match os.as_str() {
-        "macos" => "13".to_owned(),
+        "macos" => "14".to_owned(),
         "ios" => "17.0".to_owned(),
         _ => os,
     }
