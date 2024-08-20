@@ -2,7 +2,6 @@
     associated_type_defaults,
     let_chains,
     macro_metavar_expr,
-    never_type,
 )]
 
 mod bind;

@@ -13,8 +13,6 @@ macro_rules! impl_tuple_bind {
     };
 }
 
-impl Bind for ! {}
-
 impl_tuple_bind!();
 impl_tuple_bind!(T1);
 impl_tuple_bind!(T1, T2);

@@ -2,7 +2,7 @@ use crate::{Node, Bind, Context, Event, IdPath, Id, IdentifyExt};
 
 /// The primary view trait. Represents a lightweight UI component.
 pub trait View: Bind {
-    type Body: View = !;
+    type Body: View = NeverView;
 
     fn body(&self) -> Self::Body {
         panic!("View does not have a body!")
@@ -43,7 +43,10 @@ macro_rules! impl_tuple_view {
     };
 }
 
-impl View for ! {}
+pub enum NeverView {}
+
+impl Bind for NeverView {}
+impl View for NeverView {}
 
 // Note: We explicitly implement the 0 (unit) and 1 tuples to avoid e.g. the
 // overhead of using a Group requiring a Vec.

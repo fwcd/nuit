@@ -11,7 +11,6 @@ Nuit's API takes inspiration from SwiftUI, Xilem, React and a number of other fr
 >
 > - [impl Trait in type aliases](https://github.com/rust-lang/rust/issues/63063)
 > - [associated type defaults](https://github.com/rust-lang/rust/issues/29661)
-> - [never type `!`](https://github.com/rust-lang/rust/issues/35121)
 > - [macro metavariable expressions](https://github.com/rust-lang/rust/issues/83527)
 > - [`let` chains](https://github.com/rust-lang/rust/issues/53667)
 >
