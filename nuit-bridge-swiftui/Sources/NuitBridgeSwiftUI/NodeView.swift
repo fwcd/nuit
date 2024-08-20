@@ -11,10 +11,6 @@ struct NodeView: View {
         case .empty:
             EmptyView()
         
-        // MARK: Shape
-        case let .shape(shape: shape):
-            ShapeNodeView(shape: shape)
-
         // MARK: Widget
         case let .text(content: content):
             Text(content)
@@ -65,7 +61,9 @@ struct NodeView: View {
                 NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
             }
 
-        // MARK: Modifier
+        // MARK: Wrapper
+        case let .shape(shape: shape):
+            ShapeNodeView(shape: shape)
         case let .modified(wrapped: wrapped, modifier: modifier):
             NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
                 .modifier(ModifierNodeViewModifier(modifier: modifier))

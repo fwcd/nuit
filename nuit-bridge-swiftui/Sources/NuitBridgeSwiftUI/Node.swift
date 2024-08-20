@@ -1,9 +1,6 @@
 indirect enum Node: Codable, Hashable {
     case empty
 
-    // MARK: Shape
-    case shape(shape: ShapeNode)
-
     // MARK: Widget
     case text(content: String)
     case textField(content: String)
@@ -20,6 +17,7 @@ indirect enum Node: Codable, Hashable {
     case zStack(wrapped: Identified<Node>)
     case list(wrapped: Identified<Node>)
 
-    // MARK: Modifier
+    // MARK: Wrapper
+    case shape(shape: ShapeNode)
     case modified(wrapped: Identified<Node>, modifier: ModifierNode)
 }

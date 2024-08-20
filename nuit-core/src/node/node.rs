@@ -10,9 +10,6 @@ use super::{ModifierNode, ShapeNode};
 pub enum Node {
     Empty {}, // Intentionally not a unit variant for uniform serialization
 
-    // Shape
-    Shape { shape: ShapeNode },
-
     // Widget
     Text { content: String },
     TextField { content: String },
@@ -29,6 +26,7 @@ pub enum Node {
     ZStack { wrapped: Box<Identified<Node>> },
     List { wrapped: Box<Identified<Node>> },
 
-    // Modifier
+    // Wrapper
+    Shape { shape: ShapeNode },
     Modified { wrapped: Box<Identified<Node>>, modifier: ModifierNode, }
 }
