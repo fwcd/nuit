@@ -63,7 +63,7 @@ struct NodeView: View {
 
         // MARK: Wrapper
         case let .shape(shape: shape):
-            AnyShape(shape)
+            ShapeNodeView(shape: shape)
         case let .modified(wrapped: wrapped, modifier: modifier):
             NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
                 .modifier(ModifierNodeViewModifier(modifier: modifier))
