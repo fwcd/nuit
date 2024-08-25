@@ -30,3 +30,9 @@ pub enum Node {
     Shape { shape: ShapeNode },
     Modified { wrapped: Box<Identified<Node>>, modifier: ModifierNode, }
 }
+
+impl Default for Node {
+    fn default() -> Self {
+        Node::Empty {}
+    }
+}

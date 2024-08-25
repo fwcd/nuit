@@ -1,3 +1,5 @@
+mod node_widget;
+
 use adw::{gtk::{Box, ListBox, Orientation, SelectionMode}, prelude::*, ActionRow, Application, ApplicationWindow, HeaderBar};
 use nuit_core::{Root, View};
 
