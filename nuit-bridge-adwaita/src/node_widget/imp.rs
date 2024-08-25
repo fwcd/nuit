@@ -1,7 +1,7 @@
-use std::cell::Cell;
+use std::cell::{Cell, RefCell};
 
 use adw::{glib, gtk, subclass::prelude::*};
-use nuit_core::Node;
+use nuit_core::{IdPathBuf, Node};
 
 // See https://gtk-rs.org/gtk4-rs/stable/latest/book/g_object_subclassing.html
 
@@ -9,6 +9,7 @@ use nuit_core::Node;
 #[derive(Default)]
 pub struct NodeWidget {
     pub node: Cell<Node>,
+    pub id_path: RefCell<IdPathBuf>,
 }
 
 #[glib::object_subclass]
