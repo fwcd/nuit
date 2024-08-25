@@ -2,7 +2,7 @@ mod imp;
 
 use std::rc::Rc;
 
-use adw::{glib::{self, Object}, gtk::{self, cairo::ffi::FILL_RULE_EVEN_ODD, Align, Button, Label, Orientation, Text}, prelude::{BoxExt, ButtonExt, EditableExt, WidgetExt}, subclass::prelude::*};
+use adw::{glib::{self, Object}, gtk::{self, Align, Button, Label, Orientation, Text}, prelude::{BoxExt, ButtonExt, EditableExt, WidgetExt}, subclass::prelude::*};
 use nuit_core::{clone, Event, Id, IdPath, IdPathBuf, Identified, Node};
 
 // See https://gtk-rs.org/gtk4-rs/stable/latest/book/g_object_subclassing.html
