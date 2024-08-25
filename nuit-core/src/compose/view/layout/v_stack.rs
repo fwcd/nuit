@@ -15,9 +15,9 @@ impl<T> VStack<T> {
         }
     }
 
-    pub fn with_spacing(spacing: f64, wrapped: T) -> Self {
+    pub fn with_spacing(spacing: impl Into<f64>, wrapped: T) -> Self {
         Self {
-            spacing,
+            spacing: spacing.into(),
             wrapped,
         }
     }
