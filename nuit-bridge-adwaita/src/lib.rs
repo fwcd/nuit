@@ -1,27 +1,29 @@
+#![feature(reentrant_lock)]
+
 mod node_widget;
 
-use std::sync::{Arc, Mutex};
+use std::sync::{Arc, ReentrantLock};
 
 use adw::{gtk::{Box, Orientation}, prelude::*, Application, ApplicationWindow, HeaderBar};
 use node_widget::NodeWidget;
 use nuit_core::{clone, Root, View};
 
 pub fn run_app<T>(root: Root<T>) where T: View + 'static {
-    let root = Arc::new(Mutex::new(root));
+    let root = Arc::new(ReentrantLock::new(root));
     let app = Application::builder()
         .application_id("com.example.NuitApp")
         .build();
 
     app.connect_activate(move |app| {
-        let node = Root::render(&mut root.lock().unwrap());
+        let node = Root::render(&root.lock());
         let node_widget = NodeWidget::root(node, clone!(root => move |id_path, event| {
             // DEBUG
             println!("Firing {:?} at {:?}", event, id_path);
-            root.lock().unwrap().fire_event(id_path, event);
+            root.lock().fire_event(id_path, event);
         }));
 
-        root.lock().unwrap().set_update_callback(clone!(root, node_widget => move || {
-            node_widget.update(Root::render(&mut root.lock().unwrap()));
+        root.lock().set_update_callback(clone!(root, node_widget => move || {
+            node_widget.update(Root::render(&mut root.lock()));
         }));
 
         let content = Box::new(Orientation::Vertical, 0);
