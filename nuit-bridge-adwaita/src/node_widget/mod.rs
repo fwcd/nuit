@@ -1,7 +1,9 @@
 mod imp;
 
+use std::rc::Rc;
+
 use adw::{glib::{self, Object}, gtk::{self, Align, Button, Label, Orientation, Text}, prelude::{BoxExt, ButtonExt, WidgetExt}, subclass::prelude::*};
-use nuit_core::{IdPath, Node};
+use nuit_core::{Event, IdPath, IdPathBuf, Node};
 
 // See https://gtk-rs.org/gtk4-rs/stable/latest/book/g_object_subclassing.html
 
@@ -13,26 +15,39 @@ glib::wrapper! {
 }
 
 impl NodeWidget {
-    pub fn new(id_path: &IdPath) -> Self {
+    fn new(
+        node: Node,
+        id_path: IdPathBuf,
+        fire_event: Option<Rc<Box<dyn Fn(&IdPath, Event)>>>,
+    ) -> Self {
         let widget: Self = Object::builder().build();
+
+        let imp = imp::NodeWidget::from_obj(&widget);
+        imp.id_path.replace(id_path);
+        imp.fire_event.replace(fire_event);
 
         widget.set_halign(Align::Center);
         widget.set_valign(Align::Center);
         widget.set_vexpand(true);
 
-        let imp = imp::NodeWidget::from_obj(&widget);
-        imp.id_path.replace(id_path.to_owned());
-
-        widget
-    }
-
-    pub fn from_node(node: Node, id_path: &IdPath) -> Self {
-        let widget = Self::new(id_path);
         widget.update(node);
+
         widget
     }
 
-    pub fn update(&self, node: Node) {
+    pub fn root(node: Node, fire_event: impl Fn(&IdPath, Event) + 'static) -> Self {
+        Self::new(node, IdPathBuf::root(), Some(Rc::new(Box::new(fire_event))))
+    }
+
+    fn child(&self, node: Node, child_path: &IdPath) -> Self {
+        let imp = imp::NodeWidget::from_obj(self);
+        let id_path = imp.id_path.borrow().join(child_path);
+        let fire_event = imp.fire_event.borrow().clone();
+
+        Self::new(node, id_path, fire_event)
+    }
+
+    fn update(&self, node: Node) {
         // TODO: Diff node
 
         let imp = imp::NodeWidget::from_obj(&self);
@@ -54,21 +69,21 @@ impl NodeWidget {
                 let button = Button::new();
                 match label.value() {
                     Node::Text { content } => button.set_label(content),
-                    _ => button.set_child(Some(&NodeWidget::from_node(label.value().clone(), &id_path.child(label.id().clone())))),
+                    _ => button.set_child(Some(&self.child(label.value().clone(), &id_path.child(label.id().clone())))),
                 }
                 self.append(&button);
             },
             Node::HStack { wrapped } => {
                 let gtk_box = gtk::Box::new(Orientation::Horizontal, DEFAULT_SPACING);
                 for (child_path, child) in wrapped.value().children() {
-                    gtk_box.append(&NodeWidget::from_node(child.clone(), &id_path.join(&child_path)))
+                    gtk_box.append(&self.child(child.clone(), &id_path.join(&child_path)))
                 }
                 self.append(&gtk_box);
             },
             Node::VStack { wrapped } => {
                 let gtk_box = gtk::Box::new(Orientation::Vertical, DEFAULT_SPACING);
                 for (child_path, child) in wrapped.value().children() {
-                    gtk_box.append(&NodeWidget::from_node(child.clone(), &id_path.join(&child_path)))
+                    gtk_box.append(&self.child(child.clone(), &id_path.join(&child_path)))
                 }
                 self.append(&gtk_box);
             },
