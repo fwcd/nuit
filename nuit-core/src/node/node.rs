@@ -36,12 +36,12 @@ impl Node {
         self.children_from(IdPath::root())
     }
 
-    fn children_from(&self, path: &IdPath) -> Vec<(IdPathBuf, &Node)> {
+    pub fn children_from(&self, path: &IdPath) -> Vec<(IdPathBuf, &Node)> {
         match self {
             Self::Group { children } => children.iter()
                 .flat_map(|c| c.value().children_from(&path.child(c.id().clone())).into_iter())
                 .collect(),
-            _ => vec![(IdPathBuf::root(), self)]
+            _ => vec![(path.to_owned(), self)]
         }
     }
 }

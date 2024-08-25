@@ -10,7 +10,7 @@ use nuit_core::{Event, IdPath, IdPathBuf, Node};
 pub struct NodeWidget {
     pub node: Cell<Node>,
     pub id_path: RefCell<IdPathBuf>,
-    pub fire_event: RefCell<Option<Rc<Box<dyn Fn(&IdPath, Event)>>>>,
+    pub fire_event: RefCell<Option<Rc<Box<dyn Fn(&IdPath, &Event)>>>>,
 }
 
 #[glib::object_subclass]

@@ -18,7 +18,7 @@ impl NodeWidget {
     fn new(
         node: Node,
         id_path: IdPathBuf,
-        fire_event: Option<Rc<Box<dyn Fn(&IdPath, Event)>>>,
+        fire_event: Option<Rc<Box<dyn Fn(&IdPath, &Event)>>>,
     ) -> Self {
         let widget: Self = Object::builder().build();
 
@@ -35,7 +35,7 @@ impl NodeWidget {
         widget
     }
 
-    pub fn root(node: Node, fire_event: impl Fn(&IdPath, Event) + 'static) -> Self {
+    pub fn root(node: Node, fire_event: impl Fn(&IdPath, &Event) + 'static) -> Self {
         Self::new(node, IdPathBuf::root(), Some(Rc::new(Box::new(fire_event))))
     }
 
@@ -47,11 +47,14 @@ impl NodeWidget {
         Self::new(node, id_path, fire_event)
     }
 
-    fn update(&self, node: Node) {
+    pub fn update(&self, node: Node) {
         // TODO: Diff node
 
         let imp = imp::NodeWidget::from_obj(&self);
         imp.node.replace(node.clone());
+
+        let id_path = imp.id_path.borrow();
+        let fire_event = imp.fire_event.borrow();
 
         match &node {
             Node::Empty {} => {},
@@ -69,18 +72,26 @@ impl NodeWidget {
                     Node::Text { content } => button.set_label(content),
                     _ => button.set_child(Some(&self.child(label.value().clone(), &IdPathBuf::from(label.id().clone())))),
                 }
+                if let Some(ref fire_event) = *fire_event {
+                    let fire_event = fire_event.clone();
+                    let id_path = id_path.clone();
+                    button.connect_clicked(move |_| {
+                        fire_event(&id_path, &Event::Click {});
+                    });
+                }
                 self.append(&button);
             },
             Node::HStack { wrapped } => {
                 let gtk_box = gtk::Box::new(Orientation::Horizontal, DEFAULT_SPACING);
-                for (child_path, child) in wrapped.value().children() {
+                for (child_path, child) in wrapped.value().children_from(&IdPathBuf::from(wrapped.id().clone())) {
                     gtk_box.append(&self.child(child.clone(), &child_path))
                 }
                 self.append(&gtk_box);
             },
             Node::VStack { wrapped } => {
                 let gtk_box = gtk::Box::new(Orientation::Vertical, DEFAULT_SPACING);
-                for (child_path, child) in wrapped.value().children() {
+                for (child_path, child) in wrapped.value().children_from(&IdPathBuf::from(wrapped.id().clone())) {
+                    println!("{:?}", child_path);
                     gtk_box.append(&self.child(child.clone(), &child_path))
                 }
                 self.append(&gtk_box);

@@ -4,7 +4,7 @@ use std::sync::{Arc, Mutex};
 
 use adw::{gtk::{Box, Orientation}, prelude::*, Application, ApplicationWindow, HeaderBar};
 use node_widget::NodeWidget;
-use nuit_core::{Root, View};
+use nuit_core::{clone, Root, View};
 
 pub fn run_app<T>(root: Root<T>) where T: View + 'static {
     let root = Arc::new(Mutex::new(root));
@@ -14,9 +14,15 @@ pub fn run_app<T>(root: Root<T>) where T: View + 'static {
 
     app.connect_activate(move |app| {
         let node = Root::render(&mut root.lock().unwrap());
-        let node_widget = NodeWidget::root(node, |id_path, event| {
-            // TODO: Handle event
-        });
+        let node_widget = NodeWidget::root(node, clone!(root => move |id_path, event| {
+            // DEBUG
+            println!("Firing {:?} at {:?}", event, id_path);
+            root.lock().unwrap().fire_event(id_path, event);
+        }));
+
+        root.lock().unwrap().set_update_callback(clone!(root, node_widget => move || {
+            node_widget.update(Root::render(&mut root.lock().unwrap()));
+        }));
 
         let content = Box::new(Orientation::Vertical, 0);
         content.append(&HeaderBar::new());
