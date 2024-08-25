@@ -34,6 +34,10 @@ impl IdPath {
     pub fn child(&self, id: impl Into<Id>) -> IdPathBuf {
         self.to_owned().child(id)
     }
+
+    pub fn descendant(&self, path: &IdPath) -> IdPathBuf {
+        self.to_owned().descendant(path)
+    }
 }
 
 impl IdPathBuf {
@@ -44,6 +48,12 @@ impl IdPathBuf {
     pub fn child(&self, id: impl Into<Id>) -> Self {
         let mut components = self.0.clone();
         components.push(id.into());
+        Self(components)
+    }
+
+    pub fn descendant(&self, path: &IdPath) -> Self {
+        let mut components = self.0.clone();
+        components.extend(path.0.into_iter().cloned());
         Self(components)
     }
 }
