@@ -1,6 +1,6 @@
 mod imp;
 
-use adw::{glib::{self, Object}, gtk::{self, Button, Label, Orientation, Text}, prelude::BoxExt, subclass::prelude::*};
+use adw::{glib::{self, Object}, gtk::{self, Align, Button, Label, Orientation, Text}, prelude::{BoxExt, WidgetExt}, subclass::prelude::*};
 use nuit_core::Node;
 
 // See https://gtk-rs.org/gtk4-rs/stable/latest/book/g_object_subclassing.html
@@ -14,7 +14,11 @@ glib::wrapper! {
 
 impl NodeWidget {
     pub fn new() -> Self {
-        Object::builder().build()
+        let widget: Self = Object::builder().build();
+        widget.set_halign(Align::Center);
+        widget.set_valign(Align::Center);
+        widget.set_vexpand(true);
+        widget
     }
 
     pub fn update(&self, node: Node) {
