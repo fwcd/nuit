@@ -1,6 +1,6 @@
 use serde::{Serialize, Deserialize};
 
-use crate::{Id, Identified};
+use crate::{Id, IdPath, IdPathBuf, Identified};
 
 use super::{ModifierNode, ShapeNode};
 
@@ -29,6 +29,21 @@ pub enum Node {
     // Wrapper
     Shape { shape: ShapeNode },
     Modified { wrapped: Box<Identified<Node>>, modifier: ModifierNode, }
+}
+
+impl Node {
+    pub fn children(&self) -> Vec<(IdPathBuf, &Node)> {
+        self.children_from(IdPath::root())
+    }
+
+    fn children_from(&self, path: &IdPath) -> Vec<(IdPathBuf, &Node)> {
+        match self {
+            Self::Group { children } => children.iter()
+                .flat_map(|c| c.value().children_from(&path.child(c.id().clone())).into_iter())
+                .collect(),
+            _ => vec![(IdPathBuf::root(), self)]
+        }
+    }
 }
 
 impl Default for Node {
