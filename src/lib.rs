@@ -12,7 +12,7 @@ impl Default for Backend {
         #[cfg(target_vendor = "apple")]
         return Backend::SwiftUI;
         #[cfg(not(target_vendor = "apple"))]
-        return Backend::Relm;
+        return Backend::Adwaita;
     }
 }
 
@@ -31,7 +31,7 @@ pub fn run_app<T>(config: impl Into<Config<T>>) where T: View {
             #[cfg(not(target_vendor = "apple"))]
             panic!("SwiftUI is not supported outside of Apple platforms!")
         }
-        Backend::Relm => {
+        Backend::Adwaita => {
             panic!("Relm is not supported (yet)")
         }
     }

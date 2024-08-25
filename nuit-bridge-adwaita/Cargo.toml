@@ -1,0 +1,10 @@
+[package]
+name = "nuit-bridge-adwaita"
+description = "Adwaita bindings for Nuit"
+version.workspace = true
+edition.workspace = true
+homepage.workspace = true
+license.workspace = true
+
+[dependencies]
+nuit-core.workspace = true
