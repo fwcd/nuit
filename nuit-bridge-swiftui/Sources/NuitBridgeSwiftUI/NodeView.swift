@@ -44,12 +44,12 @@ struct NodeView: View {
             }
 
         // MARK: Layout
-        case let .vStack(wrapped: wrapped):
-            VStack {
+        case let .vStack(spacing: spacing, wrapped: wrapped):
+            VStack(spacing: spacing) {
                 NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
             }
-        case let .hStack(wrapped: wrapped):
-            HStack {
+        case let .hStack(spacing: spacing, wrapped: wrapped):
+            HStack(spacing: spacing) {
                 NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
             }
         case let .zStack(wrapped: wrapped):

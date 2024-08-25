@@ -7,8 +7,6 @@ use nuit_core::{Event, IdPath, IdPathBuf, Node};
 
 // See https://gtk-rs.org/gtk4-rs/stable/latest/book/g_object_subclassing.html
 
-const DEFAULT_SPACING: i32 = 10;
-
 glib::wrapper! {
     pub struct NodeWidget(ObjectSubclass<imp::NodeWidget>)
         @extends gtk::Box, gtk::Widget;
@@ -85,15 +83,15 @@ impl NodeWidget {
                 }
                 self.append(&button);
             },
-            Node::HStack { wrapped } => {
-                let gtk_box = gtk::Box::new(Orientation::Horizontal, DEFAULT_SPACING);
+            Node::HStack { spacing, wrapped } => {
+                let gtk_box = gtk::Box::new(Orientation::Horizontal, *spacing as i32);
                 for (child_path, child) in wrapped.value().children_from(&IdPathBuf::from(wrapped.id().clone())) {
                     gtk_box.append(&self.child(child.clone(), &child_path))
                 }
                 self.append(&gtk_box);
             },
-            Node::VStack { wrapped } => {
-                let gtk_box = gtk::Box::new(Orientation::Vertical, DEFAULT_SPACING);
+            Node::VStack { spacing, wrapped } => {
+                let gtk_box = gtk::Box::new(Orientation::Vertical, *spacing as i32);
                 for (child_path, child) in wrapped.value().children_from(&IdPathBuf::from(wrapped.id().clone())) {
                     gtk_box.append(&self.child(child.clone(), &child_path))
                 }

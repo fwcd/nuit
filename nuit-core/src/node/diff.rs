@@ -65,9 +65,14 @@ impl NodeDiff {
                 self.traverse_identified(id_path, c1, c2);
             },
             (Node::Button { label: l1 }, Node::Button { label: l2 }) => self.traverse_identified(id_path, l1, l2),
+            (Node::VStack { spacing: s1, wrapped: w1 }, Node::VStack { spacing: s2, wrapped: w2 }) |
+            (Node::HStack { spacing: s1, wrapped: w1 }, Node::HStack { spacing: s2, wrapped: w2 }) => {
+                if s1 != s2 {
+                    self.changed.push(id_path.to_owned());
+                }
+                self.traverse_identified(id_path, w1, w2);
+            },
             (Node::Child { wrapped: w1 }, Node::Child { wrapped: w2 }) |
-            (Node::VStack { wrapped: w1 }, Node::VStack { wrapped: w2 }) |
-            (Node::HStack { wrapped: w1 }, Node::HStack { wrapped: w2 }) |
             (Node::ZStack { wrapped: w1 }, Node::ZStack { wrapped: w2 }) |
             (Node::List { wrapped: w1 }, Node::List { wrapped: w2 }) => self.traverse_identified(id_path, w1, w2),
             (Node::Modified { wrapped: w1, modifier: m1 }, Node::Modified { wrapped: w2, modifier: m2 }) => {

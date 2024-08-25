@@ -21,8 +21,8 @@ pub enum Node {
     Group { children: Vec<Identified<Node>> },
 
     // Layout
-    VStack { wrapped: Box<Identified<Node>> },
-    HStack { wrapped: Box<Identified<Node>> },
+    VStack { spacing: f64, wrapped: Box<Identified<Node>> },
+    HStack { spacing: f64, wrapped: Box<Identified<Node>> },
     ZStack { wrapped: Box<Identified<Node>> },
     List { wrapped: Box<Identified<Node>> },
 

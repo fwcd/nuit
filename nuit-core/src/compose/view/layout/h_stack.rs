@@ -1,15 +1,24 @@
-use crate::{View, Node, Bind, Context, Event, IdPath, Id, IdentifyExt};
+use crate::{Bind, Context, Event, Id, IdPath, IdentifyExt, Node, View, DEFAULT_SPACING};
 
 /// A view that lays out its children horizontally.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct HStack<T> {
+    spacing: f64,
     wrapped: T,
 }
 
 impl<T> HStack<T> {
     pub fn new(wrapped: T) -> Self {
         Self {
-            wrapped
+            spacing: DEFAULT_SPACING,
+            wrapped,
+        }
+    }
+
+    pub fn with_spacing(spacing: f64, wrapped: T) -> Self {
+        Self {
+            spacing,
+            wrapped,
         }
     }
 }
@@ -27,6 +36,9 @@ impl<T> View for HStack<T> where T: View {
     }
 
     fn render(&self, context: &Context) -> Node {
-        Node::HStack { wrapped: Box::new(self.wrapped.render(&context.child(0)).identify(0)) }
+        Node::HStack {
+            spacing: self.spacing,
+            wrapped: Box::new(self.wrapped.render(&context.child(0)).identify(0)),
+        }
     }
 }
