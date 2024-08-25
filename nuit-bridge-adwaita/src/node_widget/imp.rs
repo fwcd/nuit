@@ -8,7 +8,14 @@ use nuit_core::Node;
 // Object holding the state
 #[derive(Default)]
 pub struct NodeWidget {
-    pub node: Cell<Node>,
+    node: Cell<Node>,
+}
+
+impl NodeWidget {
+    pub fn update(&self, node: Node) {
+        self.node.replace(node);
+        // TODO: Update widget
+    }
 }
 
 #[glib::object_subclass]

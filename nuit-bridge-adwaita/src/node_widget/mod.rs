@@ -20,7 +20,7 @@ impl From<Node> for NodeWidget {
     fn from(node: Node) -> Self {
         let obj = Self::new();
         let imp = imp::NodeWidget::from_obj(&obj);
-        imp.node.replace(node);
+        imp.update(node);
         obj
     }
 }
