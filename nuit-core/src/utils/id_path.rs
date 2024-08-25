@@ -35,8 +35,8 @@ impl IdPath {
         self.to_owned().child(id)
     }
 
-    pub fn descendant(&self, path: &IdPath) -> IdPathBuf {
-        self.to_owned().descendant(path)
+    pub fn join(&self, path: &IdPath) -> IdPathBuf {
+        self.to_owned().join(path)
     }
 }
 
@@ -51,7 +51,7 @@ impl IdPathBuf {
         Self(components)
     }
 
-    pub fn descendant(&self, path: &IdPath) -> Self {
+    pub fn join(&self, path: &IdPath) -> Self {
         let mut components = self.0.clone();
         components.extend(path.0.into_iter().cloned());
         Self(components)

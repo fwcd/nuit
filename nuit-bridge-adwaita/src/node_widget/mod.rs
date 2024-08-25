@@ -60,14 +60,14 @@ impl NodeWidget {
             Node::HStack { wrapped } => {
                 let gtk_box = gtk::Box::new(Orientation::Horizontal, DEFAULT_SPACING);
                 for (child_path, child) in wrapped.value().children() {
-                    gtk_box.append(&NodeWidget::from_node(child.clone(), &id_path.descendant(&child_path)))
+                    gtk_box.append(&NodeWidget::from_node(child.clone(), &id_path.join(&child_path)))
                 }
                 self.append(&gtk_box);
             },
             Node::VStack { wrapped } => {
                 let gtk_box = gtk::Box::new(Orientation::Vertical, DEFAULT_SPACING);
                 for (child_path, child) in wrapped.value().children() {
-                    gtk_box.append(&NodeWidget::from_node(child.clone(), &id_path.descendant(&child_path)))
+                    gtk_box.append(&NodeWidget::from_node(child.clone(), &id_path.join(&child_path)))
                 }
                 self.append(&gtk_box);
             },
