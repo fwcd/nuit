@@ -18,6 +18,9 @@ jobs:
       - name: Publish nuit-core
         run: cargo publish --token ${{ secrets.CRATES_IO_TOKEN }}
         working-directory: nuit-core
+      - name: Publish nuit-bridge-adwaita
+        run: cargo publish --token ${{ secrets.CRATES_IO_TOKEN }}
+        working-directory: nuit-bridge-adwaita
       - name: Publish nuit-bridge-swiftui
         run: cargo publish --token ${{ secrets.CRATES_IO_TOKEN }}
         working-directory: nuit-bridge-swiftui
