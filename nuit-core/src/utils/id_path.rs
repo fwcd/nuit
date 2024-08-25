@@ -56,6 +56,12 @@ impl ToOwned for IdPath {
     }
 }
 
+impl Default for IdPathBuf {
+    fn default() -> Self {
+        Self::root()
+    }
+}
+
 impl Deref for IdPathBuf {
     type Target = IdPath;
 
