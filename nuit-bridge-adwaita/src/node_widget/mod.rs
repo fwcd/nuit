@@ -2,8 +2,8 @@ mod imp;
 
 use std::rc::Rc;
 
-use adw::{glib::{self, Object}, gtk::{self, Align, Button, Label, Orientation, Text}, prelude::{BoxExt, ButtonExt, WidgetExt}, subclass::prelude::*};
-use nuit_core::{Event, Id, IdPath, IdPathBuf, Identified, Node};
+use adw::{glib::{self, Object}, gtk::{self, cairo::ffi::FILL_RULE_EVEN_ODD, Align, Button, Label, Orientation, Text}, prelude::{BoxExt, ButtonExt, EditableExt, WidgetExt}, subclass::prelude::*};
+use nuit_core::{clone, Event, Id, IdPath, IdPathBuf, Identified, Node};
 
 // See https://gtk-rs.org/gtk4-rs/stable/latest/book/g_object_subclassing.html
 
@@ -78,6 +78,11 @@ impl NodeWidget {
             },
             Node::TextField { content } => {
                 let text = Text::builder().text(content).build();
+                if let Some(ref fire_event) = *fire_event {
+                    text.connect_changed(clone!(fire_event, id_path => move |text| {
+                        fire_event(&id_path, &Event::UpdateText { content: text.text().into() });
+                    }));
+                }
                 self.append(&text);
             },
             Node::Button { label } => {
@@ -87,11 +92,9 @@ impl NodeWidget {
                     _ => button.set_child(Some(&self.child_from_identified(&label))),
                 }
                 if let Some(ref fire_event) = *fire_event {
-                    let fire_event = fire_event.clone();
-                    let id_path = id_path.clone();
-                    button.connect_clicked(move |_| {
+                    button.connect_clicked(clone!(fire_event, id_path => move |_button| {
                         fire_event(&id_path, &Event::Click {});
-                    });
+                    }));
                 }
                 self.append(&button);
             },
