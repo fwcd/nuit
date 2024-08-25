@@ -48,13 +48,17 @@ impl NodeWidget {
     }
 
     pub fn update(&self, node: Node) {
-        // TODO: Diff node
-
         let imp = imp::NodeWidget::from_obj(&self);
         imp.node.replace(node.clone());
 
         let id_path = imp.id_path.borrow();
         let fire_event = imp.fire_event.borrow();
+
+        // TODO: Diff nodes instead of replacing the entire tree
+
+        while let Some(child) = self.first_child() {
+            self.remove(&child);
+        }
 
         match &node {
             Node::Empty {} => {},
