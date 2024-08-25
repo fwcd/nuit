@@ -1,3 +1,5 @@
+use std::env;
+
 use nuit_core::View;
 
 use crate::Backend;
@@ -39,7 +41,7 @@ impl<T> From<T> for ConfigBuilder<T> {
     fn from(view: T) -> Self {
         Self {
             view,
-            preferred_backend: None,
+            preferred_backend: env::var("NUIT_BACKEND").ok().map(|v| v.parse().unwrap()),
         }
     }
 }
