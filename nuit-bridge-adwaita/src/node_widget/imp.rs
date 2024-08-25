@@ -8,23 +8,18 @@ use nuit_core::Node;
 // Object holding the state
 #[derive(Default)]
 pub struct NodeWidget {
-    node: Cell<Node>,
-}
-
-impl NodeWidget {
-    pub fn update(&self, node: Node) {
-        self.node.replace(node);
-        // TODO: Update widget
-    }
+    pub node: Cell<Node>,
 }
 
 #[glib::object_subclass]
 impl ObjectSubclass for NodeWidget {
     const NAME: &'static str = "NuitNodeWidget";
     type Type = super::NodeWidget;
-    type ParentType = gtk::Widget;
+    type ParentType = gtk::Box;
 }
 
 impl ObjectImpl for NodeWidget {}
 
 impl WidgetImpl for NodeWidget {}
+
+impl BoxImpl for NodeWidget {}
