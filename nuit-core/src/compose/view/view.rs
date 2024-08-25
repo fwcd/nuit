@@ -14,7 +14,7 @@ pub trait View: Bind {
         self.body().fire(event, id_path);
     }
 
-    fn render(&mut self, context: &Context) -> Node {
+    fn render(&self, context: &Context) -> Node {
         self.bind(context);
         self.body().render(context)
     }
@@ -32,7 +32,7 @@ macro_rules! impl_tuple_view {
                 }
             }
 
-            fn render(&mut self, context: &Context) -> Node {
+            fn render(&self, context: &Context) -> Node {
                 Node::Group {
                     children: vec![
                         $(${ignore($tvs)} self.${index()}.render(&context.child(${index()})).identify(${index()}),)*
@@ -55,7 +55,7 @@ impl View for NeverView {}
 impl View for () {
     fn fire(&self, _event: &Event, _id_path: &IdPath) {}
 
-    fn render(&mut self, _context: &Context) -> Node {
+    fn render(&self, _context: &Context) -> Node {
         Node::Empty {}
     }
 }
@@ -76,7 +76,7 @@ impl<T> View for (T,) where T: View {
         }
     }
 
-    fn render(&mut self, context: &Context) -> Node {
+    fn render(&self, context: &Context) -> Node {
         Node::Child { wrapped: Box::new(self.0.render(&context.child(0)).identify(0)) }
     }
 }

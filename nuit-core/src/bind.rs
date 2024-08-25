@@ -2,7 +2,7 @@ use crate::Context;
 
 /// Binds a storage to the view's state.
 pub trait Bind {
-    fn bind(&mut self, _context: &Context) {
+    fn bind(&self, _context: &Context) {
         // Bind nothing by default
     }
 }

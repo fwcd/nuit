@@ -26,7 +26,7 @@ impl<T> View for HStack<T> where T: View {
         }
     }
 
-    fn render(&mut self, context: &Context) -> Node {
+    fn render(&self, context: &Context) -> Node {
         Node::HStack { wrapped: Box::new(self.wrapped.render(&context.child(0)).identify(0)) }
     }
 }

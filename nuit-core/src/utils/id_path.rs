@@ -15,6 +15,10 @@ pub struct IdPath([Id]);
 pub struct IdPathBuf(Vec<Id>);
 
 impl IdPath {
+    pub fn root() -> &'static Self {
+        Self::ref_cast(&[])
+    }
+
     pub fn is_root(&self) -> bool {
         self.0.is_empty()
     }
@@ -30,6 +34,10 @@ impl IdPath {
     pub fn child(&self, id: impl Into<Id>) -> IdPathBuf {
         self.to_owned().child(id)
     }
+
+    pub fn join(&self, path: &IdPath) -> IdPathBuf {
+        self.to_owned().join(path)
+    }
 }
 
 impl IdPathBuf {
@@ -42,6 +50,12 @@ impl IdPathBuf {
         components.push(id.into());
         Self(components)
     }
+
+    pub fn join(&self, path: &IdPath) -> Self {
+        let mut components = self.0.clone();
+        components.extend(path.0.into_iter().cloned());
+        Self(components)
+    }
 }
 
 impl ToOwned for IdPath {
@@ -49,6 +63,18 @@ impl ToOwned for IdPath {
 
     fn to_owned(&self) -> IdPathBuf {
         IdPathBuf(self.0.to_vec())
+    }
+}
+
+impl Default for IdPathBuf {
+    fn default() -> Self {
+        Self::root()
+    }
+}
+
+impl From<Id> for IdPathBuf {
+    fn from(id: Id) -> Self {
+        Self(vec![id])
     }
 }
 

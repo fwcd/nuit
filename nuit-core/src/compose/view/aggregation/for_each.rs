@@ -57,7 +57,7 @@ where
         }
     }
 
-    fn render(&mut self, context: &Context) -> Node {
+    fn render(&self, context: &Context) -> Node {
         Node::Group {
             children: self.collection
                 .into_iter()

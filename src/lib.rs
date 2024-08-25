@@ -12,12 +12,12 @@ impl Default for Backend {
         #[cfg(target_vendor = "apple")]
         return Backend::SwiftUI;
         #[cfg(not(target_vendor = "apple"))]
-        return Backend::Relm;
+        return Backend::Adwaita;
     }
 }
 
 /// Blocks and presents the given view to the user.
-pub fn run_app<T>(config: impl Into<Config<T>>) where T: View {
+pub fn run_app<T>(config: impl Into<Config<T>>) where T: View + 'static {
     let config: Config<T> = config.into();
     let backend = config.preferred_backend().unwrap_or_default();
     let view = config.into_view();
@@ -31,8 +31,8 @@ pub fn run_app<T>(config: impl Into<Config<T>>) where T: View {
             #[cfg(not(target_vendor = "apple"))]
             panic!("SwiftUI is not supported outside of Apple platforms!")
         }
-        Backend::Relm => {
-            panic!("Relm is not supported (yet)")
+        Backend::Adwaita => {
+            nuit_bridge_adwaita::run_app(root);
         }
     }
 }

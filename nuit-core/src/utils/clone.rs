@@ -8,4 +8,10 @@ macro_rules! clone {
             move || $body
         }
     );
+    ($($n:ident),+ => move |$($i:ident),*| $body:expr) => (
+        {
+            $( let $n = $n.clone(); )+
+            move |$($i,)*| $body
+        }
+    );
 }

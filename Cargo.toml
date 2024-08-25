@@ -11,12 +11,16 @@ license.workspace = true
 [dependencies]
 nuit-derive.workspace = true
 nuit-core.workspace = true
+# TODO: Scope this under not(apple) to avoid pulling it in on macOS?
+# Would be nice to have https://github.com/rust-lang/cargo/issues/1197
+nuit-bridge-adwaita.workspace = true
 
 [target.'cfg(target_vendor = "apple")'.dependencies]
 nuit-bridge-swiftui.workspace = true
 
 [workspace]
 members = [
+    "nuit-bridge-adwaita",
     "nuit-bridge-swiftui",
     "nuit-core",
     "nuit-derive",
@@ -29,6 +33,7 @@ license = "GPL-3.0-or-later"
 homepage = "https://github.com/fwcd/nuit"
 
 [workspace.dependencies]
+nuit-bridge-adwaita = { version = "0.0.7", path = "nuit-bridge-adwaita" }
 nuit-bridge-swiftui = { version = "0.0.7", path = "nuit-bridge-swiftui" }
 nuit-core = { version = "0.0.7", path = "nuit-core" }
 nuit-derive = { version = "0.0.7", path = "nuit-derive" }
