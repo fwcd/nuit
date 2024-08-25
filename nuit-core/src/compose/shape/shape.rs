@@ -9,7 +9,7 @@ pub trait Shape {
     }
 
     fn render(&self) -> ShapeNode {
-        self.body().render()
+        Shape::render(&self.body())
     }
 }
 
@@ -23,7 +23,7 @@ impl<T> Bind for T where T: Shape {}
 impl<T> View for T where T: Shape {
     fn fire(&self, _event: &Event, _id_path: &IdPath) {}
 
-    fn render(&mut self, _context: &Context) -> Node {
+    fn render(&self, _context: &Context) -> Node {
         Node::Shape {
             shape: Shape::render(self)
         }

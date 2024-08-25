@@ -19,7 +19,7 @@ impl Bind for Text {}
 impl View for Text {
     fn fire(&self, _event: &Event, _id_path: &IdPath) {}
 
-    fn render(&mut self, _context: &Context) -> Node {
+    fn render(&self, _context: &Context) -> Node {
         Node::Text { content: self.content.clone() }
     }
 }

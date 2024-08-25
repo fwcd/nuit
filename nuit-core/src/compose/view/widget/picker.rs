@@ -24,7 +24,7 @@ impl<C> View for Picker<C> where C: View {
         }
     }
 
-    fn render(&mut self, context: &Context) -> Node {
+    fn render(&self, context: &Context) -> Node {
         Node::Picker {
             title: self.title.clone(),
             selection: self.selection.get(),

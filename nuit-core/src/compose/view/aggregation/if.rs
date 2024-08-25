@@ -47,10 +47,10 @@ impl<T, F> View for If<T, F> where T: View, F: View {
         }
     }
 
-    fn render(&mut self, context: &Context) -> Node {
-        if let Some(ref mut then_view) = self.then_view {
+    fn render(&self, context: &Context) -> Node {
+        if let Some(ref then_view) = self.then_view {
             Node::Child { wrapped: Box::new(then_view.render(&context.child(0)).identify(0)) }
-        } else if let Some(ref mut else_view) = self.else_view {
+        } else if let Some(ref else_view) = self.else_view {
             Node::Child { wrapped: Box::new(else_view.render(&context.child(1)).identify(1)) }
         } else {
             Node::Empty {}

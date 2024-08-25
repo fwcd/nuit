@@ -1,4 +1,4 @@
-use std::rc::Rc;
+use std::{cell::RefCell, rc::Rc};
 
 use crate::{Storage, IdPath, Binding, IdPathBuf};
 
@@ -6,36 +6,38 @@ use crate::{Storage, IdPath, Binding, IdPathBuf};
 #[derive(Clone)]
 pub struct State<T> {
     initial_value: T,
-    storage: Option<Rc<Storage>>,
-    key: Option<(IdPathBuf, usize)>,
+    storage: RefCell<Option<Rc<Storage>>>,
+    key: RefCell<Option<(IdPathBuf, usize)>>,
 }
 
 impl<T> State<T> where T: 'static + Clone {
     pub fn new(initial_value: impl Into<T>) -> Self {
         Self {
             initial_value: initial_value.into(),
-            storage: None,
-            key: None,
+            storage: RefCell::new(None),
+            key: RefCell::new(None),
         }
     }
 
-    pub fn link(&mut self, storage: Rc<Storage>, id_path: &IdPath, i: usize) {
+    pub fn link(&self, storage: Rc<Storage>, id_path: &IdPath, i: usize) {
         let key = (id_path.to_owned(), i);
 
-        self.storage = Some(storage.clone());
-        self.key = Some(key.clone());
+        *self.storage.borrow_mut() = Some(storage.clone());
+        *self.key.borrow_mut() = Some(key.clone());
 
         storage.initialize_if_needed(key, || self.initial_value.clone());
     }
 
     pub fn get(&self) -> T {
-        let storage = self.storage.as_ref().expect("Storage not linked prior to get");
-        storage.get::<T>(self.key.as_ref().unwrap())
+        let storage = self.storage.borrow();
+        let storage = storage.as_ref().expect("Storage not linked prior to get");
+        storage.get::<T>(self.key.borrow().as_ref().unwrap())
     }
 
     pub fn set(&self, value: impl Into<T>) {
-        let storage = self.storage.as_ref().expect("Storage not linked prior to set");
-        storage.add_change(self.key.clone().unwrap(), value.into());
+        let storage = self.storage.borrow();
+        let storage = storage.as_ref().expect("Storage not linked prior to set");
+        storage.add_change(self.key.borrow().clone().unwrap(), value.into());
     }
 
     pub fn binding(&self) -> Binding<T> {

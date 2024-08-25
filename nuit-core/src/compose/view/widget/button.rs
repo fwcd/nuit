@@ -32,7 +32,7 @@ impl<T, F> View for Button<T, F> where T: View, F: Fn() + 'static {
         }
     }
 
-    fn render(&mut self, context: &Context) -> Node {
+    fn render(&self, context: &Context) -> Node {
         Node::Button { label: Box::new(self.label.render(&context.child(0)).identify(0)) }
     }
 }

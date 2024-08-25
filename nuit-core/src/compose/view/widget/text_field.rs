@@ -22,7 +22,7 @@ impl View for TextField {
         }
     }
 
-    fn render(&mut self, _context: &Context) -> Node {
+    fn render(&self, _context: &Context) -> Node {
         Node::TextField { content: self.content.get() }
     }
 }
