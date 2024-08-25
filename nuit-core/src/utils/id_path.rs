@@ -15,6 +15,10 @@ pub struct IdPath([Id]);
 pub struct IdPathBuf(Vec<Id>);
 
 impl IdPath {
+    pub fn root() -> &'static Self {
+        Self::ref_cast(&[])
+    }
+
     pub fn is_root(&self) -> bool {
         self.0.is_empty()
     }
