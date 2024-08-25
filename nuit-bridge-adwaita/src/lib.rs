@@ -2,7 +2,7 @@ mod node_widget;
 
 use std::sync::{Arc, Mutex};
 
-use adw::{gtk::{Box, ListBox, Orientation, SelectionMode}, prelude::*, ActionRow, Application, ApplicationWindow, HeaderBar};
+use adw::{gtk::{Box, Orientation}, prelude::*, Application, ApplicationWindow, HeaderBar};
 use node_widget::NodeWidget;
 use nuit_core::{Root, View};
 
