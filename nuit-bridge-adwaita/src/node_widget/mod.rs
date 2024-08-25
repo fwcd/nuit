@@ -1,6 +1,6 @@
 mod imp;
 
-use adw::{glib::{self, Object}, gtk::{self, Align, Button, Label, Orientation, Text}, prelude::{BoxExt, WidgetExt}, subclass::prelude::*};
+use adw::{glib::{self, Object}, gtk::{self, Align, Button, Label, Orientation, Text}, prelude::{BoxExt, ButtonExt, WidgetExt}, subclass::prelude::*};
 use nuit_core::{IdPath, Node};
 
 // See https://gtk-rs.org/gtk4-rs/stable/latest/book/g_object_subclassing.html
@@ -50,12 +50,13 @@ impl NodeWidget {
                 let text = Text::builder().text(content).build();
                 self.append(&text);
             },
-            Node::Button { label } => match label.value() {
-                Node::Text { content } => {
-                    let button = Button::builder().label(content).build();
-                    self.append(&button);
-                },
-                _ => {}, // TODO: Handle non-text button labels
+            Node::Button { label } => {
+                let button = Button::new();
+                match label.value() {
+                    Node::Text { content } => button.set_label(content),
+                    _ => button.set_child(Some(&NodeWidget::from_node(label.value().clone(), &id_path.child(label.id().clone())))),
+                }
+                self.append(&button);
             },
             Node::HStack { wrapped } => {
                 let gtk_box = gtk::Box::new(Orientation::Horizontal, DEFAULT_SPACING);
