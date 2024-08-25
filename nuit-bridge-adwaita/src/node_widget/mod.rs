@@ -99,7 +99,10 @@ impl NodeWidget {
                 }
                 self.append(&gtk_box);
             },
-            _ => {}, // TODO: Handle other node types
+            // TODO: Handle other node types
+            _ => {
+                eprintln!("Warning: Unimplemented node type {node:?}");
+            },
         }
     }
 }
