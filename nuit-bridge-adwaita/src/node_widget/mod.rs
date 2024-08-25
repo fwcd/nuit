@@ -5,6 +5,8 @@ use nuit_core::Node;
 
 // See https://gtk-rs.org/gtk4-rs/stable/latest/book/g_object_subclassing.html
 
+const DEFAULT_SPACING: i32 = 10;
+
 glib::wrapper! {
     pub struct NodeWidget(ObjectSubclass<imp::NodeWidget>)
         @extends gtk::Box, gtk::Widget;
@@ -36,14 +38,14 @@ impl NodeWidget {
                 _ => {}, // TODO: Handle non-text button labels
             },
             Node::HStack { wrapped } => {
-                let gtk_box = gtk::Box::new(Orientation::Horizontal, 0);
+                let gtk_box = gtk::Box::new(Orientation::Horizontal, DEFAULT_SPACING);
                 for (_, child) in wrapped.value().children() {
                     gtk_box.append(&NodeWidget::from(child.clone()))
                 }
                 self.append(&gtk_box);
             },
             Node::VStack { wrapped } => {
-                let gtk_box = gtk::Box::new(Orientation::Vertical, 0);
+                let gtk_box = gtk::Box::new(Orientation::Vertical, DEFAULT_SPACING);
                 for (_, child) in wrapped.value().children() {
                     gtk_box.append(&NodeWidget::from(child.clone()))
                 }
