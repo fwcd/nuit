@@ -8,15 +8,17 @@ license.workspace = true
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
+[features]
+# Would be nice to have https://github.com/rust-lang/cargo/issues/1197
+default = ["adwaita", "swiftui"]
+adwaita = ["dep:nuit-bridge-adwaita"]
+swiftui = ["dep:nuit-bridge-swiftui"]
+
 [dependencies]
 nuit-derive.workspace = true
 nuit-core.workspace = true
-# TODO: Scope this under not(apple) to avoid pulling it in on macOS?
-# Would be nice to have https://github.com/rust-lang/cargo/issues/1197
-nuit-bridge-adwaita.workspace = true
-
-[target.'cfg(target_vendor = "apple")'.dependencies]
-nuit-bridge-swiftui.workspace = true
+nuit-bridge-adwaita = { workspace = true, optional = true }
+nuit-bridge-swiftui = { workspace = true, optional = true }
 
 [workspace]
 members = [

@@ -8,11 +8,13 @@ pub use nuit_core::*;
 pub use nuit_derive::*;
 
 impl Default for Backend {
+    #[allow(unreachable_code)]
     fn default() -> Self {
-        #[cfg(target_vendor = "apple")]
+        #[cfg(feature = "swiftui")]
         return Backend::SwiftUI;
-        #[cfg(not(target_vendor = "apple"))]
+        #[cfg(feature = "adwaita")]
         return Backend::Adwaita;
+        panic!("A backend must be enabled via Nuit's crate features!");
     }
 }
 
@@ -24,6 +26,7 @@ pub fn run_app<T>(config: impl Into<Config<T>>) where T: View + 'static {
     let root = Root::new(view);
 
     match backend {
+        #[cfg(feature = "swiftui")]
         Backend::SwiftUI => {
             let c_root = CRoot::from(Box::new(root));
             #[cfg(target_vendor = "apple")]
@@ -31,8 +34,11 @@ pub fn run_app<T>(config: impl Into<Config<T>>) where T: View + 'static {
             #[cfg(not(target_vendor = "apple"))]
             panic!("SwiftUI is not supported outside of Apple platforms!")
         }
+        #[cfg(feature = "adwaita")]
         Backend::Adwaita => {
             nuit_bridge_adwaita::run_app(root);
         }
+        #[allow(unreachable_patterns)]
+        _ => panic!("The backend {backend:?} must be enabled via Nuit's crate features!"),
     }
 }
