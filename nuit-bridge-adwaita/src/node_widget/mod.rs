@@ -53,8 +53,6 @@ impl NodeWidget {
         let imp = imp::NodeWidget::from_obj(&self);
         imp.node.replace(node.clone());
 
-        let id_path = imp.id_path.borrow();
-
         match &node {
             Node::Empty {} => {},
             Node::Text { content } => {
@@ -69,21 +67,21 @@ impl NodeWidget {
                 let button = Button::new();
                 match label.value() {
                     Node::Text { content } => button.set_label(content),
-                    _ => button.set_child(Some(&self.child(label.value().clone(), &id_path.child(label.id().clone())))),
+                    _ => button.set_child(Some(&self.child(label.value().clone(), &IdPathBuf::from(label.id().clone())))),
                 }
                 self.append(&button);
             },
             Node::HStack { wrapped } => {
                 let gtk_box = gtk::Box::new(Orientation::Horizontal, DEFAULT_SPACING);
                 for (child_path, child) in wrapped.value().children() {
-                    gtk_box.append(&self.child(child.clone(), &id_path.join(&child_path)))
+                    gtk_box.append(&self.child(child.clone(), &child_path))
                 }
                 self.append(&gtk_box);
             },
             Node::VStack { wrapped } => {
                 let gtk_box = gtk::Box::new(Orientation::Vertical, DEFAULT_SPACING);
                 for (child_path, child) in wrapped.value().children() {
-                    gtk_box.append(&self.child(child.clone(), &id_path.join(&child_path)))
+                    gtk_box.append(&self.child(child.clone(), &child_path))
                 }
                 self.append(&gtk_box);
             },

@@ -72,6 +72,12 @@ impl Default for IdPathBuf {
     }
 }
 
+impl From<Id> for IdPathBuf {
+    fn from(id: Id) -> Self {
+        Self(vec![id])
+    }
+}
+
 impl Deref for IdPathBuf {
     type Target = IdPath;
 
