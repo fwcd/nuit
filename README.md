@@ -61,5 +61,6 @@ fn main() {
 
 Running this example, e.g. with `cargo run --example counter`, launches:
 
-<img src="screenshots/counter.png" width="335">
-
+| SwiftUI | Adwaita (GTK4) |
+| - | - |
+| <img src="screenshots/counter-swiftui.png" height="300"> | <img src="screenshots/counter-adwaita.png" height="300"> |
