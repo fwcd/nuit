@@ -1,6 +1,6 @@
 [package]
 name = "nuit-bridge-adwaita"
-description = "Adwaita bindings for Nuit"
+description = "Adwaita backend for Nuit"
 version.workspace = true
 edition.workspace = true
 homepage.workspace = true
