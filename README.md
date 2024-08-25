@@ -7,6 +7,7 @@ A declarative, cross-platform UI library for Rust that uses native controls.
 | Crate | Description | Version | Docs |
 | - | - | - | - |
 | [nuit](./nuit) | Umbrella crate for the library | [![crates.io](https://img.shields.io/crates/v/nuit)](https://crates.io/crates/nuit) | [![docs.rs](https://img.shields.io/docsrs/nuit)](https://docs.rs/nuit) |
+| [nuit-bridge-adwaita](./nuit-bridge-adwaita) | Adwaita bindings (Linux, macOS) | [![crates.io](https://img.shields.io/crates/v/nuit-bridge-adwaita)](https://crates.io/crates/nuit-bridge-adwaita) | [![docs.rs](https://img.shields.io/docsrs/nuit-bridge-adwaita)](https://docs.rs/nuit-bridge-adwaita) |
 | [nuit-bridge-swiftui](./nuit-bridge-swiftui) | SwiftUI bindings (macOS, iOS) | [![crates.io](https://img.shields.io/crates/v/nuit-bridge-swiftui)](https://crates.io/crates/nuit-bridge-swiftui) | [![docs.rs](https://img.shields.io/docsrs/nuit-bridge-swiftui)](https://docs.rs/nuit-bridge-swiftui) |
 | [nuit-core](./nuit-core) | Core structures and traits | [![crates.io](https://img.shields.io/crates/v/nuit-core)](https://crates.io/crates/nuit-core) | [![docs.rs](https://img.shields.io/docsrs/nuit-core)](https://docs.rs/nuit-core) |
 | [nuit-derive](./nuit-derive) | Derive macros | [![crates.io](https://img.shields.io/crates/v/nuit-derive)](https://crates.io/crates/nuit-derive) | [![docs.rs](https://img.shields.io/docsrs/nuit-derive)](https://docs.rs/nuit-derive) |
