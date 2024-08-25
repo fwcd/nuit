@@ -7,4 +7,5 @@ homepage.workspace = true
 license.workspace = true
 
 [dependencies]
+adw = { package = "libadwaita", version = "0.7" }
 nuit-core.workspace = true

@@ -17,7 +17,7 @@ impl Default for Backend {
 }
 
 /// Blocks and presents the given view to the user.
-pub fn run_app<T>(config: impl Into<Config<T>>) where T: View {
+pub fn run_app<T>(config: impl Into<Config<T>>) where T: View + 'static {
     let config: Config<T> = config.into();
     let backend = config.preferred_backend().unwrap_or_default();
     let view = config.into_view();
@@ -32,7 +32,7 @@ pub fn run_app<T>(config: impl Into<Config<T>>) where T: View {
             panic!("SwiftUI is not supported outside of Apple platforms!")
         }
         Backend::Adwaita => {
-            panic!("Relm is not supported (yet)")
+            nuit_bridge_adwaita::run_app(root);
         }
     }
 }
