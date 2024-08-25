@@ -91,7 +91,6 @@ impl NodeWidget {
             Node::VStack { wrapped } => {
                 let gtk_box = gtk::Box::new(Orientation::Vertical, DEFAULT_SPACING);
                 for (child_path, child) in wrapped.value().children_from(&IdPathBuf::from(wrapped.id().clone())) {
-                    println!("{:?}", child_path);
                     gtk_box.append(&self.child(child.clone(), &child_path))
                 }
                 self.append(&gtk_box);

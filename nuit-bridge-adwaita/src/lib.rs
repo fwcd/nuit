@@ -17,8 +17,6 @@ pub fn run_app<T>(root: Root<T>) where T: View + 'static {
     app.connect_activate(move |app| {
         let node = Root::render(&root.lock());
         let node_widget = NodeWidget::root(node, clone!(root => move |id_path, event| {
-            // DEBUG
-            println!("Firing {:?} at {:?}", event, id_path);
             root.lock().fire_event(id_path, event);
         }));
 
