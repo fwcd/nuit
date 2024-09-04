@@ -10,10 +10,12 @@ impl View for PieChartView {
 
     fn body(&self) -> Self::Body {
         ZStack::new((
-            Sector::new(Angle::ZERO, Angle::with_degrees(30.0), 150, 0)
-                .fill(Color::YELLOW),
             Sector::new(Angle::with_degrees(30.0), Angle::FULL, 100, 0)
                 .fill(Color::CYAN),
+            Sector::new(Angle::ZERO, Angle::with_degrees(30.0), 150, 0)
+                .fill(Color::YELLOW),
+            Sector::new(Angle::with_degrees(10.0), Angle::with_degrees(20.0), 180, 160)
+                .fill(Color::RED),
         ))
     }
 }

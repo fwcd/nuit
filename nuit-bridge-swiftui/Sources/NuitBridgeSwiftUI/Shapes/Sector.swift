@@ -10,7 +10,11 @@ struct Sector: Shape {
         Path { path in
             let center = CGPoint(x: rect.midX, y: rect.midY)
             path.addArc(center: center, radius: outerRadius, startAngle: startAngle, endAngle: endAngle, clockwise: false)
-            path.addLine(to: center)
+            if innerRadius <= 0 {
+                path.addLine(to: center)
+            } else {
+                path.addArc(center: center, radius: innerRadius, startAngle: endAngle, endAngle: startAngle, clockwise: true)
+            }
         }
     }
 }
