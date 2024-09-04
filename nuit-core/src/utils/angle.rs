@@ -10,6 +10,11 @@ pub struct Angle {
 }
 
 impl Angle {
+    pub const ZERO: Self = Self::with_radians(0.0);
+    pub const QUARTER: Self = Self::with_radians(PI / 2.0);
+    pub const HALF: Self = Self::with_radians(PI);
+    pub const FULL: Self = Self::with_radians(2.0 * PI);
+
     /// Creates an angle from the given value in radians.
     pub const fn with_radians(radians: f64) -> Self {
         Self { radians }
