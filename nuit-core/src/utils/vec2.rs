@@ -1,10 +1,11 @@
+use nuit_derive::ApproxEq;
 use serde::{Serialize, Deserialize};
 use std::{fmt, ops::{Add, Sub, Mul, Div, DivAssign, MulAssign, AddAssign, SubAssign, Neg}};
 
 use super::Zero;
 
 /// A 2D vector (or position).
-#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, Eq, ApproxEq, Hash, Serialize, Deserialize)]
 pub struct Vec2<T> {
     pub x: T,
     pub y: T,

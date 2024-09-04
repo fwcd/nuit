@@ -1,9 +1,10 @@
+use nuit_derive::ApproxEq;
 use serde::{Serialize, Deserialize};
 
 use super::Angle;
 
 /// An RGBA color.
-#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, ApproxEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Color {
     red: f64,

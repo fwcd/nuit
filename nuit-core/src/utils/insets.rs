@@ -1,7 +1,8 @@
+use nuit_derive::ApproxEq;
 use serde::{Serialize, Deserialize};
 
 /// Insets along each edge of a rectangle.
-#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, ApproxEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Insets {
     pub top: f64,
