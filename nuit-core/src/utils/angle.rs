@@ -31,17 +31,17 @@ impl Angle {
     }
 
     /// The value in radians.
-    pub fn radians(self) -> f64 {
+    pub const fn radians(self) -> f64 {
         self.radians
     }
 
     /// The value in degrees.
-    pub fn degrees(self) -> f64 {
+    pub const fn degrees(self) -> f64 {
         self.radians * 180.0 / PI
     }
 
     /// The fractional value between 0 and 1.
-    pub fn fractional(self) -> f64 {
+    pub const fn fractional(self) -> f64 {
         self.radians / (2.0 * PI)
     }
 }
@@ -99,5 +99,19 @@ impl MulAssign<f64> for Angle {
 impl DivAssign<f64> for Angle {
     fn div_assign(&mut self, rhs: f64) {
         self.radians /= rhs;
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use std::f64::consts::PI;
+
+    use crate::{assert_approx_eq, Angle};
+
+    #[test]
+    fn conversions() {
+        assert_approx_eq!(Angle::HALF.fractional(), 0.5);
+        assert_approx_eq!(Angle::HALF.degrees(), 180.0);
+        assert_approx_eq!(Angle::HALF.radians(), PI);
     }
 }
