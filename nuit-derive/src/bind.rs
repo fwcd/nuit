@@ -6,7 +6,6 @@ pub fn derive(input: TokenStream) -> TokenStream {
     let input: DeriveInput = syn::parse(input).unwrap();
     let name = &input.ident;
 
-    // TODO: Handle Bind bounds correctly (i.e. we'd only want to generate them for State fields)
     let type_params: Vec<TypeParam> = input.generics.type_params().cloned().collect();
 
     let state_fields: Vec<Ident> = match input.data {
