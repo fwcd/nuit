@@ -25,6 +25,7 @@ pub enum Node {
     HStack { spacing: f64, wrapped: Box<Identified<Node>> },
     ZStack { wrapped: Box<Identified<Node>> },
     List { wrapped: Box<Identified<Node>> },
+    Overlay { wrapped: Box<Identified<Node>>, overlayed: Box<Identified<Node>> },
 
     // Wrapper
     Shape { shape: ShapeNode },

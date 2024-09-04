@@ -1,9 +1,15 @@
 use crate::{Event, Frame, Handler, Insets, Modified, ModifierNode, Vec2, View};
 
+use super::Overlay;
+
 /// An extension trait with various convenience methods for views.
 pub trait ViewExt: Sized {
     fn modifier(self, modifier: ModifierNode) -> Modified<Self> {
         Modified::new(self, modifier)
+    }
+
+    fn overlay<O>(self, overlayed: O) -> Overlay<Self, O> {
+        Overlay::new(self, overlayed)
     }
 
     fn padding(self, insets: impl Into<Insets>) -> Modified<Self> {
