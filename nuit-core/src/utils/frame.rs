@@ -32,17 +32,21 @@ impl Frame {
     }
 }
 
-impl From<i32> for Frame {
-    fn from(value: i32) -> Self {
-        Self::exact(value, value)
-    }
+macro_rules! impl_exact_from {
+    ($($tys:ty),*) => {
+        $(impl From<$tys> for Frame {
+            fn from(value: $tys) -> Self {
+                Self::exact(value as f64, value as f64)
+            }
+        })*
+    };
 }
 
-impl From<f64> for Frame {
-    fn from(value: f64) -> Self {
-        Self::exact(value, value)
-    }
-}
+impl_exact_from!(
+    u8, u16, u32, u64, u128, usize,
+    i8, i16, i32, i64, i128, isize,
+    f32, f64
+);
 
 impl<W, H> From<(W, H)> for Frame where W: Into<f64>, H: Into<f64> {
     fn from((width, height): (W, H)) -> Self {
