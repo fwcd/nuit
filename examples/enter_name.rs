@@ -4,12 +4,12 @@ use nuit::{Text, VStack, View, ViewExt, State, HStack, TextField, Bind, Insets, 
 
 #[derive(Bind)]
 struct EnterNameView {
-    name: State<String>,
+    raw_names: State<String>,
 }
 
 impl EnterNameView {
     fn new() -> Self {
-        Self { name: State::new("") }
+        Self { raw_names: State::new("") }
     }
 }
 
@@ -17,13 +17,13 @@ impl View for EnterNameView {
     type Body = impl View;
 
     fn body(&self) -> Self::Body {
-        let name = self.name.clone();
+        let raw_names = self.raw_names.clone();
         VStack::new((
             HStack::new((
                 Text::new("Please enter some names:"),
-                TextField::new(name.binding()),
+                TextField::new(raw_names.binding()),
             )),
-            ForEach::new(name.get().split(" ").map(|s| s.trim().to_owned()), |name| {
+            ForEach::new(raw_names.get().split(",").map(|s| s.trim().to_owned()).filter(|s| !s.is_empty()), |name| {
                 Text::new(format!("Hi {}!", name))
                     .on_appear(clone!(name => move || println!("A wild {} appeared!", name)))
                     .on_disappear(clone!(name => move || println!("{} disappeared!", name)))
