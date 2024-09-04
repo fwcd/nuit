@@ -16,9 +16,9 @@ impl View for LoopsView {
                 }),
             ),
             HStack::new(
-                ForEach::new([42, 1, 2, 3], |v| {
-                    Text::new(format!("{v}"))
-                }),
+                ForEach::new(0..10, |i| {
+                    Text::new(format!("{i}"))
+                })
             ),
         ))
     }
