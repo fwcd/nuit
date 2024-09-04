@@ -9,7 +9,7 @@ pub trait Bind {
 
 macro_rules! impl_tuple_bind {
     ($($tvs:ident),*) => {
-        impl<$($tvs),*> Bind for ($($tvs,)*) where $($tvs: Bind),* {}
+        impl<$($tvs),*> Bind for ($($tvs,)*) {}
     };
 }
 
