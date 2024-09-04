@@ -1,5 +1,6 @@
 mod alignment;
 mod angle;
+mod approx_eq;
 mod clone;
 mod color;
 mod frame;
@@ -15,6 +16,7 @@ mod zero;
 
 pub use alignment::*;
 pub use angle::*;
+pub use approx_eq::*;
 pub use color::*;
 pub use frame::*;
 pub use has_id::*;
