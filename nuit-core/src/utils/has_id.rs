@@ -16,3 +16,9 @@ impl HasId for String {
         Id::string(self.clone())
     }
 }
+
+impl<'a> HasId for &'a str {
+    fn id(&self) -> Id {
+        Id::string(self.to_string())
+    }
+}
