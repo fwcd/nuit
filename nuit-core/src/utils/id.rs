@@ -2,6 +2,10 @@ use std::fmt;
 
 use serde::{Serialize, Deserialize};
 
+// TODO: Investigate if we can use a `Cow<str>` to avoid unnecessary clones.
+// We'd likely have to fight with lifetimes a bit, since `Id` would likely
+// require a lifetime parameter now.
+
 /// An identifier for a view.
 #[derive(Debug, Clone, Hash, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(untagged)]
