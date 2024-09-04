@@ -41,6 +41,12 @@ impl<T> Identified<T> {
     pub fn map<U>(self, f: impl FnOnce(T) -> U) -> Identified<U> {
         Identified { id: self.id, value: f(self.value) }
     }
+
+    /// Maps the given function over the value, providing the id.
+    pub fn map_with_id<U>(self, f: impl FnOnce(&Id, T) -> U) -> Identified<U> {
+        let value = f(&self.id, self.value);
+        Identified { id: self.id, value }
+    }
 }
 
 /// An extension trait for conveniently creating `Identified` values.

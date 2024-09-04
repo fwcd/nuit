@@ -1,70 +1,47 @@
-use std::marker::PhantomData;
-
-use crate::{View, Node, Bind, Context, HasId, Event, IdPath, IdentifyExt};
+use crate::{Bind, Context, Event, HasId, IdPath, Identified, IdentifyExt, Node, View};
 
 /// A group of views that is dynamically computed from a given collection.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub struct ForEach<C, I, F, V> {
-    collection: C,
-    view_func: F,
-    phantom_item: PhantomData<I>,
-    phantom_view: PhantomData<V>,
+pub struct ForEach<V> {
+    children: Vec<Identified<V>>,
 }
 
 // Note: We need the trait bounds here already since the collection types may
 // otherwise get inferred incorrectly, resulting in potentially obscure errors
 // where the composite type appears not to implement View.
 
-impl<C, I, F, V> ForEach<C, I, F, V>
-where
-    for<'a> &'a C: IntoIterator<Item = &'a I> + Clone,
-    I: HasId,
-    F: Fn(&I) -> V,
-    V: Bind
-{
-    pub fn new(collection: C, view_func: F) -> Self {
+impl<V> ForEach<V> where V: Bind {
+    pub fn new<I: HasId>(collection: impl IntoIterator<Item = I>, view_func: impl Fn(I) -> V) -> Self {
         Self {
-            collection,
-            view_func,
-            phantom_item: PhantomData,
-            phantom_view: PhantomData,
+            children: collection
+                .into_iter()
+                .map(|i| {
+                    let id = i.id();
+                    view_func(i).identify(id)
+                })
+                .collect()
         }
     }
 }
 
 // TODO: Figure out if we can write the bound on references to avoid the clone
 
-impl<C, I, F, V> Bind for ForEach<C, I, F, V>
-where
-    for<'a> &'a C: IntoIterator<Item = &'a I> + Clone,
-    I: HasId,
-    F: Fn(&I) -> V,
-    V: Bind
-{}
+impl<V> Bind for ForEach<V> where V: Bind {}
 
-impl<C, I, F, V> View for ForEach<C, I, F, V>
-where
-    for<'a> &'a C: IntoIterator<Item = &'a I> + Clone,
-    I: HasId,
-    F: Fn(&I) -> V,
-    V: View
-{
+impl<V> View for ForEach<V> where V: View {
     fn fire(&self, event: &Event, id_path: &IdPath) {
         if let Some(head) = id_path.head() {
-            if let Some(item) = self.collection.into_iter().find(|item| item.id() == head) {
-                (self.view_func)(item).fire(event, &id_path.tail());
+            if let Some(view) = self.children.iter().find(|view| view.id() == &head) {
+                view.value().fire(event, &id_path.tail());
             }
         }
     }
 
     fn render(&self, context: &Context) -> Node {
         Node::Group {
-            children: self.collection
-                .into_iter()
-                .map(|item| {
-                    let id = item.id();
-                    (self.view_func)(item).render(&context.child(id.clone())).identify(id)
-                })
+            children: self.children
+                .iter()
+                .map(|view| view.as_ref().map_with_id(|id, v| v.render(&context.child(id.clone()))))
                 .collect(),
         }
     }
