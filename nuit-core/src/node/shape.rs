@@ -1,6 +1,6 @@
 use serde::{Serialize, Deserialize};
 
-use crate::{Style, Vec2};
+use crate::{Angle, Style, Vec2};
 
 /// A rendered shape tree.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -12,6 +12,7 @@ pub enum ShapeNode {
     Ellipse {},
     Rectangle {},
     RoundedRectangle { corner_size: Vec2<f64> },
+    Sector { start_angle: Angle, end_angle: Angle, outer_radius: f64, inner_radius: f64 },
 
     // Styled
     Fill { wrapped: Box<ShapeNode>, style: Style },
