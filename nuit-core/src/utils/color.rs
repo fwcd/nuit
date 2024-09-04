@@ -74,14 +74,13 @@ impl Color {
 
 #[cfg(test)]
 mod tests {
-    use crate::{Angle, Color};
+    use crate::{assert_approx_eq, Angle, Color};
 
     #[test]
     fn hsv_to_rgb() {
-        // TODO: Use tolerant assertions since we are comparing floats
-        assert_eq!(Color::with_hsv(Angle::ZERO, 1.0, 1.0), Color::RED);
-        assert_eq!(Color::with_hsv(Angle::HALF, 1.0, 1.0), Color::CYAN);
-        assert_eq!(Color::with_hsv(Angle::HALF, 0.0, 1.0), Color::WHITE);
-        assert_eq!(Color::with_hsv(Angle::HALF, 0.0, 0.0), Color::BLACK);
+        assert_approx_eq!(Color::with_hsv(Angle::ZERO, 1.0, 1.0), Color::RED);
+        assert_approx_eq!(Color::with_hsv(Angle::HALF, 1.0, 1.0), Color::CYAN);
+        assert_approx_eq!(Color::with_hsv(Angle::HALF, 0.0, 1.0), Color::WHITE);
+        assert_approx_eq!(Color::with_hsv(Angle::HALF, 0.0, 0.0), Color::BLACK);
     }
 }
