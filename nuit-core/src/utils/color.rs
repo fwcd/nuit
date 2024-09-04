@@ -1,5 +1,7 @@
 use serde::{Serialize, Deserialize};
 
+use super::Angle;
+
 /// An RGBA color.
 #[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -35,12 +37,14 @@ impl Color {
         Self::new(gray, gray, gray, 1.0)
     }
 
-    pub fn with_hsva(hue: f64, saturation: f64, value: f64, alpha: f64) -> Self {
+    pub fn with_hsva(hue: Angle, saturation: f64, value: f64, alpha: f64) -> Self {
+        let hue_degrees = hue.degrees();
+
         let c = value * saturation;
-        let x = c * (1.0 - ((hue / 60.0) % 2.0 - 1.0).abs());
+        let x = c * (1.0 - ((hue_degrees / 60.0) % 2.0 - 1.0).abs());
         let m = value - c;
         
-        let (r_prime, g_prime, b_prime) = match hue {
+        let (r_prime, g_prime, b_prime) = match hue_degrees {
             0.0..=60.0 => (c, x, 0.0),
             60.0..=120.0 => (x, c, 0.0),
             120.0..=180.0 => (0.0, c, x),
@@ -62,21 +66,21 @@ impl Color {
         }
     }
 
-    pub fn with_hsv(hue: f64, saturation: f64, value: f64) -> Self {
+    pub fn with_hsv(hue: Angle, saturation: f64, value: f64) -> Self {
         Self::with_hsva(hue, saturation, value, 1.0)
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use super::Color;
+    use crate::{Angle, Color};
 
     #[test]
     fn hsv_to_rgb() {
         // TODO: Use tolerant assertions since we are comparing floats
-        assert_eq!(Color::with_hsv(0.0, 1.0, 1.0), Color::RED);
-        assert_eq!(Color::with_hsv(180.0, 1.0, 1.0), Color::CYAN);
-        assert_eq!(Color::with_hsv(180.0, 0.0, 1.0), Color::WHITE);
-        assert_eq!(Color::with_hsv(180.0, 0.0, 0.0), Color::BLACK);
+        assert_eq!(Color::with_hsv(Angle::ZERO, 1.0, 1.0), Color::RED);
+        assert_eq!(Color::with_hsv(Angle::HALF, 1.0, 1.0), Color::CYAN);
+        assert_eq!(Color::with_hsv(Angle::HALF, 0.0, 1.0), Color::WHITE);
+        assert_eq!(Color::with_hsv(Angle::HALF, 0.0, 0.0), Color::BLACK);
     }
 }
