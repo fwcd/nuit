@@ -25,6 +25,11 @@ impl Angle {
         Self::with_radians(degrees * PI / 180.0)
     }
 
+    /// Creates an angle from the given fractional value between 0 and 1.
+    pub const fn with_fractional(fractional: f64) -> Self {
+        Self::with_radians(fractional * 2.0 * PI)
+    }
+
     /// The value in radians.
     pub fn radians(self) -> f64 {
         self.radians
@@ -33,6 +38,11 @@ impl Angle {
     /// The value in degrees.
     pub fn degrees(self) -> f64 {
         self.radians * 180.0 / PI
+    }
+
+    /// The fractional value between 0 and 1.
+    pub fn fractional(self) -> f64 {
+        self.radians / (2.0 * PI)
     }
 }
 
