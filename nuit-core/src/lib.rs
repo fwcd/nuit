@@ -4,7 +4,6 @@
     macro_metavar_expr,
 )]
 
-mod bind;
 mod binding;
 mod compose;
 mod context;
@@ -16,7 +15,6 @@ mod state;
 mod storage;
 mod utils;
 
-pub use bind::*;
 pub use binding::*;
 pub use compose::*;
 pub use context::*;
