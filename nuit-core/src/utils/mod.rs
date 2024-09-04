@@ -1,3 +1,4 @@
+mod alignment;
 mod angle;
 mod clone;
 mod color;
@@ -12,6 +13,7 @@ mod style;
 mod vec2;
 mod zero;
 
+pub use alignment::*;
 pub use angle::*;
 pub use color::*;
 pub use frame::*;
