@@ -1,4 +1,4 @@
-use std::f64::consts::PI;
+use std::{f64::consts::PI, ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign}};
 
 use serde::{Deserialize, Serialize};
 
@@ -33,5 +33,61 @@ impl Angle {
     /// The value in degrees.
     pub fn degrees(self) -> f64 {
         self.radians * 180.0 / PI
+    }
+}
+
+impl Add for Angle {
+    type Output = Self;
+
+    fn add(self, rhs: Self) -> Self {
+        Self { radians: self.radians + rhs.radians }
+    }
+}
+
+impl Sub for Angle {
+    type Output = Self;
+
+    fn sub(self, rhs: Self) -> Self {
+        Self { radians: self.radians - rhs.radians }
+    }
+}
+
+impl Mul<f64> for Angle {
+    type Output = Self;
+
+    fn mul(self, rhs: f64) -> Self {
+        Self { radians: self.radians * rhs }
+    }
+}
+
+impl Div<f64> for Angle {
+    type Output = Self;
+
+    fn div(self, rhs: f64) -> Self {
+        Self { radians: self.radians / rhs }
+    }
+}
+
+impl AddAssign for Angle {
+    fn add_assign(&mut self, rhs: Self) {
+        self.radians += rhs.radians;
+    }
+}
+
+impl SubAssign for Angle {
+    fn sub_assign(&mut self, rhs: Self) {
+        self.radians -= rhs.radians;
+    }
+}
+
+impl MulAssign<f64> for Angle {
+    fn mul_assign(&mut self, rhs: f64) {
+        self.radians *= rhs;
+    }
+}
+
+impl DivAssign<f64> for Angle {
+    fn div_assign(&mut self, rhs: f64) {
+        self.radians /= rhs;
     }
 }
