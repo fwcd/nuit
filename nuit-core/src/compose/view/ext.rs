@@ -24,6 +24,10 @@ pub trait ViewExt: Sized {
         self.modifier(ModifierNode::Position { position })
     }
 
+    fn opacity(self, opacity: f64) -> Modified<Self> {
+        self.modifier(ModifierNode::Opacity { opacity })
+    }
+
     fn frame(self, frame: impl Into<Frame>) -> Modified<Self> {
         self.modifier(ModifierNode::Frame { frame: frame.into() })
     }

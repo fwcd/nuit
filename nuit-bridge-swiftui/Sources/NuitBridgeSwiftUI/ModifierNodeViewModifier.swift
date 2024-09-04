@@ -9,6 +9,8 @@ struct ModifierNodeViewModifier: ViewModifier {
             content.padding(EdgeInsets(insets))
         case let .position(position: position):
             content.position(CGPoint(position))
+        case let .opacity(opacity: opacity):
+            content.opacity(opacity)
         case let .frame(frame: frame):
             switch frame {
             case let .constrained(minWidth: minWidth, idealWidth: idealWidth, maxWidth: maxWidth, minHeight: minHeight, idealHeight: idealHeight, maxHeight: maxHeight):

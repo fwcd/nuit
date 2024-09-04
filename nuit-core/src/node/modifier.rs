@@ -8,6 +8,7 @@ use crate::{Frame, Insets, Style, Vec2};
 pub enum ModifierNode {
     Padding { insets: Insets },
     Position { position: Vec2<f64> },
+    Opacity { opacity: f64 },
     Frame { frame: Frame },
     Fill { style: Style },
 }
