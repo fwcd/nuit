@@ -60,7 +60,13 @@ fn main() {
 }
 ```
 
-Running this example with `cargo run --example counter` will launch the app with the platform-specific default backend:
+Running this example with
+
+```sh
+cargo run --example counter
+```
+
+will launch the app with the platform-specific default backend:
 
 | SwiftUI | Adwaita (GTK4) |
 | - | - |
