@@ -16,7 +16,7 @@ indirect enum Node: Codable, Hashable {
     case hStack(spacing: Double, wrapped: Identified<Node>)
     case zStack(wrapped: Identified<Node>)
     case list(wrapped: Identified<Node>)
-    case overlay(wrapped: Identified<Node>, overlayed: Identified<Node>)
+    case overlay(wrapped: Identified<Node>, alignment: Alignment, overlayed: Identified<Node>)
 
     // MARK: Wrapper
     case shape(shape: ShapeNode)

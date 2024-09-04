@@ -75,8 +75,11 @@ impl NodeDiff {
             (Node::Child { wrapped: w1 }, Node::Child { wrapped: w2 }) |
             (Node::ZStack { wrapped: w1 }, Node::ZStack { wrapped: w2 }) |
             (Node::List { wrapped: w1 }, Node::List { wrapped: w2 }) => self.traverse_identified(id_path, w1, w2),
-            (Node::Overlay { wrapped: w1, overlayed: o1 }, Node::Overlay { wrapped: w2, overlayed: o2 }) => {
+            (Node::Overlay { wrapped: w1, alignment: a1, overlayed: o1 }, Node::Overlay { wrapped: w2, alignment: a2, overlayed: o2 }) => {
                 self.traverse_identified(id_path, w1, w2);
+                if a1 != a2 {
+                    self.changed.push(id_path.to_owned());
+                }
                 self.traverse_identified(id_path, o1, o2);
             },
             (Node::Modified { wrapped: w1, modifier: m1 }, Node::Modified { wrapped: w2, modifier: m2 }) => {

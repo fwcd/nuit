@@ -1,6 +1,6 @@
 use serde::{Serialize, Deserialize};
 
-use crate::{Id, IdPath, IdPathBuf, Identified};
+use crate::{Alignment, Id, IdPath, IdPathBuf, Identified};
 
 use super::{ModifierNode, ShapeNode};
 
@@ -25,7 +25,7 @@ pub enum Node {
     HStack { spacing: f64, wrapped: Box<Identified<Node>> },
     ZStack { wrapped: Box<Identified<Node>> },
     List { wrapped: Box<Identified<Node>> },
-    Overlay { wrapped: Box<Identified<Node>>, overlayed: Box<Identified<Node>> },
+    Overlay { wrapped: Box<Identified<Node>>, alignment: Alignment, overlayed: Box<Identified<Node>> },
 
     // Wrapper
     Shape { shape: ShapeNode },

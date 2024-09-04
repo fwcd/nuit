@@ -1,4 +1,4 @@
-use crate::{Event, Frame, Handler, Insets, Modified, ModifierNode, Vec2, View};
+use crate::{Alignment, Event, Frame, Handler, Insets, Modified, ModifierNode, Vec2, View};
 
 use super::Overlay;
 
@@ -8,8 +8,12 @@ pub trait ViewExt: Sized {
         Modified::new(self, modifier)
     }
 
+    fn overlay_at<O>(self, alignment: Alignment, overlayed: O) -> Overlay<Self, O> {
+        Overlay::new(self, alignment, overlayed)
+    }
+
     fn overlay<O>(self, overlayed: O) -> Overlay<Self, O> {
-        Overlay::new(self, overlayed)
+        self.overlay_at(Alignment::Center, overlayed)
     }
 
     fn padding(self, insets: impl Into<Insets>) -> Modified<Self> {

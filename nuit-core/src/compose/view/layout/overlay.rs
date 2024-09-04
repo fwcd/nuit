@@ -1,16 +1,18 @@
-use crate::{View, Node, Bind, Context, IdPath, Event, Id, IdentifyExt};
+use crate::{Alignment, Bind, Context, Event, Id, IdPath, IdentifyExt, Node, View};
 
 /// A view that lays out its children on top of each other.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Overlay<T, O> {
     wrapped: T,
+    alignment: Alignment,
     overlayed: O,
 }
 
 impl<T, O> Overlay<T, O> {
-    pub fn new(wrapped: T, overlayed: O) -> Self {
+    pub fn new(wrapped: T, alignment: Alignment, overlayed: O) -> Self {
         Self {
             wrapped,
+            alignment,
             overlayed,
         }
     }
@@ -32,6 +34,7 @@ impl<T, O> View for Overlay<T, O> where T: View, O: View {
     fn render(&self, context: &Context) -> Node {
         Node::Overlay {
             wrapped: Box::new(self.wrapped.render(&context.child(0)).identify(0)),
+            alignment: self.alignment,
             overlayed: Box::new(self.overlayed.render(&context.child(1)).identify(1)),
         }
     }

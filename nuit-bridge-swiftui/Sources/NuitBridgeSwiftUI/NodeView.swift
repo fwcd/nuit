@@ -60,9 +60,9 @@ struct NodeView: View {
             List {
                 NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
             }
-        case let .overlay(wrapped: wrapped, overlayed: overlayed):
+        case let .overlay(wrapped: wrapped, alignment: alignment, overlayed: overlayed):
             NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
-                .overlay {
+                .overlay(alignment: .init(alignment)) {
                     NodeView(node: overlayed.value, idPath: idPath + [overlayed.id])
                 }
 
