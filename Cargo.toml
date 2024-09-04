@@ -29,15 +29,15 @@ members = [
 ]
 
 [workspace.package]
-version = "0.0.10"
+version = "0.0.11"
 edition = "2021"
 license = "GPL-3.0-or-later"
 homepage = "https://github.com/fwcd/nuit"
 
 [workspace.dependencies]
-nuit-bridge-adwaita = { version = "0.0.10", path = "nuit-bridge-adwaita" }
-nuit-bridge-swiftui = { version = "0.0.10", path = "nuit-bridge-swiftui" }
-nuit-core = { version = "0.0.10", path = "nuit-core" }
-nuit-derive = { version = "0.0.10", path = "nuit-derive" }
+nuit-bridge-adwaita = { version = "0.0.11", path = "nuit-bridge-adwaita" }
+nuit-bridge-swiftui = { version = "0.0.11", path = "nuit-bridge-swiftui" }
+nuit-core = { version = "0.0.11", path = "nuit-core" }
+nuit-derive = { version = "0.0.11", path = "nuit-derive" }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
