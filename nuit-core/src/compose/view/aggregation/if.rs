@@ -42,7 +42,7 @@ impl<T, F> View for If<T, F> where T: View, F: View {
                         else_view.fire(event, &id_path.tail())
                     }
                 },
-                i => panic!("Cannot fire event for child id {} on HStack which only has one child", i)
+                i => panic!("Cannot fire event for child id {} on HStack which only has two childs", i)
             }
         }
     }
