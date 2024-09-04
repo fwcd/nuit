@@ -73,6 +73,7 @@ mod tests {
 
     #[test]
     fn hsv_to_rgb() {
+        // TODO: Use tolerant assertions since we are comparing floats
         assert_eq!(Color::with_hsv(0.0, 1.0, 1.0), Color::RED);
         assert_eq!(Color::with_hsv(180.0, 1.0, 1.0), Color::CYAN);
         assert_eq!(Color::with_hsv(180.0, 0.0, 1.0), Color::WHITE);
