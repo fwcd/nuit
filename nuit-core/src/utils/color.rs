@@ -39,7 +39,7 @@ impl Color {
     }
 
     pub fn with_hsva(hue: Angle, saturation: f64, value: f64, alpha: f64) -> Self {
-        let hue_degrees = hue.degrees();
+        let hue_degrees = hue.degrees().rem_euclid(360.0);
 
         let c = value * saturation;
         let x = c * (1.0 - ((hue_degrees / 60.0) % 2.0 - 1.0).abs());
@@ -52,7 +52,7 @@ impl Color {
             180.0..=240.0 => (0.0, x, c),
             240.0..=300.0 => (x, 0.0, c),
             300.0..=360.0 => (c, 0.0, x),
-            _ => (0.0, 0.0, 0.0), // In case the hue is outside [0, 360], which shouldn't happen
+            _ => unreachable!("Hue is taken modulo 360 degrees"),
         };
 
         let red = r_prime + m;
@@ -82,5 +82,15 @@ mod tests {
         assert_approx_eq!(Color::with_hsv(Angle::HALF, 1.0, 1.0), Color::CYAN);
         assert_approx_eq!(Color::with_hsv(Angle::HALF, 0.0, 1.0), Color::WHITE);
         assert_approx_eq!(Color::with_hsv(Angle::HALF, 0.0, 0.0), Color::BLACK);
+
+        // Hue should be taken modulo the full angle
+        assert_approx_eq!(
+            Color::with_hsv(Angle::QUARTER, 1.0, 1.0),
+            Color::with_hsv(Angle::QUARTER + Angle::FULL, 1.0, 1.0)
+        );
+        assert_approx_eq!(
+            Color::with_hsv(Angle::QUARTER, 1.0, 1.0),
+            Color::with_hsv(Angle::QUARTER - Angle::FULL, 1.0, 1.0)
+        );
     }
 }
