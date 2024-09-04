@@ -5,6 +5,7 @@ indirect enum ShapeNode: Codable, Hashable {
     case ellipse
     case rectangle
     case roundedRectangle(cornerSize: Vec2<Double>)
+    case sector(startAngle: Angle, endAngle: Angle, outerRadius: Double, innerRadius: Double)
 
     // MARK: Styled
     case fill(wrapped: ShapeNode, style: Style)
