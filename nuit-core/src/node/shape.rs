@@ -12,7 +12,7 @@ pub enum ShapeNode {
     Ellipse {},
     Rectangle {},
     RoundedRectangle { corner_size: Vec2<f64> },
-    Sector { start_angle: Angle, end_angle: Angle, inner_radius: f64, outer_radius: f64 },
+    Sector { start_angle: Angle, end_angle: Angle, inner_radius_fraction: f64 },
 
     // Styled
     Fill { wrapped: Box<ShapeNode>, style: Style },
