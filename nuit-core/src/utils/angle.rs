@@ -113,5 +113,9 @@ mod tests {
         assert_approx_eq!(Angle::HALF.fractional(), 0.5);
         assert_approx_eq!(Angle::HALF.degrees(), 180.0);
         assert_approx_eq!(Angle::HALF.radians(), PI);
+
+        assert_approx_eq!(Angle::with_fractional(1.0), 2.0 * PI);
+        assert_approx_eq!(Angle::with_degrees(360.0), 2.0 * PI);
+        assert_approx_eq!(Angle::with_radians(2.0 * PI), 2.0 * PI);
     }
 }
