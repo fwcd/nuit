@@ -13,9 +13,9 @@ impl View for RainbowView {
         let fraction = |i| i as f64 / total as f64;
         let radius = |i| 50.0 + fraction(i) * 100.0;
         ZStack::new(
-            ForEach::new(0..total, |i| {
+            ForEach::new((0..total).rev(), |i| {
                 let outer_radius = radius(i);
-                let inner_radius = radius(i - 1);
+                let inner_radius = radius(-1);
                 Sector::new(Angle::HALF, Angle::FULL, inner_radius / outer_radius)
                     .fill(Color::with_hsv(Angle::with_fractional(fraction(total - 1 - i)), 1.0, 1.0))
                     .frame(outer_radius * 2.0)
