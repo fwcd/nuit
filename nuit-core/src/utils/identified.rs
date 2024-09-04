@@ -17,12 +17,12 @@ impl<T> Identified<T> {
     }
 
     /// The id.
-    pub fn id(&self) -> &Id {
+    pub const fn id(&self) -> &Id {
         &self.id
     }
 
     /// The wrapped value.
-    pub fn value(&self) -> &T {
+    pub const fn value(&self) -> &T {
         &self.value
     }
 

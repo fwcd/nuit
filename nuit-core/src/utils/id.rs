@@ -15,11 +15,11 @@ pub enum Id {
 }
 
 impl Id {
-    pub fn index(value: usize) -> Self {
+    pub const fn index(value: usize) -> Self {
         Self::Index(value)
     }
 
-    pub fn string(value: String) -> Self {
+    pub const fn string(value: String) -> Self {
         Self::String(value)
     }
 }
