@@ -1,6 +1,5 @@
-#[macro_export]
-
 /// Clones values for capture in a closure.
+#[macro_export]
 macro_rules! clone {
     ($($n:ident),+ => move || $body:expr) => (
         {
