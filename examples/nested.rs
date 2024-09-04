@@ -1,7 +1,8 @@
 #![feature(type_alias_impl_trait, impl_trait_in_assoc_type)]
 
-use nuit::{Text, VStack, View, Bind, Button, State, Context};
+use nuit::{Text, VStack, View, Bind, Button, State};
 
+#[derive(Bind)]
 struct IncrementView<F> {
     action: F,
 }
@@ -11,8 +12,6 @@ impl<F> IncrementView<F> {
         Self { action }
     }
 }
-
-impl<F> Bind for IncrementView<F> {}
 
 impl<F> View for IncrementView<F> where F: Fn() + Clone + 'static {
     type Body = impl View;
@@ -25,6 +24,7 @@ impl<F> View for IncrementView<F> where F: Fn() + Clone + 'static {
     }
 }
 
+#[derive(Bind)]
 struct CounterView {
     count: State<i32>,
 }
@@ -32,12 +32,6 @@ struct CounterView {
 impl CounterView {
     fn new() -> Self {
         Self { count: State::new(0) }
-    }
-}
-
-impl Bind for CounterView {
-    fn bind(&self, context: &Context) {
-        self.count.link(context.storage().clone(), context.id_path(), 0);
     }
 }
 
