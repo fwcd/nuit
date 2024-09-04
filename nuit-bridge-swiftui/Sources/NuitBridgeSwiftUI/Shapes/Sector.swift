@@ -3,8 +3,8 @@ import SwiftUI
 struct Sector: Shape {
     let startAngle: SwiftUI.Angle
     let endAngle: SwiftUI.Angle
-    let outerRadius: Double
     let innerRadius: Double
+    let outerRadius: Double
 
     func path(in rect: CGRect) -> Path {
         Path { path in

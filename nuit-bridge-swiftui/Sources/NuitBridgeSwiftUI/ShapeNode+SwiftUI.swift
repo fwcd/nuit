@@ -14,8 +14,8 @@ extension AnyShape {
             self.init(Rectangle())
         case let .roundedRectangle(cornerSize: cornerSize):
             self.init(RoundedRectangle(cornerSize: CGSize(cornerSize)))
-        case let .sector(startAngle: startAngle, endAngle: endAngle, outerRadius: outerRadius, innerRadius: innerRadius):
-            self.init(Sector(startAngle: .init(startAngle), endAngle: .init(endAngle), outerRadius: outerRadius, innerRadius: innerRadius))
+        case let .sector(startAngle: startAngle, endAngle: endAngle, innerRadius: innerRadius, outerRadius: outerRadius):
+            self.init(Sector(startAngle: .init(startAngle), endAngle: .init(endAngle), innerRadius: innerRadius, outerRadius: outerRadius))
 
         // Filling is unfortunately only supported at the top-level since
         // .fill(...) returns a View rather than a Shape, so we'll have to
