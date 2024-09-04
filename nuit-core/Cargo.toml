@@ -7,6 +7,7 @@ homepage.workspace = true
 license.workspace = true
 
 [dependencies]
+nuit-derive.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 ref-cast = "1.0"

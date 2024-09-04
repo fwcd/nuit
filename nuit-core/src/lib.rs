@@ -27,3 +27,8 @@ pub use root::*;
 pub use state::*;
 pub use storage::*;
 pub use utils::*;
+
+// We alias the crate (nuit-core) to nuit to make nuit-derive's derive macros
+// work in the same way as the do for nuit's library clients (which shouldn't
+// need to know about nuit-core). See https://stackoverflow.com/a/57049687.
+pub(crate) extern crate self as nuit;

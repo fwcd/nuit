@@ -1,9 +1,10 @@
 use std::{f64::consts::PI, ops::{Add, AddAssign, Div, DivAssign, Mul, MulAssign, Sub, SubAssign}};
 
+use nuit_derive::ApproxEq;
 use serde::{Deserialize, Serialize};
 
 /// A geometric angle.
-#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, Copy, PartialEq, ApproxEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Angle {
     radians: f64,
@@ -114,8 +115,8 @@ mod tests {
         assert_approx_eq!(Angle::HALF.degrees(), 180.0);
         assert_approx_eq!(Angle::HALF.radians(), PI);
 
-        assert_approx_eq!(Angle::with_fractional(1.0), 2.0 * PI);
-        assert_approx_eq!(Angle::with_degrees(360.0), 2.0 * PI);
-        assert_approx_eq!(Angle::with_radians(2.0 * PI), 2.0 * PI);
+        assert_approx_eq!(Angle::with_fractional(1.0), Angle::FULL);
+        assert_approx_eq!(Angle::with_degrees(360.0), Angle::FULL);
+        assert_approx_eq!(Angle::with_radians(2.0 * PI), Angle::FULL);
     }
 }
