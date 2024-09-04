@@ -25,4 +25,4 @@ jobs:
       if: runner.os == 'macOS'
       run: brew install libadwaita gtk4
     - name: Build and Test
-      run: cargo test --all-features
+      run: cargo test --all --all-features
