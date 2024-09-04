@@ -9,6 +9,8 @@ struct ModifierNodeViewModifier: ViewModifier {
             content.padding(EdgeInsets(insets))
         case let .position(position: position):
             content.position(CGPoint(position))
+        case let .offset(delta: delta):
+            content.offset(x: delta.x, y: delta.y)
         case let .opacity(opacity: opacity):
             content.opacity(opacity)
         case let .frame(frame: frame):

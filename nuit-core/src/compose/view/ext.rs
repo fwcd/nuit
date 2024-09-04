@@ -24,6 +24,10 @@ pub trait ViewExt: Sized {
         self.modifier(ModifierNode::Position { position })
     }
 
+    fn offset(self, delta: Vec2<f64>) -> Modified<Self> {
+        self.modifier(ModifierNode::Offset { delta })
+    }
+
     fn opacity(self, opacity: impl Into<f64>) -> Modified<Self> {
         self.modifier(ModifierNode::Opacity { opacity: opacity.into() })
     }
