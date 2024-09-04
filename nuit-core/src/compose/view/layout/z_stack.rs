@@ -1,7 +1,9 @@
-use crate::{View, Node, Bind, Context, IdPath, Event, Id, IdentifyExt};
+use nuit_derive::Bind;
+
+use crate::{View, Node, Context, IdPath, Event, Id, IdentifyExt};
 
 /// A view that lays out its children on top of each other.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Bind)]
 pub struct ZStack<T> {
     wrapped: T,
 }
@@ -13,8 +15,6 @@ impl<T> ZStack<T> {
         }
     }
 }
-
-impl<T> Bind for ZStack<T> where T: Bind {}
 
 impl<T> View for ZStack<T> where T: View {
     fn fire(&self, event: &Event, id_path: &IdPath) {

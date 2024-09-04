@@ -1,7 +1,9 @@
-use crate::{Bind, View, Node, Context, IdPath, Event, Id, IdentifyExt};
+use nuit_derive::Bind;
+
+use crate::{View, Node, Context, IdPath, Event, Id, IdentifyExt};
 
 /// A view that arranges its children in a stylized list.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Bind)]
 pub struct List<T> {
     wrapped: T,
 }
@@ -13,8 +15,6 @@ impl<T> List<T> {
         }
     }
 }
-
-impl<T> Bind for List<T> where T: Bind {}
 
 impl<T> View for List<T> where T: View {
     fn fire(&self, event: &Event, id_path: &IdPath) {

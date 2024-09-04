@@ -1,7 +1,9 @@
-use crate::{View, Node, Bind, Context, Binding, Event, IdPath};
+use nuit_derive::Bind;
+
+use crate::{View, Node, Context, Binding, Event, IdPath};
 
 /// A user-modifiable text field.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Bind)]
 pub struct TextField {
     content: Binding<String>,
 }
@@ -11,8 +13,6 @@ impl TextField {
         Self { content }
     }
 }
-
-impl Bind for TextField {}
 
 impl View for TextField {
     fn fire(&self, event: &Event, id_path: &IdPath) {

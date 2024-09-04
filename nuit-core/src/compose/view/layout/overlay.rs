@@ -1,7 +1,9 @@
-use crate::{Alignment, Bind, Context, Event, Id, IdPath, IdentifyExt, Node, View};
+use nuit_derive::Bind;
+
+use crate::{Alignment, Context, Event, Id, IdPath, IdentifyExt, Node, View};
 
 /// A view that lays out its children on top of each other.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Bind)]
 pub struct Overlay<T, O> {
     wrapped: T,
     alignment: Alignment,
@@ -17,8 +19,6 @@ impl<T, O> Overlay<T, O> {
         }
     }
 }
-
-impl<T, O> Bind for Overlay<T, O> where T: Bind, O: Bind {}
 
 impl<T, O> View for Overlay<T, O> where T: View, O: View {
     fn fire(&self, event: &Event, id_path: &IdPath) {

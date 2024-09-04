@@ -1,7 +1,9 @@
-use crate::{View, Node, Bind, Context, Event, IdPath, Id, IdentifyExt};
+use nuit_derive::Bind;
+
+use crate::{View, Node, Context, Event, IdPath, Id, IdentifyExt};
 
 /// A widget that performs an action when pressed/tapped.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Bind)]
 pub struct Button<T, F> {
     label: T,
     action: Option<F>,
@@ -15,8 +17,6 @@ impl<T, F> Button<T, F> {
         }
     }
 }
-
-impl<T, F> Bind for Button<T, F> where T: Bind, F: Fn() + 'static {}
 
 impl<T, F> View for Button<T, F> where T: View, F: Fn() + 'static {
     fn fire(&self, event: &Event, id_path: &IdPath) {

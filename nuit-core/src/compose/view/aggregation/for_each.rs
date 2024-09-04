@@ -1,7 +1,9 @@
-use crate::{Bind, Context, Event, HasId, IdPath, Identified, IdentifyExt, Node, View};
+use nuit_derive::Bind;
+
+use crate::{Context, Event, HasId, IdPath, Identified, IdentifyExt, Node, View};
 
 /// A group of views that is dynamically computed from a given collection.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Bind)]
 pub struct ForEach<V> {
     children: Vec<Identified<V>>,
 }
@@ -10,7 +12,7 @@ pub struct ForEach<V> {
 // otherwise get inferred incorrectly, resulting in potentially obscure errors
 // where the composite type appears not to implement View.
 
-impl<V> ForEach<V> where V: Bind {
+impl<V> ForEach<V> where V: View {
     pub fn new<I: HasId>(collection: impl IntoIterator<Item = I>, view_func: impl Fn(I) -> V) -> Self {
         Self {
             children: collection
@@ -25,8 +27,6 @@ impl<V> ForEach<V> where V: Bind {
 }
 
 // TODO: Figure out if we can write the bound on references to avoid the clone
-
-impl<V> Bind for ForEach<V> where V: Bind {}
 
 impl<V> View for ForEach<V> where V: View {
     fn fire(&self, event: &Event, id_path: &IdPath) {

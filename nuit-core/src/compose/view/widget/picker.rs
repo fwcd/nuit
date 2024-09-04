@@ -1,7 +1,9 @@
-use crate::{View, Node, Bind, Context, Binding, Event, IdPath, Id, IdentifyExt};
+use nuit_derive::Bind;
+
+use crate::{View, Node, Context, Binding, Event, IdPath, Id, IdentifyExt};
 
 /// A view that lets the user choose a value.
-#[derive(Debug, Clone)]
+#[derive(Debug, Clone, Bind)]
 pub struct Picker<C> {
     title: String,
     selection: Binding<Id>,
@@ -13,8 +15,6 @@ impl<C> Picker<C> {
         Self { title: title.into(), selection, content }
     }
 }
-
-impl<C> Bind for Picker<C> where C: Bind {}
 
 impl<C> View for Picker<C> where C: View {
     fn fire(&self, event: &Event, id_path: &IdPath) {

@@ -1,8 +1,10 @@
-use crate::{View, Node, Bind, Context, Event, IdPath, Id, IdentifyExt};
+use nuit_derive::Bind;
+
+use crate::{View, Node, Context, Event, IdPath, Id, IdentifyExt};
 
 /// A conditional view that can take on one of at most two branches, depending
 /// on a boolean condition.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Bind)]
 pub struct If<T, F> {
     then_view: Option<T>,
     else_view: Option<F>,
@@ -25,8 +27,6 @@ impl<T, F> If<T, F> {
         }
     }
 }
-
-impl<T, F> Bind for If<T, F> where T: Bind, F: Bind {}
 
 impl<T, F> View for If<T, F> where T: View, F: View {
     fn fire(&self, event: &Event, id_path: &IdPath) {

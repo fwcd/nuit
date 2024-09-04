@@ -1,7 +1,9 @@
-use crate::{View, Node, Bind, Context, Event, IdPath};
+use nuit_derive::Bind;
+
+use crate::{View, Node, Context, Event, IdPath};
 
 /// A text label.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Bind)]
 pub struct Text {
     content: String,
 }
@@ -13,8 +15,6 @@ impl Text {
         }
     }
 }
-
-impl Bind for Text {}
 
 impl View for Text {
     fn fire(&self, _event: &Event, _id_path: &IdPath) {}

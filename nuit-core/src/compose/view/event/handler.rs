@@ -1,7 +1,9 @@
-use crate::{View, Node, Bind, Context, Event, IdPath};
+use nuit_derive::Bind;
+
+use crate::{View, Node, Context, Event, IdPath};
 
 /// A view that handles events using a provided closure.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, Bind, PartialEq, Eq)]
 pub struct Handler<T, F> {
     wrapped: T,
     handle_event: F
@@ -15,8 +17,6 @@ impl<T, F> Handler<T, F> {
         }
     }
 }
-
-impl<T, F> Bind for Handler<T, F> where T: Bind, F: Fn(Event) {}
 
 impl<T, F> View for Handler<T, F> where T: View, F: Fn(Event) {
     fn fire(&self, event: &Event, id_path: &IdPath) {

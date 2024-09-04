@@ -1,7 +1,9 @@
-use crate::{Bind, Context, Event, Id, IdPath, IdentifyExt, Node, View, DEFAULT_SPACING};
+use nuit_derive::Bind;
+
+use crate::{Context, Event, Id, IdPath, IdentifyExt, Node, View, DEFAULT_SPACING};
 
 /// A view that lays out its children horizontally.
-#[derive(Debug, Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq, Bind)]
 pub struct HStack<T> {
     spacing: f64,
     wrapped: T,
@@ -22,8 +24,6 @@ impl<T> HStack<T> {
         }
     }
 }
-
-impl<T> Bind for HStack<T> where T: Bind {}
 
 impl<T> View for HStack<T> where T: View {
     fn fire(&self, event: &Event, id_path: &IdPath) {
