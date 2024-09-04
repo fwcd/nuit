@@ -1,10 +1,12 @@
 use proc_macro::TokenStream;
 use quote::quote;
-use syn::{Data, DeriveInput, Fields, Ident};
+use syn::{Data, DeriveInput, Fields, Ident, TypeParam};
 
 pub fn derive(input: TokenStream) -> TokenStream {
     let input: DeriveInput = syn::parse(input).unwrap();
     let name = &input.ident;
+
+    let type_params: Vec<TypeParam> = input.generics.type_params().cloned().collect();
 
     let fields: Vec<Ident> = match input.data {
         Data::Struct(s) => match s.fields {
@@ -18,7 +20,10 @@ pub fn derive(input: TokenStream) -> TokenStream {
     };
 
     let impl_block = quote! {
-        impl ::nuit::ApproxEq for #name {
+        impl<#(#type_params),*> ::nuit::ApproxEq for #name<#(#type_params),*>
+        where
+            #(#type_params: ::nuit::ApproxEq),*
+        {
             fn approx_eq(&self, other: &Self, tolerance: f64) -> bool {
                 #(self.#fields.approx_eq(&other.#fields, tolerance))&&*
             }
