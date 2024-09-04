@@ -11,13 +11,13 @@ pub struct Angle {
 
 impl Angle {
     /// Creates an angle from the given value in radians.
-    pub const fn from_radians(radians: f64) -> Self {
+    pub const fn with_radians(radians: f64) -> Self {
         Self { radians }
     }
 
     /// Creates an angle from the given value in degrees.
-    pub const fn from_degrees(degrees: f64) -> Self {
-        Self::from_radians(degrees * PI / 180.0)
+    pub const fn with_degrees(degrees: f64) -> Self {
+        Self::with_radians(degrees * PI / 180.0)
     }
 
     /// The value in radians.
