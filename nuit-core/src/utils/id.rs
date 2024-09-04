@@ -10,17 +10,17 @@ use serde::{Serialize, Deserialize};
 #[derive(Debug, Clone, Hash, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(untagged)]
 pub enum Id {
-    Index(usize),
+    Index(i64),
     String(String),
 }
 
 impl Id {
-    pub const fn index(value: usize) -> Self {
-        Self::Index(value)
+    pub fn index(value: impl Into<i64>) -> Self {
+        Self::Index(value.into())
     }
 
-    pub const fn string(value: String) -> Self {
-        Self::String(value)
+    pub fn string(value: impl Into<String>) -> Self {
+        Self::String(value.into())
     }
 }
 
@@ -33,11 +33,20 @@ impl fmt::Display for Id {
     }
 }
 
-impl From<usize> for Id {
-    fn from(value: usize) -> Self {
-        Self::Index(value)
-    }
+macro_rules! impl_id_from_integer {
+    ($($tys:ty),*) => {
+        $(impl From<$tys> for Id {
+            fn from(value: $tys) -> Self {
+                Self::Index(value as i64)
+            }
+        })*
+    };
 }
+
+impl_id_from_integer!(
+    u8, u16, u32, u64, usize,
+    i8, i16, i32, i64, isize
+);
 
 impl From<String> for Id {
     fn from(value: String) -> Self {
