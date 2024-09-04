@@ -1,3 +1,4 @@
+mod angle;
 mod clone;
 mod color;
 mod frame;
@@ -11,6 +12,7 @@ mod style;
 mod vec2;
 mod zero;
 
+pub use angle::*;
 pub use color::*;
 pub use frame::*;
 pub use has_id::*;
