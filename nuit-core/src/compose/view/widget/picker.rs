@@ -17,8 +17,8 @@ impl<C> Picker<C> {
 }
 
 impl<C> View for Picker<C> where C: View {
-    fn fire(&self, event: &Event, id_path: &IdPath) {
-        assert!(id_path.is_root());
+    fn fire(&self, event: &Event, event_path: &IdPath, _context: &Context) {
+        assert!(event_path.is_root());
         if let Event::UpdatePickerSelection { id } = event {
             self.selection.set(id.clone());
         }

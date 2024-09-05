@@ -19,10 +19,10 @@ impl<T> Modified<T> {
 }
 
 impl<T> View for Modified<T> where T: View {
-    fn fire(&self, event: &Event, id_path: &IdPath) {
-        if let Some(head) = id_path.head() {
+    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) {
+        if let Some(head) = event_path.head() {
             match head {
-                Id::Index(0) => self.wrapped.fire(event, &id_path.tail()),
+                Id::Index(0) => self.wrapped.fire(event, &event_path.tail(), &context.child(0)),
                 i => panic!("Cannot fire event for child id {} on Modified which only has one child", i)
             }
         }

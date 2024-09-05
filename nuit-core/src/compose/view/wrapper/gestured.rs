@@ -16,13 +16,13 @@ impl<T, G> Gestured<T, G> {
 }
 
 impl<T, G> View for Gestured<T, G> where T: View, G: Gesture {
-    fn fire(&self, event: &Event, id_path: &IdPath) {
-        if let Some(head) = id_path.head() {
+    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) {
+        if let Some(head) = event_path.head() {
             match head {
-                Id::Index(0) => self.wrapped.fire(event, id_path),
+                Id::Index(0) => self.wrapped.fire(event, event_path.tail(), &context.child(0)),
                 Id::Index(1) => match event {
-                    Event::Gesture { gesture } => self.gesture.fire(gesture, id_path),
-                    _ => eprintln!("Warning: Non-gesture event {:?} targeted to id path {:?} in a gesture is ignored", event, id_path),
+                    Event::Gesture { gesture } => self.gesture.fire(gesture, event_path, &context.child(1)),
+                    _ => eprintln!("Warning: Non-gesture event {:?} targeted to id path {:?} in a gesture is ignored", event, event_path),
                 },
                 i => panic!("Cannot fire event for child id {} on Gestured, which has two childs", i),
             }

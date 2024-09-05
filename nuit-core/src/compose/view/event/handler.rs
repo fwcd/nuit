@@ -19,11 +19,11 @@ impl<T, F> Handler<T, F> {
 }
 
 impl<T, F> View for Handler<T, F> where T: View, F: Fn(Event) {
-    fn fire(&self, event: &Event, id_path: &IdPath) {
-        if id_path.is_root() {
+    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) {
+        if event_path.is_root() {
             (self.handle_event)(event.clone());
         }
-        self.wrapped.fire(event, id_path);
+        self.wrapped.fire(event, event_path, context);
     }
 
     fn render(&self, context: &Context) -> Node {

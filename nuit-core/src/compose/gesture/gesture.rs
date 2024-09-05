@@ -8,8 +8,9 @@ pub trait Gesture: Bind {
         panic!("Gesture does not have a body!")
     }
 
-    fn fire(&self, event: &GestureEvent, id_path: &IdPath) {
-        self.body().fire(event, id_path)
+    fn fire(&self, event: &GestureEvent, event_path: &IdPath, context: &Context) {
+        self.bind(context);
+        self.body().fire(event, event_path, context)
     }
 
     fn render(&self, context: &Context) -> GestureNode {

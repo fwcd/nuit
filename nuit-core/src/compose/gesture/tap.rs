@@ -24,11 +24,11 @@ impl<F> TapGesture<F> {
 }
 
 impl<F> Gesture for TapGesture<F> where F: Fn() {
-    fn fire(&self, event: &GestureEvent, id_path: &IdPath) {
+    fn fire(&self, event: &GestureEvent, event_path: &IdPath, _context: &Context) {
         if let GestureEvent::Tap {} = event {
             (self.action)();
         } else {
-            eprintln!("Warning: Ignoring non-tap gesture event {:?} targeted to TapGesture at {:?}", event, id_path)
+            eprintln!("Warning: Ignoring non-tap gesture event {:?} targeted to TapGesture at {:?}", event, event_path)
         }
     }
 

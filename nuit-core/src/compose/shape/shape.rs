@@ -21,7 +21,7 @@ impl Shape for NeverShape {}
 impl<T> Bind for T where T: Shape {}
 
 impl<T> View for T where T: Shape {
-    fn fire(&self, _event: &Event, _id_path: &IdPath) {}
+    fn fire(&self, _event: &Event, _id_path: &IdPath, _context: &Context) {}
 
     fn render(&self, _context: &Context) -> Node {
         Node::Shape {

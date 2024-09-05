@@ -15,8 +15,8 @@ impl TextField {
 }
 
 impl View for TextField {
-    fn fire(&self, event: &Event, id_path: &IdPath) {
-        assert!(id_path.is_root());
+    fn fire(&self, event: &Event, event_path: &IdPath, _context: &Context) {
+        assert!(event_path.is_root());
         if let Event::UpdateText { content } = event {
             self.content.set(content.to_owned());
         }

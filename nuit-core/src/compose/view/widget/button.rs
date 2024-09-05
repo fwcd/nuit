@@ -19,10 +19,10 @@ impl<T, F> Button<T, F> {
 }
 
 impl<T, F> View for Button<T, F> where T: View, F: Fn() + 'static {
-    fn fire(&self, event: &Event, id_path: &IdPath) {
-        if let Some(head) = id_path.head() {
+    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) {
+        if let Some(head) = event_path.head() {
             match head {
-                Id::Index(0) => self.label.fire(event, &id_path.tail()),
+                Id::Index(0) => self.label.fire(event, &event_path.tail(), &context.child(0)),
                 i => panic!("Cannot fire event for child id {} on Button which only has one child", i)
             }
         } else if let Event::ButtonTap {} = event {

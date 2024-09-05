@@ -29,17 +29,17 @@ impl<T, F> If<T, F> {
 }
 
 impl<T, F> View for If<T, F> where T: View, F: View {
-    fn fire(&self, event: &Event, id_path: &IdPath) {
-        if let Some(head) = id_path.head() {
+    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) {
+        if let Some(head) = event_path.head() {
             match head {
                 Id::Index(0) => {
                     if let Some(ref then_view) = self.then_view {
-                        then_view.fire(event, &id_path.tail())
+                        then_view.fire(event, &event_path.tail(), &context.child(0))
                     }
                 },
                 Id::Index(1) => {
                     if let Some(ref else_view) = self.else_view {
-                        else_view.fire(event, &id_path.tail())
+                        else_view.fire(event, &event_path.tail(), &context.child(1))
                     }
                 },
                 i => panic!("Cannot fire event for child id {} on HStack which only has two childs", i)

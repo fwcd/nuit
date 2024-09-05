@@ -17,7 +17,7 @@ impl Text {
 }
 
 impl View for Text {
-    fn fire(&self, _event: &Event, _id_path: &IdPath) {}
+    fn fire(&self, _event: &Event, _id_path: &IdPath, _context: &Context) {}
 
     fn render(&self, _context: &Context) -> Node {
         Node::Text { content: self.content.clone() }

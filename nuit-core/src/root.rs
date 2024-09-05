@@ -25,8 +25,9 @@ impl<T> Root<T> {
 
 impl<T> Root<T> where T: View {
     pub fn render(&self) -> Node {
+        let context = Context::new(self.storage.clone());
         let new_render = self.storage.with_preapplied_changes(|| {
-            self.view.borrow().render(&Context::new(self.storage.clone()))
+            self.view.borrow().render(&context)
         });
 
         {
@@ -34,13 +35,13 @@ impl<T> Root<T> where T: View {
             let diff = new_render.diff(&last_render);
 
             for (id_path, _) in &diff.removed {
-                self.view.borrow().fire(&Event::Disappear, id_path)
+                self.view.borrow().fire(&Event::Disappear, id_path, &context);
             }
 
             self.storage.apply_changes();
 
             for (id_path, _) in &diff.added {
-                self.view.borrow().fire(&Event::Appear, id_path)
+                self.view.borrow().fire(&Event::Appear, id_path, &context);
             }
         }
 
@@ -60,7 +61,7 @@ impl<T> Root<T> where T: View {
     }
 
     pub fn fire_event(&self, id_path: &IdPath, event: &Event) {
-        self.view.borrow().fire(event, id_path);
+        self.view.borrow().fire(event, id_path, &Context::new(self.storage.clone()));
     }
 
     pub fn set_update_callback(&self, update_callback: impl Fn() + 'static) {

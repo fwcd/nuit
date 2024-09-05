@@ -10,8 +10,9 @@ pub trait View: Bind {
 
     // TODO: Return an error type from fire to avoid panicking on wrong paths?
 
-    fn fire(&self, event: &Event, id_path: &IdPath) {
-        self.body().fire(event, id_path);
+    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) {
+        self.bind(context);
+        self.body().fire(event, event_path, context);
     }
 
     fn render(&self, context: &Context) -> Node {
@@ -23,10 +24,10 @@ pub trait View: Bind {
 macro_rules! impl_tuple_view {
     ($($tvs:ident),*) => {
         impl<$($tvs),*> View for ($($tvs,)*) where $($tvs: View),* {
-            fn fire(&self, event: &Event, id_path: &IdPath) {
-                if let Some(head) = id_path.head() {
+            fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) {
+                if let Some(head) = event_path.head() {
                     match head {
-                        $(${ignore($tvs)} Id::Index(${index()}) => self.${index()}.fire(event, &id_path.tail()),)*
+                        $(${ignore($tvs)} Id::Index(${index()}) => self.${index()}.fire(event, &event_path.tail(), &context.child(${index()})),)*
                         i => panic!("Cannot fire event for child id {} on a {}-tuple", i, ${count($tvs, 0)})
                     }
                 }
@@ -53,7 +54,7 @@ impl View for NeverView {}
 // overhead of using a Group requiring a Vec.
 
 impl View for () {
-    fn fire(&self, _event: &Event, _id_path: &IdPath) {}
+    fn fire(&self, _event: &Event, _id_path: &IdPath, _context: &Context) {}
 
     fn render(&self, _context: &Context) -> Node {
         Node::Empty {}
@@ -67,10 +68,10 @@ impl<T> View for (T,) where T: View {
         self.0.body()
     }
 
-    fn fire(&self, event: &Event, id_path: &IdPath) {
-        if let Some(head) = id_path.head() {
+    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) {
+        if let Some(head) = event_path.head() {
             match head {
-                Id::Index(0) => self.0.fire(event, &id_path.tail()),
+                Id::Index(0) => self.0.fire(event, &event_path.tail(), &context.child(0)),
                 i => panic!("Cannot fire event for child id {} on 1-tuple", i)
             }
         }

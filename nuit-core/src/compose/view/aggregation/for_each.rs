@@ -29,10 +29,10 @@ impl<V> ForEach<V> where V: View {
 // TODO: Figure out if we can write the bound on references to avoid the clone
 
 impl<V> View for ForEach<V> where V: View {
-    fn fire(&self, event: &Event, id_path: &IdPath) {
-        if let Some(head) = id_path.head() {
+    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) {
+        if let Some(head) = event_path.head() {
             if let Some(view) = self.children.iter().find(|view| view.id() == &head) {
-                view.value().fire(event, &id_path.tail());
+                view.value().fire(event, &event_path.tail(), &context.child(view.id().clone()));
             }
         }
     }
