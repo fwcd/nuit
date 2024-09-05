@@ -26,14 +26,17 @@ impl Color {
     pub const MAGENTA: Self = Self::with_rgb(1.0, 0.0, 1.0);
     pub const YELLOW: Self = Self::with_rgb(1.0, 1.0, 0.0);
 
+    /// Creates a new color with the given RGBA components.
     pub const fn new(red: f64, green: f64, blue: f64, alpha: f64) -> Self {
         Self { red, green, blue, alpha }
     }
 
+    /// Creates a new color with the given RGB components and alpha 1.
     pub const fn with_rgb(red: f64, green: f64, blue: f64) -> Self {
         Self::new(red, green, blue, 1.0)
     }
 
+    /// Creates a new color with the given grayscale value and alpha 1.
     pub const fn with_grayscale(gray: f64) -> Self {
         Self::new(gray, gray, gray, 1.0)
     }
@@ -43,11 +46,12 @@ impl Color {
         Self::new(rand::random(), rand::random(), rand::random(), rand::random())
     }
 
-    /// A random RGB color that is not transparent.
+    /// A random RGB color with alpha 1.
     pub fn random_rgb() -> Self {
         Self::new(rand::random(), rand::random(), rand::random(), 1.0)
     }
 
+    /// Creates a new color with the given HSV value and alpha.
     pub fn with_hsva(hue: Angle, saturation: f64, value: f64, alpha: f64) -> Self {
         let hue_degrees = hue.degrees().rem_euclid(360.0);
 
@@ -77,6 +81,7 @@ impl Color {
         }
     }
 
+    /// Creates a new color with the given HSV value.
     pub fn with_hsv(hue: Angle, saturation: f64, value: f64) -> Self {
         Self::with_hsva(hue, saturation, value, 1.0)
     }
