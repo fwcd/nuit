@@ -1,5 +1,21 @@
 import CoreGraphics
 
+extension Vec2 where T == Double {
+    init(_ cgPoint: CGPoint) {
+        self.init(
+            x: Double(cgPoint.x),
+            y: Double(cgPoint.y)
+        )
+    }
+
+    init(_ cgSize: CGSize) {
+        self.init(
+            x: Double(cgSize.width),
+            y: Double(cgSize.height)
+        )
+    }
+}
+
 extension CGPoint {
     init(_ vec2: Vec2<Double>) {
         self.init(

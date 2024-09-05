@@ -71,8 +71,8 @@ struct NodeView: View {
         case let .shape(shape: shape):
             ShapeNodeView(shape: shape)
         case let .gestured(wrapped: wrapped, gesture: gesture):
-            NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
-                .gesture(GestureNodeGesture(node: gesture.value, idPath: idPath + [gesture.id]))
+            let view = NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
+                .modifier(GestureNodeViewModifier(node: gesture.value, idPath: idPath + [gesture.id]))
         case let .modified(wrapped: wrapped, modifier: modifier):
             NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
                 .modifier(ModifierNodeViewModifier(modifier: modifier))
