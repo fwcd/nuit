@@ -53,3 +53,9 @@ impl<T> State<T> where T: 'static + Clone {
         )
     }
 }
+
+impl<T> Default for State<T> where T: 'static + Default + Clone {
+    fn default() -> Self {
+        Self::new(T::default())
+    }
+}
