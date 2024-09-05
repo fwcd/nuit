@@ -84,7 +84,7 @@ will launch the app with the platform-specific default backend, e.g. SwiftUI on 
 
 <img src="screenshots/counter-swiftui.png" height="300">
 
-Using the Adwaita/GTK4 the app looks as follows:
+Using the Adwaita/GTK4 backend the app looks as follows:
 
 <img src="screenshots/counter-adwaita.png" height="300">
 
