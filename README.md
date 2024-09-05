@@ -80,11 +80,13 @@ Running this example with
 cargo run --example counter
 ```
 
-will launch the app with the platform-specific default backend:
+will launch the app with the platform-specific default backend, e.g. SwiftUI on macOS:
 
-| SwiftUI | Adwaita (GTK4) |
-| - | - |
-| <img src="screenshots/counter-swiftui.png" height="300"> | <img src="screenshots/counter-adwaita.png" height="300"> |
+<img src="screenshots/counter-swiftui.png" height="300">
+
+Using the Adwaita/GTK4 the app looks as follows:
+
+<img src="screenshots/counter-adwaita.png" height="300">
 
 > [!TIP]
 > On platforms that support multiple backends you can explicitly choose a backend via the `NUIT_BACKEND` environment variable:
