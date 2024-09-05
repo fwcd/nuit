@@ -1,3 +1,3 @@
 enum GestureNode: Codable, Hashable {
-    case tap
+    case tap(count: Int)
 }
