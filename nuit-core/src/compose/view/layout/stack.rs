@@ -34,7 +34,7 @@ macro_rules! impl_stack {
                 if let Some(head) = id_path.head() {
                     match head {
                         Id::Index(0) => self.wrapped.fire(event, &id_path.tail()),
-                        i => panic!("Cannot fire event for child id {} on $name which only has one child", i)
+                        i => panic!("Cannot fire event for child id {} on {} which only has one child", i, stringify!($name)),
                     }
                 }
             }
