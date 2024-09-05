@@ -1,6 +1,6 @@
 #![feature(type_alias_impl_trait, impl_trait_in_assoc_type)]
 
-use nuit::{Bind, Circle, Color, HStack, ShapeExt, State, Text, View, ViewExt};
+use nuit::{Bind, Circle, Color, DragGesture, HStack, ShapeExt, State, Text, Vec2, View, ViewExt};
 
 #[derive(Bind)]
 struct TapView {
@@ -36,6 +36,26 @@ impl View for TapView {
     }
 }
 
+#[derive(Bind, Default)]
+struct DragView {
+    offset: State<Vec2<f64>>,
+}
+
+impl View for DragView {
+    type Body = impl View;
+
+    fn body(&self) -> Self::Body {
+        let offset = self.offset.clone();
+        Circle::new()
+            .fill(Color::BLACK)
+            .frame(150)
+            .offset(offset.get())
+            .gesture(DragGesture::new_default(move |event| {
+                offset.set(event.translation());
+            }))
+    }
+}
+
 #[derive(Bind)]
 struct GesturesView;
 
@@ -46,6 +66,7 @@ impl View for GesturesView {
         HStack::new((
             TapView::new(1),
             TapView::new(2),
+            DragView::default(),
         ))
     }
 }
