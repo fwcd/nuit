@@ -42,16 +42,19 @@ impl Color {
     }
 
     /// A random RGBA color.
+    #[cfg(feature = "rand")]
     pub fn random_rgba() -> Self {
         Self::new(rand::random(), rand::random(), rand::random(), rand::random())
     }
 
     /// A random RGB color with alpha 1.
+    #[cfg(feature = "rand")]
     pub fn random_rgb() -> Self {
         Self::with_rgb(rand::random(), rand::random(), rand::random())
     }
 
     /// A random grayscale color with alpha 1.
+    #[cfg(feature = "rand")]
     pub fn random_grayscale() -> Self {
         Self::with_grayscale(rand::random())
     }

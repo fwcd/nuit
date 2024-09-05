@@ -6,9 +6,13 @@ edition.workspace = true
 homepage.workspace = true
 license.workspace = true
 
+[features]
+default = []
+rand = ["dep:rand"]
+
 [dependencies]
 nuit-derive.workspace = true
 serde.workspace = true
 serde_json.workspace = true
-rand = "0.8"
+rand = { version = "0.8", optional = true }
 ref-cast = "1.0"

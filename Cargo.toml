@@ -13,12 +13,17 @@ license.workspace = true
 default = ["adwaita", "swiftui"]
 adwaita = ["dep:nuit-bridge-adwaita"]
 swiftui = ["dep:nuit-bridge-swiftui"]
+rand = ["nuit-core/rand"]
 
 [dependencies]
 nuit-derive.workspace = true
 nuit-core.workspace = true
 nuit-bridge-adwaita = { workspace = true, optional = true }
 nuit-bridge-swiftui = { workspace = true, optional = true }
+
+[[example]]
+name = "gestures"
+required-features = ["rand"]
 
 [workspace]
 members = [
