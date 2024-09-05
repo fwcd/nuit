@@ -89,7 +89,7 @@ Using the Adwaita/GTK4 backend the app looks as follows:
 <img src="screenshots/counter-adwaita.png" height="300">
 
 > [!TIP]
-> On platforms that support multiple backends you can explicitly choose a backend via the `NUIT_BACKEND` environment variable:
+> On platforms that support multiple backends (currently only macOS) you can explicitly choose a backend via the `NUIT_BACKEND` environment variable:
 >
 > ```sh
 > NUIT_BACKEND=adwaita cargo run --example counter
