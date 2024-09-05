@@ -38,6 +38,16 @@ impl Color {
         Self::new(gray, gray, gray, 1.0)
     }
 
+    /// A random RGBA color.
+    pub fn random_rgba() -> Self {
+        Self::new(rand::random(), rand::random(), rand::random(), rand::random())
+    }
+
+    /// A random RGB color that is not transparent.
+    pub fn random_rgb() -> Self {
+        Self::new(rand::random(), rand::random(), rand::random(), 1.0)
+    }
+
     pub fn with_hsva(hue: Angle, saturation: f64, value: f64, alpha: f64) -> Self {
         let hue_degrees = hue.degrees().rem_euclid(360.0);
 
