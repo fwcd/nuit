@@ -4,10 +4,10 @@ use super::{IdPath, IdPathBuf};
 pub trait Diff: Sized {
     /// Appends the difference to "construct" this type from the given other one
     /// to the given difference.
-    fn record_diff<'a>(&'a self, old: &'a Self, id_path: &IdPath, difference: &mut Difference<'a, Self>);
+    fn record_diff<'a>(&'a self, old: &'a Self, id_path: &IdPath, difference: &mut Difference<(IdPathBuf, &'a Self)>);
 
     /// Computes the difference to "construct" this type from the given other one.
-    fn diff<'a>(&'a self, old: &'a Self) -> Difference<'a, Self> {
+    fn diff<'a>(&'a self, old: &'a Self) -> Difference<(IdPathBuf, &'a Self)> {
         let mut difference = Difference::new();
         self.record_diff(old, IdPath::root(), &mut difference);
         return difference;
@@ -16,13 +16,13 @@ pub trait Diff: Sized {
 
 /// The difference between two values.
 #[derive(Debug, PartialEq, Eq, Clone)]
-pub struct Difference<'a, T> {
-    pub removed: Vec<(IdPathBuf, &'a T)>,
-    pub changed: Vec<(IdPathBuf, &'a T)>,
-    pub added: Vec<(IdPathBuf, &'a T)>,
+pub struct Difference<T> {
+    pub removed: Vec<T>,
+    pub changed: Vec<T>,
+    pub added: Vec<T>,
 }
 
-impl<'a, T> Difference<'a, T> {
+impl<T> Difference<T> {
     pub fn new() -> Self {
         Self {
             removed: Vec::new(),
@@ -32,7 +32,7 @@ impl<'a, T> Difference<'a, T> {
     }
 }
 
-impl<'a, T> Default for Difference<'a, T> {
+impl<T> Default for Difference<T> {
     fn default() -> Self {
         Self::new()
     }

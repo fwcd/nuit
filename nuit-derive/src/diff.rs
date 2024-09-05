@@ -15,7 +15,7 @@ pub fn derive(input: TokenStream) -> TokenStream {
 
     let impl_block = quote! {
         impl<#(#type_params),*> ::nuit::Diff for #name<#(#type_params),*> {
-            fn record_diff<'a>(&'a self, old: &'a Self, id_path: &::nuit::IdPath, difference: &mut ::nuit::Difference<'a, Self>) {
+            fn record_diff<'a>(&'a self, old: &'a Self, id_path: &::nuit::IdPath, difference: &mut ::nuit::Difference<(::nuit::IdPathBuf, &'a Self)>) {
                 use ::std::mem;
 
                 if mem::discriminant(self) != mem::discriminant(old) {
