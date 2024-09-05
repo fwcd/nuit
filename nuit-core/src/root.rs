@@ -29,17 +29,19 @@ impl<T> Root<T> where T: View {
             self.view.borrow().render(&Context::new(self.storage.clone()))
         });
 
-        let last_render = self.last_render.borrow();
-        let diff = new_render.diff(&last_render);
+        {
+            let last_render = self.last_render.borrow();
+            let diff = new_render.diff(&last_render);
 
-        for (id_path, _) in &diff.removed {
-            self.view.borrow().fire(&Event::Disappear, id_path)
-        }
+            for (id_path, _) in &diff.removed {
+                self.view.borrow().fire(&Event::Disappear, id_path)
+            }
 
-        self.storage.apply_changes();
+            self.storage.apply_changes();
 
-        for (id_path, _) in &diff.added {
-            self.view.borrow().fire(&Event::Appear, id_path)
+            for (id_path, _) in &diff.added {
+                self.view.borrow().fire(&Event::Appear, id_path)
+            }
         }
 
         *self.last_render.borrow_mut() = new_render.clone();
