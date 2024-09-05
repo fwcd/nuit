@@ -22,6 +22,7 @@ impl View for GesturesView {
         let color = self.color.clone();
         Circle::new()
             .fill(color.get())
+            .frame(100)
             .overlay(Text::new("Tap me!"))
             .on_tap(move || {
                 color.set(Color::random_rgb());
