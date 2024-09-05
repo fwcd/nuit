@@ -16,15 +16,36 @@ pub fn derive(input: TokenStream) -> TokenStream {
     let impl_block = quote! {
         impl ::nuit::Diff for #name {
             fn record_diff<'a>(&'a self, old: &'a Self, id_path: &::nuit::IdPath, difference: &mut ::nuit::Difference<&'a Self>) {
-                use ::std::mem;
+                use ::std::{mem, collections::{HashSet, HashMap}};
+                use ::nuit::{Difference, Identified, Id, IdPath};
 
-                fn recurse_on<'a>(new_child: &'a Identified<#name>, old_child: &'a Identified<#name>, id_path: &::nuit::IdPath, difference: &mut ::nuit::Difference<&'a #name>) {
+                fn recurse_on<'a>(new_child: &'a Identified<#name>, old_child: &'a Identified<#name>, id_path: &IdPath, difference: &mut Difference<&'a #name>) {
                     if new_child.id() != old_child.id() {
                         difference.removed.push((id_path.child(old_child.id().clone()), old_child.value()));
                         difference.added.push((id_path.child(new_child.id().clone()), new_child.value()));
                         return;
                     }
                     new_child.value().record_diff(old_child.value(), &id_path.child(new_child.id().clone()), difference);
+                }
+
+                fn recurse_container_on<'a>(new_child_container: &'a Vec<Identified<#name>>, old_child_container: &'a Vec<Identified<#name>>, id_path: &IdPath, difference: &mut Difference<&'a #name>) {
+                    let new_children: HashMap<&Id, &Identified<#name>> = new_child_container.iter().map(|c| (c.id(), c)).collect();
+                    let old_children: HashMap<&Id, &Identified<#name>> = old_child_container.iter().map(|c| (c.id(), c)).collect();
+
+                    let new_ids: HashSet<&Id> = new_children.keys().cloned().collect();
+                    let old_ids: HashSet<&Id> = old_children.keys().cloned().collect();
+
+                    for &child_id in new_ids.difference(&old_ids) {
+                        difference.added.push((id_path.child(child_id.clone()), new_children[child_id].value()));
+                    }
+
+                    for &child_id in old_ids.difference(&new_ids) {
+                        difference.removed.push((id_path.child(child_id.clone()), old_children[child_id].value()));
+                    }
+
+                    for &child_id in new_ids.intersection(&old_ids) {
+                        recurse_on(new_children[child_id], old_children[child_id], id_path, difference);
+                    }
                 }
 
                 if mem::discriminant(self) != mem::discriminant(old) {
@@ -62,13 +83,13 @@ fn create_variant_match_arms(variants: Vec<Variant>) -> Vec<proc_macro2::TokenSt
             let pattern = quote! { Self::#ident { #(#field_idents: #bound_idents),* } };
             let simple_idents: Vec<Ident> = bound_vars.iter().filter(|(_, k)| matches!(k, DiffFieldKind::Simple)).map(|(bi, _)| bi.clone()).collect();
             let child_idents: Vec<Ident> = bound_vars.iter().filter(|(_, k)| matches!(k, DiffFieldKind::Child)).map(|(bi, _)| bi.clone()).collect();
-            let childs_idents: Vec<Ident> = bound_vars.iter().filter(|(_, k)| matches!(k, DiffFieldKind::Childs)).map(|(bi, _)| bi.clone()).collect();
+            let child_container_idents: Vec<Ident> = bound_vars.iter().filter(|(_, k)| matches!(k, DiffFieldKind::ChildContainer)).map(|(bi, _)| bi.clone()).collect();
 
-            (pattern, simple_idents, child_idents, childs_idents)
+            (pattern, simple_idents, child_idents, child_container_idents)
         };
 
-        let (pattern1, simple_idents1, child_idents1, childs_idents1) = create_pattern(1);
-        let (pattern2, simple_idents2, child_idents2, childs_idents2) = create_pattern(2);
+        let (pattern1, simple_idents1, child_idents1, child_container_idents1) = create_pattern(1);
+        let (pattern2, simple_idents2, child_idents2, child_container_idents2) = create_pattern(2);
 
         quote! {
             (#pattern1, #pattern2) => {
@@ -80,7 +101,8 @@ fn create_variant_match_arms(variants: Vec<Variant>) -> Vec<proc_macro2::TokenSt
                 // Handle child (`Identified<Self>`) variables by recursing on them
                 #(recurse_on(#child_idents1, #child_idents2, id_path, difference);)*
 
-                // TODO: Handle child container (`Vec<Identified<Self>>`) variables by diffing, then recursing
+                // Handle child container (`Vec<Identified<Self>>`) variables by diffing, then recursing
+                #(recurse_container_on(#child_container_idents1, #child_container_idents2, id_path, difference);)*
             }
         }
     }).collect()
@@ -90,7 +112,7 @@ fn create_variant_match_arms(variants: Vec<Variant>) -> Vec<proc_macro2::TokenSt
 enum DiffFieldKind {
     Simple,
     Child,
-    Childs,
+    ChildContainer,
 }
 
 impl DiffFieldKind {
@@ -103,7 +125,7 @@ impl DiffFieldKind {
         if node == (IDENTIFIED, [top_level_name]).into() { // Identified<Self>
             Self::Child
         } else if node == (VEC, [(IDENTIFIED, [top_level_name])]).into() { // Vec<Identified<Self>>
-            Self::Childs
+            Self::ChildContainer
         } else {
             Self::Simple
         }
