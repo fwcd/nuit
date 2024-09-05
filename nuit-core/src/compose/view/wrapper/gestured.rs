@@ -21,7 +21,7 @@ impl<T, G> View for Gestured<T, G> where T: View, G: Gesture {
             match head {
                 Id::Index(0) => self.wrapped.fire(event, event_path.tail(), &context.child(0)),
                 Id::Index(1) => match event {
-                    Event::Gesture { gesture } => self.gesture.fire(gesture, event_path, &context.child(1)),
+                    Event::Gesture { gesture } => self.gesture.fire(gesture, event_path.tail(), &context.child(1)),
                     _ => eprintln!("Warning: Non-gesture event {:?} targeted to id path {:?} in a gesture is ignored", event, event_path),
                 },
                 i => panic!("Cannot fire event for child id {} on Gestured, which has two childs", i),

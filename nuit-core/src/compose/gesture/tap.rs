@@ -25,6 +25,7 @@ impl<F> TapGesture<F> {
 
 impl<F> Gesture for TapGesture<F> where F: Fn() {
     fn fire(&self, event: &GestureEvent, event_path: &IdPath, _context: &Context) {
+        assert!(event_path.is_root());
         if let GestureEvent::Tap {} = event {
             (self.action)();
         } else {
