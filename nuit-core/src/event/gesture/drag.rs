@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::Vec2;
 
-/// A drag event.
+/// An event emitted during a drag gesture.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct DragEvent {
