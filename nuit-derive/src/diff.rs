@@ -51,6 +51,7 @@ pub fn derive(input: TokenStream) -> TokenStream {
                 if mem::discriminant(self) != mem::discriminant(old) {
                     difference.removed.push((id_path.to_owned(), old));
                     difference.added.push((id_path.to_owned(), self));
+                    return;
                 }
 
                 match (self, old) {
