@@ -1,4 +1,4 @@
-//! A declarative, cross-platform UI library that uses native controls.
+//! A declarative, cross-platform UI framework that uses native controls.
 //! 
 //! The API takes inspiration from contemporary reactive frameworks like
 //! SwiftUI, Xilem and React. A central design goal is to avoid using too much

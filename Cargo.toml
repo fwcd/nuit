@@ -1,6 +1,6 @@
 [package]
 name = "nuit"
-description = "Declarative, cross-platform UI library for Rust that uses native controls"
+description = "Declarative, cross-platform UI framework for Rust that uses native controls"
 version.workspace = true
 edition.workspace = true
 homepage.workspace = true
