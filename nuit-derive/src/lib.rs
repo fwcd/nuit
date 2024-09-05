@@ -1,3 +1,5 @@
+#![feature(let_chains)]
+
 mod approx_eq;
 mod bind;
 mod diff;
