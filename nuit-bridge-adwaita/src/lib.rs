@@ -8,6 +8,7 @@ use adw::{gtk::{Box, Orientation}, prelude::*, Application, ApplicationWindow, H
 use node_widget::NodeWidget;
 use nuit_core::{clone, Root, View};
 
+/// Runs the given app root using Adwaita/GTK4.
 pub fn run_app<T>(root: Root<T>) where T: View + 'static {
     let root = Arc::new(ReentrantLock::new(root));
     let app = Application::builder()
