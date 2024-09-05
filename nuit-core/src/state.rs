@@ -19,6 +19,10 @@ impl<T> State<T> where T: 'static + Clone {
         }
     }
 
+    pub fn is_linked(&self) -> bool {
+        self.storage.borrow().is_some() && self.key.borrow().is_some()
+    }
+
     pub fn link(&self, storage: Rc<Storage>, id_path: &IdPath, i: usize) {
         let key = (id_path.to_owned(), i);
 
