@@ -14,8 +14,11 @@ A declarative, cross-platform UI library for Rust that uses native controls.
 
 Nuit's API takes inspiration from SwiftUI, Xilem, React and a number of other frameworks, while itself using SwiftUI under the hood on macOS.
 
-> [!NOTE]
-> Nuit is still experimental with a rapidly evolving API and requires a nightly Rust toolchain as it uses a number of cutting edge/unstable compiler features, including
+> [!IMPORTANT] Nuit is still experimental with a rapidly evolving API. As such, treat this library as a sandbox rather than as a finished product.
+> 
+> While the SwiftUI backend can be considered the reference implementation of the Nuit API, the Adwaita backend is still in early development and does not cover the full API surface yet.
+> 
+> The library also requires a nightly Rust toolchain due to its use of a number of unstable compiler features:
 >
 > - [impl Trait in type aliases](https://github.com/rust-lang/rust/issues/63063)
 > - [associated type defaults](https://github.com/rust-lang/rust/issues/29661)
