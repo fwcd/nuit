@@ -30,6 +30,14 @@ impl<T> Difference<T> {
             added: Vec::new(),
         }
     }
+
+    pub fn map<U>(self, mut f: impl FnMut(T) -> U) -> Difference<U> {
+        Difference {
+            removed: self.removed.into_iter().map(|x| f(x)).collect(),
+            changed: self.changed.into_iter().map(|x| f(x)).collect(),
+            added: self.added.into_iter().map(|x| f(x)).collect(),
+        }
+    }
 }
 
 impl<T> Default for Difference<T> {
