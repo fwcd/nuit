@@ -20,5 +20,6 @@ indirect enum Node: Codable, Hashable {
 
     // MARK: Wrapper
     case shape(shape: ShapeNode)
+    case gestured(wrapped: Identified<Node>, gesture: Identified<GestureNode>)
     case modified(wrapped: Identified<Node>, modifier: ModifierNode)
 }
