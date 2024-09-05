@@ -1,4 +1,4 @@
-use crate::{Alignment, Event, Frame, Gesture, Handler, Insets, Modified, ModifierNode, TapGesture, Vec2, View};
+use crate::{Alignment, DragEvent, DragGesture, Event, Frame, Gesture, Handler, Insets, Modified, ModifierNode, TapGesture, Vec2, View};
 
 use super::{Gestured, Overlay};
 
@@ -17,7 +17,15 @@ pub trait ViewExt: Sized {
     }
 
     fn on_tap<F>(self, action: F) -> Gestured<Self, TapGesture<F>> where F: Fn() {
-        self.on_taps(1, action)
+        self.gesture(TapGesture::new_single(action))
+    }
+
+    fn on_drag_by<F>(self, minimum_distance: impl Into<f64>, action: F) -> Gestured<Self, DragGesture<F>> where F: Fn(&DragEvent) {
+        self.gesture(DragGesture::new(minimum_distance.into(), action))
+    }
+
+    fn on_drag<F>(self, action: F) -> Gestured<Self, DragGesture<F>> where F: Fn(&DragEvent) {
+        self.gesture(DragGesture::new_default(action))
     }
 
     fn overlay_at<O>(self, alignment: Alignment, overlayed: O) -> Overlay<Self, O> where O: View {

@@ -1,6 +1,6 @@
 #![feature(type_alias_impl_trait, impl_trait_in_assoc_type)]
 
-use nuit::{Bind, Circle, Color, DragGesture, HStack, ShapeExt, State, Text, Vec2, View, ViewExt};
+use nuit::{Bind, Circle, Color, HStack, ShapeExt, State, Text, Vec2, View, ViewExt};
 
 #[derive(Bind)]
 struct TapView {
@@ -50,9 +50,9 @@ impl View for DragView {
             .fill(Color::BLACK)
             .frame(150)
             .offset(offset.get())
-            .gesture(DragGesture::new_default(move |event| {
+            .on_drag(move |event| {
                 offset.set(event.translation());
-            }))
+            })
     }
 }
 
