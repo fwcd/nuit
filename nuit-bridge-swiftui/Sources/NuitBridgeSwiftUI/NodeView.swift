@@ -52,7 +52,8 @@ struct NodeView: View {
             HStack(spacing: spacing) {
                 NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
             }
-        case let .zStack(wrapped: wrapped):
+        case let .zStack(spacing: _, wrapped: wrapped):
+            // TODO: Apply spacing on visionOS
             ZStack {
                 NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
             }

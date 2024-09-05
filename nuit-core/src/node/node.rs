@@ -23,7 +23,7 @@ pub enum Node {
     // Layout
     VStack { spacing: f64, wrapped: Box<Identified<Node>> },
     HStack { spacing: f64, wrapped: Box<Identified<Node>> },
-    ZStack { wrapped: Box<Identified<Node>> },
+    ZStack { spacing: f64, wrapped: Box<Identified<Node>> },
     List { wrapped: Box<Identified<Node>> },
     Overlay { wrapped: Box<Identified<Node>>, alignment: Alignment, overlayed: Box<Identified<Node>> },
 

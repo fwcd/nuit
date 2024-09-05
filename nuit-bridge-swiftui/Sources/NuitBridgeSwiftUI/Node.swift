@@ -14,7 +14,7 @@ indirect enum Node: Codable, Hashable {
     // MARK: Layout
     case vStack(spacing: Double, wrapped: Identified<Node>)
     case hStack(spacing: Double, wrapped: Identified<Node>)
-    case zStack(wrapped: Identified<Node>)
+    case zStack(spacing: Double, wrapped: Identified<Node>)
     case list(wrapped: Identified<Node>)
     case overlay(wrapped: Identified<Node>, alignment: Alignment, overlayed: Identified<Node>)
 
