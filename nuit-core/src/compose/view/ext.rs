@@ -1,11 +1,23 @@
-use crate::{Alignment, Event, Frame, Handler, Insets, Modified, ModifierNode, Vec2, View};
+use crate::{Alignment, Event, Frame, Handler, Insets, Modified, ModifierNode, TapGesture, Vec2, View};
 
-use super::Overlay;
+use super::{Gestured, Overlay};
 
 /// An extension trait with various convenience methods for views.
 pub trait ViewExt: Sized {
     fn modifier(self, modifier: ModifierNode) -> Modified<Self> {
         Modified::new(self, modifier)
+    }
+
+    fn gesture<G>(self, gesture: G) -> Gestured<Self, G> {
+        Gestured::new(self, gesture)
+    }
+
+    fn on_taps<F>(self, count: usize, action: F) -> Gestured<Self, TapGesture<F>> {
+        self.gesture(TapGesture::new(count, action))
+    }
+
+    fn on_tap<F>(self, action: F) -> Gestured<Self, TapGesture<F>> {
+        self.on_taps(1, action)
     }
 
     fn overlay_at<O>(self, alignment: Alignment, overlayed: O) -> Overlay<Self, O> {

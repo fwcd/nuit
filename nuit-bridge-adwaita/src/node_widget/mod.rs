@@ -93,7 +93,7 @@ impl NodeWidget {
                 }
                 if let Some(ref fire_event) = *fire_event {
                     button.connect_clicked(clone!(fire_event, id_path => move |_button| {
-                        fire_event(&id_path, &Event::Click {});
+                        fire_event(&id_path, &Event::ButtonTap {});
                     }));
                 }
                 self.append(&button);

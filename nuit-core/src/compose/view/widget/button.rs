@@ -25,7 +25,7 @@ impl<T, F> View for Button<T, F> where T: View, F: Fn() + 'static {
                 Id::Index(0) => self.label.fire(event, &id_path.tail()),
                 i => panic!("Cannot fire event for child id {} on Button which only has one child", i)
             }
-        } else if let Event::Click {} = event {
+        } else if let Event::ButtonTap {} = event {
             if let Some(ref action) = self.action {
                 action();
             }

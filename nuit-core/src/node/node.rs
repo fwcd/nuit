@@ -3,7 +3,7 @@ use serde::{Serialize, Deserialize};
 
 use crate::{Alignment, Id, IdPath, IdPathBuf, Identified};
 
-use super::{ModifierNode, ShapeNode};
+use super::{GestureNode, ModifierNode, ShapeNode};
 
 /// A rendered UI component tree.
 #[derive(Debug, Clone, PartialEq, Diff, Serialize, Deserialize)]
@@ -30,6 +30,7 @@ pub enum Node {
 
     // Wrapper
     Shape { shape: ShapeNode },
+    Gestured { wrapped: Box<Identified<Node>>, gesture: Identified<GestureNode>, },
     Modified { wrapped: Box<Identified<Node>>, modifier: ModifierNode, }
 }
 

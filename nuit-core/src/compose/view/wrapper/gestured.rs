@@ -1,0 +1,38 @@
+use nuit_derive::Bind;
+
+use crate::{Context, Event, Gesture, Id, IdPath, IdentifyExt, Node, View};
+
+/// A view recognizing a gesture.
+#[derive(Debug, Clone, PartialEq, Bind)]
+pub struct Gestured<T, G> {
+    wrapped: T,
+    gesture: G,
+}
+
+impl<T, G> Gestured<T, G> {
+    pub fn new(wrapped: T, gesture: G) -> Self {
+        Self { wrapped, gesture }
+    }
+}
+
+impl<T, G> View for Gestured<T, G> where T: View, G: Gesture {
+    fn fire(&self, event: &Event, id_path: &IdPath) {
+        if let Some(head) = id_path.head() {
+            match head {
+                Id::Index(0) => self.wrapped.fire(event, id_path),
+                Id::Index(1) => match event {
+                    Event::Gesture { gesture } => self.gesture.fire(gesture, id_path),
+                    _ => eprintln!("Warning: Non-gesture event {:?} targeted to id path {:?} in a gesture is ignored", event, id_path),
+                },
+                i => panic!("Cannot fire event for child id {} on Gestured, which has two childs", i),
+            }
+        }
+    }
+
+    fn render(&self, context: &Context) -> Node {
+        Node::Gestured {
+            wrapped: Box::new(self.wrapped.render(&context.child(0)).identify(0)),
+            gesture: self.gesture.render(&context.child(1)).identify(1),
+        }
+    }
+}
