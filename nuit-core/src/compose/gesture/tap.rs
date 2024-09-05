@@ -12,13 +12,13 @@ pub struct TapGesture<F> {
 impl<F> TapGesture<F> {
     /// Creates a tap gesture that executes the given action upon recognizing
     /// the given number of taps.
-    pub fn new(count: usize, action: F) -> Self {
+    pub const fn new(count: usize, action: F) -> Self {
         Self { count, action }
     }
 
     /// Creates a tap gesture that executes the given action after recognizing a
     /// single tap.
-    pub fn new_single(action: F) -> Self {
+    pub const fn new_single(action: F) -> Self {
         Self::new(1, action)
     }
 }
