@@ -48,7 +48,12 @@ impl Color {
 
     /// A random RGB color with alpha 1.
     pub fn random_rgb() -> Self {
-        Self::new(rand::random(), rand::random(), rand::random(), 1.0)
+        Self::with_rgb(rand::random(), rand::random(), rand::random())
+    }
+
+    /// A random grayscale color with alpha 1.
+    pub fn random_grayscale() -> Self {
+        Self::with_grayscale(rand::random())
     }
 
     /// Creates a new color with the given HSV value and alpha.
