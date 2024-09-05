@@ -11,7 +11,7 @@ pub struct DragGesture<F> {
     action: F,
 }
 
-impl<F> DragGesture<F> {
+impl<F> DragGesture<F> where F: Fn(&DragEvent) {
     /// Creates a drag gesture that executes the given action on a drag further
     /// than the given minimum distance.
     pub const fn new(minimum_distance: f64, action: F) -> Self {

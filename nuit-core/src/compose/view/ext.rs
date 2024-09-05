@@ -1,4 +1,4 @@
-use crate::{Alignment, Event, Frame, Handler, Insets, Modified, ModifierNode, TapGesture, Vec2, View};
+use crate::{Alignment, Event, Frame, Gesture, Handler, Insets, Modified, ModifierNode, TapGesture, Vec2, View};
 
 use super::{Gestured, Overlay};
 
@@ -8,23 +8,23 @@ pub trait ViewExt: Sized {
         Modified::new(self, modifier)
     }
 
-    fn gesture<G>(self, gesture: G) -> Gestured<Self, G> {
+    fn gesture<G>(self, gesture: G) -> Gestured<Self, G> where G: Gesture {
         Gestured::new(self, gesture)
     }
 
-    fn on_taps<F>(self, count: usize, action: F) -> Gestured<Self, TapGesture<F>> {
+    fn on_taps<F>(self, count: usize, action: F) -> Gestured<Self, TapGesture<F>> where F: Fn() {
         self.gesture(TapGesture::new(count, action))
     }
 
-    fn on_tap<F>(self, action: F) -> Gestured<Self, TapGesture<F>> {
+    fn on_tap<F>(self, action: F) -> Gestured<Self, TapGesture<F>> where F: Fn() {
         self.on_taps(1, action)
     }
 
-    fn overlay_at<O>(self, alignment: Alignment, overlayed: O) -> Overlay<Self, O> {
+    fn overlay_at<O>(self, alignment: Alignment, overlayed: O) -> Overlay<Self, O> where O: View {
         Overlay::new(self, alignment, overlayed)
     }
 
-    fn overlay<O>(self, overlayed: O) -> Overlay<Self, O> {
+    fn overlay<O>(self, overlayed: O) -> Overlay<Self, O> where O: View {
         self.overlay_at(Alignment::Center, overlayed)
     }
 

@@ -9,7 +9,7 @@ pub struct TapGesture<F> {
     action: F,
 }
 
-impl<F> TapGesture<F> {
+impl<F> TapGesture<F> where F: Fn() {
     /// Creates a tap gesture that executes the given action upon recognizing
     /// the given number of taps.
     pub const fn new(count: usize, action: F) -> Self {
