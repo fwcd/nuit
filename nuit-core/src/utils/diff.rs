@@ -4,10 +4,10 @@ use super::{IdPath, IdPathBuf};
 pub trait Diff: Sized {
     /// Appends the difference to "construct" this type from the given other one
     /// to the given difference.
-    fn record_diff(&self, old: &Self, id_path: &IdPath, difference: &mut Difference<Self>);
+    fn record_diff<'a>(&'a self, old: &'a Self, id_path: &IdPath, difference: &mut Difference<'a, Self>);
 
     /// Computes the difference to "construct" this type from the given other one.
-    fn diff(&self, old: &Self) -> Difference<Self> {
+    fn diff<'a>(&'a self, old: &'a Self) -> Difference<'a, Self> {
         let mut difference = Difference::new();
         self.record_diff(old, IdPath::root(), &mut difference);
         return difference;
