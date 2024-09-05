@@ -1,3 +1,4 @@
+use nuit_derive::Diff;
 use serde::{Serialize, Deserialize};
 
 use crate::{Alignment, Id, IdPath, IdPathBuf, Identified};
@@ -5,7 +6,7 @@ use crate::{Alignment, Id, IdPath, IdPathBuf, Identified};
 use super::{ModifierNode, ShapeNode};
 
 /// A rendered UI component tree.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Diff, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", rename_all_fields = "camelCase")]
 pub enum Node {
     Empty {}, // Intentionally not a unit variant for uniform serialization

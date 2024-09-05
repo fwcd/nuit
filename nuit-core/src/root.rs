@@ -1,6 +1,6 @@
 use std::{cell::RefCell, rc::Rc};
 
-use crate::{Context, Event, IdPath, IdPathBuf, Node, NodeDiff, Storage, View};
+use crate::{Context, Diff, Event, IdPath, IdPathBuf, Node, Storage, View};
 
 /// The central state of a Nuit application.
 pub struct Root<T> {
@@ -29,16 +29,19 @@ impl<T> Root<T> where T: View {
             self.view.borrow().render(&Context::new(self.storage.clone()))
         });
 
-        let diff = NodeDiff::between(&new_render, &self.last_render.borrow());
+        {
+            let last_render = self.last_render.borrow();
+            let diff = new_render.diff(&last_render);
 
-        for id_path in diff.removed() {
-            self.view.borrow().fire(&Event::Disappear, id_path)
-        }
+            for (id_path, _) in &diff.removed {
+                self.view.borrow().fire(&Event::Disappear, id_path)
+            }
 
-        self.storage.apply_changes();
+            self.storage.apply_changes();
 
-        for id_path in diff.added() {
-            self.view.borrow().fire(&Event::Appear, id_path)
+            for (id_path, _) in &diff.added {
+                self.view.borrow().fire(&Event::Appear, id_path)
+            }
         }
 
         *self.last_render.borrow_mut() = new_render.clone();
