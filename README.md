@@ -12,7 +12,15 @@ A declarative, cross-platform UI library for Rust that uses native controls.
 | [nuit-core](./nuit-core) | Core structures and traits | [![crates.io](https://img.shields.io/crates/v/nuit-core)](https://crates.io/crates/nuit-core) | [![docs.rs](https://img.shields.io/docsrs/nuit-core)](https://docs.rs/nuit-core) |
 | [nuit-derive](./nuit-derive) | Derive macros | [![crates.io](https://img.shields.io/crates/v/nuit-derive)](https://crates.io/crates/nuit-derive) | [![docs.rs](https://img.shields.io/docsrs/nuit-derive)](https://docs.rs/nuit-derive) |
 
-Nuit's API takes inspiration from SwiftUI, Xilem, React and a number of other frameworks, while itself using SwiftUI under the hood on macOS.
+The API takes inspiration from contemporary reactive frameworks like SwiftUI, Xilem and React. A central design goal is to avoid using too much macro magic and instead heavily leverage associated types, traits and generics.
+
+A simple hello world program in Nuit takes only a single line:
+
+```rust
+nuit::run_app(Text::new("Hello world!"));
+```
+
+For a more elaborate example, check out [the section below](#example).
 
 > [!IMPORTANT]
 > Nuit is still experimental with a rapidly evolving API. As such, treat this library as a sandbox rather than as a finished product, especially if you intend to write an app with it.

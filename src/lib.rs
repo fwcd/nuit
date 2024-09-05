@@ -1,3 +1,18 @@
+//! A declarative, cross-platform UI library that uses native controls.
+//! 
+//! The API takes inspiration from contemporary reactive frameworks like
+//! SwiftUI, Xilem and React. A central design goal is to avoid using too much
+//! macro magic and instead heavily leverage associated types, traits and
+//! generics.
+//! 
+//! A simple hello world program in Nuit takes only a single line:
+//! 
+//! ```no_run
+//! use nuit::Text;
+//! 
+//! nuit::run_app(Text::new("Hello world!"));
+//! ```
+
 mod backend;
 mod config;
 
