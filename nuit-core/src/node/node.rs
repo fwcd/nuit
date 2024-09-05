@@ -30,7 +30,7 @@ pub enum Node {
 
     // Wrapper
     Shape { shape: ShapeNode },
-    Gesture { wrapped: Box<Identified<Node>>, gesture: GestureNode, },
+    Gestured { wrapped: Box<Identified<Node>>, gesture: Identified<GestureNode>, },
     Modified { wrapped: Box<Identified<Node>>, modifier: ModifierNode, }
 }
 
