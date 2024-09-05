@@ -93,6 +93,11 @@ impl Color {
     pub fn with_hsv(hue: Angle, saturation: f64, value: f64) -> Self {
         Self::with_hsva(hue, saturation, value, 1.0)
     }
+
+    /// The inverted color with the same alpha.
+    pub fn invert_rgb(self) -> Self {
+        Self::new(1.0 - self.red, 1.0 - self.green, 1.0 - self.blue, self.alpha)
+    }
 }
 
 #[cfg(test)]
