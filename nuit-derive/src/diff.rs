@@ -15,10 +15,10 @@ pub fn derive(input: TokenStream) -> TokenStream {
 
     let impl_block = quote! {
         impl ::nuit::Diff for #name {
-            fn record_diff<'a>(&'a self, old: &'a Self, id_path: &::nuit::IdPath, difference: &mut ::nuit::Difference<(::nuit::IdPathBuf, &'a Self)>) {
+            fn record_diff<'a>(&'a self, old: &'a Self, id_path: &::nuit::IdPath, difference: &mut ::nuit::Difference<&'a Self>) {
                 use ::std::mem;
 
-                fn recurse_on<'a>(new_child: &'a Identified<#name>, old_child: &'a Identified<#name>, id_path: &::nuit::IdPath, difference: &mut ::nuit::Difference<(::nuit::IdPathBuf, &'a #name)>) {
+                fn recurse_on<'a>(new_child: &'a Identified<#name>, old_child: &'a Identified<#name>, id_path: &::nuit::IdPath, difference: &mut ::nuit::Difference<&'a #name>) {
                     if new_child.id() != old_child.id() {
                         difference.removed.push((id_path.child(old_child.id().clone()), old_child.value()));
                         difference.added.push((id_path.child(new_child.id().clone()), new_child.value()));
@@ -65,7 +65,7 @@ fn create_variant_match_arms(variants: Vec<Variant>) -> Vec<proc_macro2::TokenSt
         quote! {
             (#pattern1, #pattern2) => {
                 if false #(|| #bound_idents1 != #bound_idents2)* {
-                    difference.changed.push((id_path.to_owned(), self));
+                    difference.changed.push((id_path.to_owned(), self, old));
                 }
             }
         }
