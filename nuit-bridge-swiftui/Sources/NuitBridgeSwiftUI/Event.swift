@@ -1,5 +1,5 @@
 enum Event: Codable, Hashable {
-    case click
+    case buttonTap
     case gesture(gesture: GestureEvent)
     case updateText(content: String)
     case updatePickerSelection(id: Id)

@@ -23,7 +23,7 @@ struct NodeView: View {
             }
         case let .button(label: label):
             Button {
-                root.fire(event: .click, for: idPath)
+                root.fire(event: .buttonTap, for: idPath)
             } label: {
                 NodeView(node: label.value, idPath: idPath + [label.id])
             }

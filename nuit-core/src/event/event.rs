@@ -9,7 +9,7 @@ use super::GestureEvent;
 #[serde(rename_all = "camelCase", rename_all_fields = "camelCase")]
 pub enum Event {
     // Interaction
-    Click {},
+    ButtonTap {},
     Gesture { gesture: GestureEvent },
     UpdateText { content: String },
     UpdatePickerSelection { id: Id },
