@@ -49,6 +49,7 @@ impl View for DragView {
         Circle::new()
             .fill(Color::BLACK)
             .frame(150)
+            .overlay(Text::new("Drag me!"))
             .offset(offset.get())
             .on_drag(move |event| {
                 offset.set(event.translation());
