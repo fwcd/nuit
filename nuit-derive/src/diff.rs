@@ -55,7 +55,7 @@ pub fn derive(input: TokenStream) -> TokenStream {
 
                 match (self, old) {
                     #(#variant_arms,)*
-                    _ => unreachable!(),
+                    _ => unreachable!("There's a bug in #[derive(Diff)], unhandled case:\n  new: {:?}\n old: {:?}", self, old),
                 }
             }
         }
