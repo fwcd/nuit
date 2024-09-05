@@ -24,8 +24,12 @@ impl View for TapView {
         let color = self.color.clone();
         Circle::new()
             .fill(color.get())
-            .frame(100)
-            .overlay(Text::new("Tap me!"))
+            .frame(150)
+            .overlay(Text::new(match self.taps {
+                1 => "Tap me!".to_owned(),
+                2 => "Double-tap me!".to_owned(),
+                i => format!("Tap me {} times!", i),
+            }))
             .on_taps(self.taps, move || {
                 color.set(Color::random_rgb());
             })
