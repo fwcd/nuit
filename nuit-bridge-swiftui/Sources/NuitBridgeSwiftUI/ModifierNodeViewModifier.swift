@@ -37,6 +37,8 @@ struct ModifierNodeViewModifier: ViewModifier {
             } else {
                 content
             }
+        case let .foregroundStyle(style: style):
+            content.foregroundStyle(AnyShapeStyle(style))
         }
     }
 }

@@ -1,4 +1,4 @@
-use crate::{Alignment, DragEvent, DragGesture, Event, Frame, Gesture, Handler, Insets, Modified, ModifierNode, TapGesture, Vec2, View};
+use crate::{Alignment, DragEvent, DragGesture, Event, Frame, Gesture, Handler, Insets, Modified, ModifierNode, Style, TapGesture, Vec2, View};
 
 use super::{Gestured, Overlay};
 
@@ -54,6 +54,10 @@ pub trait ViewExt: Sized {
 
     fn frame(self, frame: impl Into<Frame>) -> Modified<Self> {
         self.modifier(ModifierNode::Frame { frame: frame.into() })
+    }
+
+    fn foreground_style(self, style: impl Into<Style>) -> Modified<Self> {
+        self.modifier(ModifierNode::Fill { style: style.into() })
     }
 
     fn on_appear(self, action: impl Fn() + 'static) -> Handler<Self, impl Fn(Event)> {

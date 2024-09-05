@@ -5,4 +5,5 @@ enum ModifierNode: Codable, Hashable {
     case opacity(opacity: Double)
     case frame(frame: Frame)
     case fill(style: Style)
+    case foregroundStyle(style: Style)
 }

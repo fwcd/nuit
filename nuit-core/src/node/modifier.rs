@@ -12,4 +12,5 @@ pub enum ModifierNode {
     Opacity { opacity: f64 },
     Frame { frame: Frame },
     Fill { style: Style },
+    ForegroundStyle { style: Style },
 }
