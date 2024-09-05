@@ -11,7 +11,7 @@ pub fn derive(input: TokenStream) -> TokenStream {
         _ => panic!("#[derive(Diff)] only works on enums!")
     };
 
-    let variant_arms: Vec<proc_macro2::TokenStream> = create_variant_match_arms(variants);
+    let variant_arms: Vec<proc_macro2::TokenStream> = create_variant_match_arms(variants, name);
 
     let impl_block = quote! {
         impl ::nuit::Diff for #name {
@@ -28,7 +28,7 @@ pub fn derive(input: TokenStream) -> TokenStream {
                     new_child.value().record_diff(old_child.value(), &id_path.child(new_child.id().clone()), difference);
                 }
 
-                fn recurse_container_on<'a>(new_child_container: &'a Vec<Identified<#name>>, old_child_container: &'a Vec<Identified<#name>>, id_path: &IdPath, difference: &mut Difference<&'a #name>) {
+                fn recurse_on_container<'a>(new_child_container: &'a Vec<Identified<#name>>, old_child_container: &'a Vec<Identified<#name>>, id_path: &IdPath, difference: &mut Difference<&'a #name>) {
                     let new_children: HashMap<&Id, &Identified<#name>> = new_child_container.iter().map(|c| (c.id(), c)).collect();
                     let old_children: HashMap<&Id, &Identified<#name>> = old_child_container.iter().map(|c| (c.id(), c)).collect();
 
@@ -64,12 +64,12 @@ pub fn derive(input: TokenStream) -> TokenStream {
     impl_block.into()
 }
 
-fn create_variant_match_arms(variants: Vec<Variant>) -> Vec<proc_macro2::TokenStream> {
+fn create_variant_match_arms(variants: Vec<Variant>, self_ty_name: &Ident) -> Vec<proc_macro2::TokenStream> {
     variants.into_iter().map(|v| {
         let ident = v.ident;
         let fields: Vec<(Ident, DiffFieldKind)> = match v.fields {
             Fields::Named(fs) => fs.named.into_iter()
-                .map(|f| (f.ident.expect("#[derive(Diff)] currently requires fields to be named"), DiffFieldKind::from_type(f.ty, &ident)))
+                .map(|f| (f.ident.expect("#[derive(Diff)] currently requires fields to be named"), DiffFieldKind::from_type(f.ty, &self_ty_name)))
                 .collect(),
             // TODO: Support unnamed/unit fields
             _ => panic!("#[derive(Diff)] currently only supports enum variants with named fields"),
@@ -102,7 +102,7 @@ fn create_variant_match_arms(variants: Vec<Variant>) -> Vec<proc_macro2::TokenSt
                 #(recurse_on(#child_idents1, #child_idents2, id_path, difference);)*
 
                 // Handle child container (`Vec<Identified<Self>>`) variables by diffing, then recursing
-                #(recurse_container_on(#child_container_idents1, #child_container_idents2, id_path, difference);)*
+                #(recurse_on_container(#child_container_idents1, #child_container_idents2, id_path, difference);)*
             }
         }
     }).collect()
@@ -115,16 +115,18 @@ enum DiffFieldKind {
     ChildContainer,
 }
 
+const IDENTIFIED: &str = "Identified";
+const SELF: &str = "Self";
+const BOX: &str = "Box";
+const VEC: &str = "Vec";
+
 impl DiffFieldKind {
-    fn from_type(ty: Type, top_level_name: &Ident) -> Self {
-        const IDENTIFIED: &str = "Identified";
-        const VEC: &str = "Vec";
+    fn from_type(ty: Type, self_ty_name: &Ident) -> Self {
+        let node = TypeNode::from(ty).normalize_self(self_ty_name.to_string().as_str());
 
-        let node = TypeNode::from(ty);
-
-        if node == (IDENTIFIED, [top_level_name]).into() { // Identified<Self>
+        if node == (BOX, [(IDENTIFIED, [SELF])]).into() { // Identified<Self>
             Self::Child
-        } else if node == (VEC, [(IDENTIFIED, [top_level_name])]).into() { // Vec<Identified<Self>>
+        } else if node == (VEC, [(IDENTIFIED, [SELF])]).into() { // Vec<Identified<Self>>
             Self::ChildContainer
         } else {
             Self::Simple
@@ -134,6 +136,14 @@ impl DiffFieldKind {
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 struct TypeNode(String, Vec<TypeNode>);
+
+impl TypeNode {
+    fn normalize_self(self, self_ty_name: &str) -> Self {
+        let name = if &self.0 == self_ty_name { SELF.to_owned() } else { self.0 };
+        let args = self.1.into_iter().map(|t| t.normalize_self(self_ty_name)).collect();
+        Self(name, args)
+    }
+}
 
 impl<'a> From<&'a str> for TypeNode {
     fn from(name: &'a str) -> Self {
@@ -159,7 +169,7 @@ impl From<Type> for TypeNode {
         match ty {
             Type::Path(ty_path) => {
                 let segments = ty_path.path.segments;
-                if let Some(segment) = segments.into_iter().next() {
+                if let Some(segment) = segments.into_iter().last() {
                     let name = segment.ident.to_string();
                     let args = match segment.arguments {
                         PathArguments::AngleBracketed(args) => args.args.into_iter()
