@@ -12,8 +12,12 @@ pub trait ViewExt: Sized {
         Gestured::new(self, gesture)
     }
 
+    fn on_taps<F>(self, count: usize, action: F) -> Gestured<Self, TapGesture<F>> {
+        self.gesture(TapGesture::new(count, action))
+    }
+
     fn on_tap<F>(self, action: F) -> Gestured<Self, TapGesture<F>> {
-        self.gesture(TapGesture::new_single(action))
+        self.on_taps(1, action)
     }
 
     fn overlay_at<O>(self, alignment: Alignment, overlayed: O) -> Overlay<Self, O> {
