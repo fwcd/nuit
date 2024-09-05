@@ -85,3 +85,10 @@ will launch the app with the platform-specific default backend:
 | SwiftUI | Adwaita (GTK4) |
 | - | - |
 | <img src="screenshots/counter-swiftui.png" height="300"> | <img src="screenshots/counter-adwaita.png" height="300"> |
+
+> [!TIP]
+> On platforms that support multiple backends you can explicitly choose a backend via the `NUIT_BACKEND` environment variable:
+>
+> ```sh
+> NUIT_BACKEND=adwaita cargo run --example counter
+> ```
