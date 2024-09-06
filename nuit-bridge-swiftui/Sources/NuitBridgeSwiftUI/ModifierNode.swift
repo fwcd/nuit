@@ -6,4 +6,6 @@ enum ModifierNode: Codable, Hashable {
     case frame(frame: Frame, alignment: Alignment)
     case fill(style: Style)
     case foregroundStyle(style: Style)
+    case scaleEffect(factor: Double, anchor: UnitPoint)
+    case rotationEffect(angle: Angle, anchor: UnitPoint)
 }

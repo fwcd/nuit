@@ -41,6 +41,10 @@ struct ModifierNodeViewModifier: ViewModifier {
             }
         case let .foregroundStyle(style: style):
             content.foregroundStyle(AnyShapeStyle(style))
+        case let .scaleEffect(factor: factor, anchor: anchor):
+            content.scaleEffect(CGFloat(factor), anchor: .init(anchor))
+        case let .rotationEffect(angle: angle, anchor: anchor):
+            content.rotationEffect(.init(angle), anchor: .init(anchor))
         }
     }
 }

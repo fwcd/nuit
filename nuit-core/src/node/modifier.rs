@@ -1,6 +1,6 @@
 use serde::{Serialize, Deserialize};
 
-use crate::{Alignment, Frame, Insets, Style, Vec2};
+use crate::{Alignment, Angle, Frame, Insets, Style, UnitPoint, Vec2};
 
 /// A rendered modifier.
 #[derive(Debug, Copy, Clone, PartialEq, Serialize, Deserialize)]
@@ -13,4 +13,6 @@ pub enum ModifierNode {
     Frame { frame: Frame, alignment: Alignment },
     Fill { style: Style },
     ForegroundStyle { style: Style },
+    ScaleEffect { factor: f64, anchor: UnitPoint },
+    RotationEffect { angle: Angle, anchor: UnitPoint },
 }
