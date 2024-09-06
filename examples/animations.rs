@@ -59,7 +59,7 @@ impl<const COUNT: usize> View for AnimationsView<COUNT> {
 }
 
 fn main() {
-    let duration = Duration::from_secs(5);
+    let duration = Duration::from_secs(4);
     nuit::run_app(AnimationsView::new([
         Animation::linear(Some(duration)),
         Animation::ease_in(Some(duration)),
