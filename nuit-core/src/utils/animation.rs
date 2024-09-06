@@ -1,4 +1,4 @@
-use std::time::Duration;
+use std::{fmt, time::Duration};
 
 use serde::{Deserialize, Serialize};
 
@@ -56,5 +56,31 @@ impl Animation {
 impl Default for Animation {
     fn default() -> Self {
         Self::Default {}
+    }
+}
+
+impl fmt::Display for Animation {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::Default {} => write!(f, "Default")?,
+            Self::Curve { curve, duration_seconds } => {
+                write!(f, "{}", curve)?;
+                if let Some(duration_seconds) = duration_seconds {
+                    write!(f, " ({} seconds)", duration_seconds)?;
+                }
+            },
+        }
+        Ok(())
+    }
+}
+
+impl fmt::Display for AnimationCurve {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            AnimationCurve::Linear => write!(f, "Linear"),
+            AnimationCurve::EaseIn => write!(f, "Ease in"),
+            AnimationCurve::EaseOut => write!(f, "Ease out"),
+            AnimationCurve::EaseInOut => write!(f, "Ease in/out"),
+        }
     }
 }
