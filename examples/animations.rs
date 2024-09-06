@@ -2,30 +2,34 @@
 
 use nuit::{Alignment, Animation, Bind, Button, Circle, ForEach, Frame, HStack, Rectangle, State, Text, VStack, Vec2, View, ViewExt, ZStack};
 
-const BALL_COUNT: usize = 4;
-const ANIMATIONS: [Animation; BALL_COUNT] = [
-    Animation::LINEAR,
-    Animation::EASE_IN,
-    Animation::EASE_OUT,
-    Animation::EASE_IN_OUT,
-];
-
-#[derive(Bind, Default)]
-struct AnimationsView {
-    flips: State<[bool; BALL_COUNT]>,
+#[derive(Bind)]
+struct AnimationsView<const COUNT: usize> {
+    animations: [Animation; COUNT],
+    flips: State<[bool; COUNT]>,
 }
 
-impl View for AnimationsView {
+impl<const COUNT: usize> AnimationsView<COUNT> {
+    pub fn new(animations: [Animation; COUNT]) -> Self {
+        Self {
+            animations,
+            flips: State::new(animations.map(|_| false)),
+        }
+    }
+}
+
+impl<const COUNT: usize> View for AnimationsView<COUNT> {
     type Body = impl View;
 
     fn body(&self) -> Self::Body {
+        let animations = self.animations;
         let flips = self.flips.clone();
         let width = 200.0;
         let radius = 10.0;
         let inner_width = width - 2.0 * radius;
+
         VStack::new((
             VStack::new(
-                ForEach::with_index_id(ANIMATIONS, |i, animation| {
+                ForEach::with_index_id(animations, |i, animation| {
                     let factor = if flips.get()[i] { 1.0 } else { -1.0 };
                     HStack::new((
                         Text::new(format!("{}", animation))
@@ -43,7 +47,7 @@ impl View for AnimationsView {
             ),
             Button::new(Text::new("Click me!"), move || {
                 let mut value = flips.get();
-                for (i, animation) in ANIMATIONS.into_iter().enumerate() {
+                for (i, animation) in animations.into_iter().enumerate() {
                     value[i] = !value[i];
                     flips.set_with_animation(value, animation);
                 }
@@ -53,5 +57,10 @@ impl View for AnimationsView {
 }
 
 fn main() {
-    nuit::run_app(AnimationsView::default());
+    nuit::run_app(AnimationsView::new([
+        Animation::LINEAR,
+        Animation::EASE_IN,
+        Animation::EASE_OUT,
+        Animation::EASE_IN_OUT,
+    ]));
 }
