@@ -21,7 +21,7 @@ impl View for FizzBuzzView {
         let fizz = count.get() % 3 == 0;
         let buzz = count.get() % 5 == 0;
         VStack::new((
-            Button::new(Text::new("Increment"), clone!(count => move || {
+            Button::with_text("Increment", clone!(count => move || {
                 count.set(count.get() + 1);
             })),
             If::new_or_else(fizz || buzz, || {

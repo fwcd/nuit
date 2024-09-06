@@ -14,7 +14,7 @@ impl View for CounterView {
         let count = self.count.clone();
         VStack::new((
             Text::new(format!("Count: {}", count.get())),
-            Button::new(Text::new("Increment"), move || {
+            Button::with_text("Increment", move || {
                 count.set(count.get() + 1);
             })
         ))

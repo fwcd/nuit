@@ -19,7 +19,7 @@ impl View for PickerView {
                 Text::new("Yellow"),
                 Text::new("Blue"),
             )),
-            Button::new(Text::new("Choose next"), clone!(selection => move || {
+            Button::with_text("Choose next", clone!(selection => move || {
                 if let Id::Index(i) = selection.get() {
                     selection.set((i + 1) % 4);
                 }

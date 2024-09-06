@@ -44,7 +44,7 @@ impl<const COUNT: usize> View for AnimationsView<COUNT> {
                                 .offset(Vec2::with_x(factor * inner_width / 2.0))
                         ))
                         .frame(Frame::with_width(width)),
-                        Button::new(Text::new("Flip"), clone!(flips => move || {
+                        Button::with_text("Flip", clone!(flips => move || {
                             let mut value = flips.get();
                             value[i] = !value[i];
                             flips.set_with(animation, value);
