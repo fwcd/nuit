@@ -42,7 +42,7 @@ impl View for FontsView {
                     FontWeight::Thin,
                     FontWeight::UltraLight,
                 ], |_, weight| {
-                    Text::new(format!("{:?}", weight))
+                    Text::new(format!("{weight:?}"))
                         .font(Font::system(18, None, Some(weight)))
                 })
             ),
@@ -53,8 +53,15 @@ impl View for FontsView {
                     FontDesign::Rounded,
                     FontDesign::Serif,
                 ], |_, design| {
-                    Text::new(format!("{:?}", design))
+                    Text::new(format!("{design:?}"))
                         .font(Font::system(18, Some(design), None))
+                })
+            ),
+            VStack::new(
+                ForEach::new((0..10).rev(), |i| {
+                    let size = i * 4 + 8;
+                    Text::new(format!("{size}"))
+                        .font(Font::with_size(size))
                 })
             ),
         ))
