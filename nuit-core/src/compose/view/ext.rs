@@ -33,7 +33,7 @@ pub trait ViewExt: Sized {
     }
 
     fn overlay<O>(self, overlayed: O) -> Overlay<Self, O> where O: View {
-        self.overlay_at(Alignment::Center, overlayed)
+        self.overlay_at(Alignment::default(), overlayed)
     }
 
     fn padding(self, insets: impl Into<Insets>) -> Modified<Self> {
@@ -57,7 +57,7 @@ pub trait ViewExt: Sized {
     }
 
     fn frame(self, frame: impl Into<Frame>) -> Modified<Self> {
-        self.frame_with(Alignment::Center, frame)
+        self.frame_with(Alignment::default(), frame)
     }
 
     fn font(self, font: impl Into<Font>) -> Modified<Self> {
