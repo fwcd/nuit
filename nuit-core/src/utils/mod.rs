@@ -14,6 +14,7 @@ mod identified;
 mod insets;
 mod material;
 mod style;
+mod unit_point;
 mod vec2;
 mod zero;
 
@@ -32,5 +33,6 @@ pub use identified::*;
 pub use insets::*;
 pub use material::*;
 pub use style::*;
+pub use unit_point::*;
 pub use vec2::*;
 pub use zero::*;
