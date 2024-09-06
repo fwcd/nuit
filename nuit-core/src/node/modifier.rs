@@ -1,6 +1,6 @@
 use serde::{Serialize, Deserialize};
 
-use crate::{Frame, Insets, Style, Vec2};
+use crate::{Alignment, Frame, Insets, Style, Vec2};
 
 /// A rendered modifier.
 #[derive(Debug, Copy, Clone, PartialEq, Serialize, Deserialize)]
@@ -10,7 +10,7 @@ pub enum ModifierNode {
     Position { position: Vec2<f64> },
     Offset { delta: Vec2<f64> },
     Opacity { opacity: f64 },
-    Frame { frame: Frame },
+    Frame { frame: Frame, alignment: Alignment },
     Fill { style: Style },
     ForegroundStyle { style: Style },
 }

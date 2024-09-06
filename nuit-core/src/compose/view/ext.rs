@@ -52,8 +52,12 @@ pub trait ViewExt: Sized {
         self.modifier(ModifierNode::Opacity { opacity: opacity.into() })
     }
 
+    fn frame_with(self, alignment: Alignment, frame: impl Into<Frame>) -> Modified<Self> {
+        self.modifier(ModifierNode::Frame { frame: frame.into(), alignment })
+    }
+
     fn frame(self, frame: impl Into<Frame>) -> Modified<Self> {
-        self.modifier(ModifierNode::Frame { frame: frame.into() })
+        self.frame_with(Alignment::Center, frame)
     }
 
     fn foreground_style(self, style: impl Into<Style>) -> Modified<Self> {

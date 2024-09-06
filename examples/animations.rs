@@ -1,6 +1,6 @@
 #![feature(type_alias_impl_trait, impl_trait_in_assoc_type)]
 
-use nuit::{Animation, Bind, Button, Circle, ForEach, Frame, HStack, State, Text, VStack, Vec2, View, ViewExt};
+use nuit::{Alignment, Animation, Bind, Button, Circle, ForEach, Frame, HStack, State, Text, VStack, Vec2, View, ViewExt};
 
 const BALL_COUNT: usize = 4;
 const ANIMATIONS: [Animation; BALL_COUNT] = [
@@ -28,7 +28,7 @@ impl View for AnimationsView {
                     let factor = if flips.get()[i] { 1.0 } else { -1.0 };
                     HStack::new((
                         Text::new(format!("{}", animation))
-                            .frame(Frame::width(100)),
+                            .frame_with(Alignment::Trailing, Frame::width(100)),
                         Circle::new()
                             .frame(Frame::exact(radius, radius))
                             .offset(Vec2::with_x(factor * (width - radius) / 2.0))

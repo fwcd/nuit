@@ -13,7 +13,7 @@ struct ModifierNodeViewModifier: ViewModifier {
             content.offset(x: delta.x, y: delta.y)
         case let .opacity(opacity: opacity):
             content.opacity(opacity)
-        case let .frame(frame: frame):
+        case let .frame(frame: frame, alignment: alignment):
             switch frame {
             case let .constrained(minWidth: minWidth, idealWidth: idealWidth, maxWidth: maxWidth, minHeight: minHeight, idealHeight: idealHeight, maxHeight: maxHeight):
                 content.frame(
@@ -22,12 +22,14 @@ struct ModifierNodeViewModifier: ViewModifier {
                     maxWidth: maxWidth.map { CGFloat($0) },
                     minHeight: minHeight.map { CGFloat($0) },
                     idealHeight: idealHeight.map { CGFloat($0) },
-                    maxHeight: maxHeight.map { CGFloat($0) }
+                    maxHeight: maxHeight.map { CGFloat($0) },
+                    alignment: .init(alignment)
                 )
             case let .exact(width: width, height: height):
                 content.frame(
                     width: width.map { CGFloat($0) },
-                    height: height.map { CGFloat($0) }
+                    height: height.map { CGFloat($0) },
+                    alignment: .init(alignment)
                 )
             }
         case let .fill(style: style):
