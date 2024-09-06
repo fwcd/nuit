@@ -1,6 +1,6 @@
 use std::{cell::RefCell, rc::Rc};
 
-use crate::{Storage, Binding};
+use crate::{Animation, Binding, Storage};
 
 use super::StateKey;
 
@@ -38,10 +38,18 @@ impl<T> State<T> where T: 'static + Clone {
         storage.get::<T>(self.key.borrow().as_ref().unwrap())
     }
 
-    pub fn set(&self, value: impl Into<T>) {
+    fn add_change(&self, value: impl Into<T>, animation: Option<Animation>) {
         let storage = self.storage.borrow();
         let storage = storage.as_ref().expect("Storage not linked prior to set");
-        storage.add_change(self.key.borrow().clone().unwrap(), value.into());
+        storage.add_change(self.key.borrow().clone().unwrap(), value.into(), animation);
+    }
+
+    pub fn set(&self, value: impl Into<T>) {
+        self.add_change(value, None)
+    }
+
+    pub fn set_with_animation(&self, value: impl Into<T>, animation: Animation) {
+        self.add_change(value, Some(animation))
     }
 
     pub fn binding(&self) -> Binding<T> {

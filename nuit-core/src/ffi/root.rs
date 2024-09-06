@@ -13,7 +13,7 @@ pub struct CRoot {
     /// Fires an to the given JSON-serialized id path with the given JSON-serialized event.
     fire_event_json: extern "C" fn(*const CRoot, *const c_char, *const c_char),
     /// Registers a callback that we (the Rust side) can use to trigger UI updates.
-    set_update_callback: extern "C" fn(*const CRoot, extern "C" fn()),
+    set_update_callback: extern "C" fn(*const CRoot, extern "C" fn(*const c_char)),
 }
 
 extern "C" fn render_json_impl<T>(c_root: *const CRoot) -> *const c_char where T: View {
@@ -34,10 +34,14 @@ extern "C" fn fire_event_json_impl<T>(c_root: *const CRoot, raw_id_path_json: *c
     }
 }
 
-extern "C" fn set_update_callback_impl<T>(c_root: *const CRoot, update_callback: extern "C" fn()) where T: View {
+extern "C" fn set_update_callback_impl<T>(c_root: *const CRoot, update_callback: extern "C" fn(*const c_char)) where T: View {
     unsafe {
         let root = (*c_root).wrapped as *mut Root<T>;
-        (*root).set_update_callback(move || update_callback());
+        (*root).set_update_callback(move |update| {
+            let update_json = serde_json::to_string(update).expect("Could not encode update to JSON");
+            let update_json_c_string = CString::new(update_json).expect("Could not convert update JSON to C string");
+            update_callback(update_json_c_string.as_ptr())
+        });
     }
 }
 

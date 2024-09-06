@@ -21,7 +21,7 @@ pub fn run_app<T>(root: Root<T>) where T: View + 'static {
             root.lock().fire_event(id_path, event);
         }));
 
-        root.lock().set_update_callback(clone!(root, node_widget => move || {
+        root.lock().set_update_callback(clone!(root, node_widget => move |_update| {
             node_widget.update(Root::render(&mut root.lock()));
         }));
 

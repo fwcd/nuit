@@ -1,6 +1,6 @@
 use std::{cell::RefCell, rc::Rc};
 
-use crate::{Context, Diff, Event, IdPath, IdPathBuf, Node, Storage, View};
+use crate::{Context, Diff, Event, IdPath, IdPathBuf, Node, Storage, Update, View};
 
 /// The central state of a Nuit application.
 pub struct Root<T> {
@@ -64,7 +64,7 @@ impl<T> Root<T> where T: View {
         self.view.borrow().fire(event, id_path, &Context::new(self.storage.clone()));
     }
 
-    pub fn set_update_callback(&self, update_callback: impl Fn() + 'static) {
+    pub fn set_update_callback(&self, update_callback: impl Fn(&Update) + 'static) {
         self.storage.set_update_callback(update_callback);
     }
 }

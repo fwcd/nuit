@@ -1,3 +1,4 @@
+mod animation;
 mod alignment;
 mod angle;
 mod approx_eq;
@@ -16,6 +17,7 @@ mod style;
 mod vec2;
 mod zero;
 
+pub use animation::*;
 pub use alignment::*;
 pub use angle::*;
 pub use approx_eq::*;

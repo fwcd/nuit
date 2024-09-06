@@ -1,13 +1,13 @@
 use std::{collections::HashMap, any::Any, cell::{RefCell, Cell}};
 
-use super::StateKey;
+use crate::{Animation, StateKey, Update};
 
 /// A facility that manages view state internally.
 pub struct Storage {
     state: RefCell<HashMap<StateKey, Box<dyn Any>>>,
     changes: RefCell<HashMap<StateKey, Box<dyn Any>>>,
     preapply: Cell<bool>,
-    update_callback: RefCell<Option<Box<dyn Fn()>>>,
+    update_callback: RefCell<Option<Box<dyn Fn(&Update)>>>,
 }
 
 impl Storage {
@@ -26,9 +26,9 @@ impl Storage {
         }
     }
 
-    pub(crate) fn add_change<V>(&self, key: StateKey, value: V) where V: 'static {
+    pub(crate) fn add_change<V>(&self, key: StateKey, value: V, animation: Option<Animation>) where V: 'static {
         self.changes.borrow_mut().insert(key, Box::new(value));
-        self.fire_update_callback();
+        self.fire_update_callback(&Update::new(animation));
     }
 
     pub(crate) fn get<T>(&self, key: &StateKey) -> T where T: Clone + 'static {
@@ -54,13 +54,13 @@ impl Storage {
         }
     }
 
-    fn fire_update_callback(&self) {
+    fn fire_update_callback(&self, update: &Update) {
         if let Some(update_callback) = self.update_callback.borrow().as_ref() {
-            update_callback();
+            update_callback(&update);
         }
     }
 
-    pub fn set_update_callback(&self, update_callback: impl Fn() + 'static) {
+    pub fn set_update_callback(&self, update_callback: impl Fn(&Update) + 'static) {
         *self.update_callback.borrow_mut() = Some(Box::new(update_callback));
     }
 }
