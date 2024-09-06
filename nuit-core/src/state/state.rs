@@ -1,13 +1,15 @@
 use std::{cell::RefCell, rc::Rc};
 
-use crate::{Storage, Binding, IdPathBuf};
+use crate::{Storage, Binding};
+
+use super::StateKey;
 
 /// A wrapper around a value managed by nuit.
 #[derive(Clone)]
 pub struct State<T> {
     initial_value: T,
     storage: RefCell<Option<Rc<Storage>>>,
-    key: RefCell<Option<IdPathBuf>>,
+    key: RefCell<Option<StateKey>>,
 }
 
 impl<T> State<T> where T: 'static + Clone {
@@ -23,7 +25,7 @@ impl<T> State<T> where T: 'static + Clone {
         self.storage.borrow().is_some() && self.key.borrow().is_some()
     }
 
-    pub fn link(&self, storage: Rc<Storage>, key: IdPathBuf) {
+    pub fn link(&self, storage: Rc<Storage>, key: StateKey) {
         *self.storage.borrow_mut() = Some(storage.clone());
         *self.key.borrow_mut() = Some(key.clone());
 

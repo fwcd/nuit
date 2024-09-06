@@ -25,7 +25,7 @@ pub fn derive(input: TokenStream) -> TokenStream {
     let impl_block = quote! {
         impl<#(#type_params),*> ::nuit::Bind for #name<#(#type_params),*> {
             fn bind(&self, context: &::nuit::Context) {
-                #(self.#state_fields.link(context.storage().clone(), context.id_path().child(#indices));)*
+                #(self.#state_fields.link(context.storage().clone(), ::nuit::StateKey::new(context.id_path(), #indices));)*
             }
         }
     };

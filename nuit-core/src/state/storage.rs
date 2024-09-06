@@ -1,11 +1,11 @@
 use std::{collections::HashMap, any::Any, cell::{RefCell, Cell}};
 
-use crate::{IdPath, IdPathBuf};
+use super::StateKey;
 
 /// A facility that manages view state internally.
 pub struct Storage {
-    state: RefCell<HashMap<IdPathBuf, Box<dyn Any>>>,
-    changes: RefCell<HashMap<IdPathBuf, Box<dyn Any>>>,
+    state: RefCell<HashMap<StateKey, Box<dyn Any>>>,
+    changes: RefCell<HashMap<StateKey, Box<dyn Any>>>,
     preapply: Cell<bool>,
     update_callback: RefCell<Option<Box<dyn Fn()>>>,
 }
@@ -20,18 +20,18 @@ impl Storage {
         }
     }
 
-    pub(crate) fn initialize_if_needed<V>(&self, key: IdPathBuf, value: impl FnOnce() -> V) where V: 'static {
+    pub(crate) fn initialize_if_needed<V>(&self, key: StateKey, value: impl FnOnce() -> V) where V: 'static {
         if !self.state.borrow().contains_key(&key) {
             self.state.borrow_mut().insert(key, Box::new(value()));
         }
     }
 
-    pub(crate) fn add_change<V>(&self, key: IdPathBuf, value: V) where V: 'static {
+    pub(crate) fn add_change<V>(&self, key: StateKey, value: V) where V: 'static {
         self.changes.borrow_mut().insert(key, Box::new(value));
         self.fire_update_callback();
     }
 
-    pub(crate) fn get<T>(&self, key: &IdPath) -> T where T: Clone + 'static {
+    pub(crate) fn get<T>(&self, key: &StateKey) -> T where T: Clone + 'static {
         if self.preapply.get() && let Some(changed) = self.changes.borrow().get(key) {
             changed.downcast_ref::<T>().cloned()
         } else {
