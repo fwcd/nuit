@@ -19,11 +19,11 @@ pub enum Frame {
 }
 
 impl Frame {
-    pub fn width(width: impl Into<f64>) -> Self {
+    pub fn with_width(width: impl Into<f64>) -> Self {
         Self::Exact { width: Some(width.into()), height: None }
     }
 
-    pub fn height(height: impl Into<f64>) -> Self {
+    pub fn with_height(height: impl Into<f64>) -> Self {
         Self::Exact { width: None, height: Some(height.into()) }
     }
 

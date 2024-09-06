@@ -24,7 +24,7 @@ impl View for EnterNameView {
             }),
         ))
         .padding(Insets::default())
-        .frame(Frame::width(400))
+        .frame(Frame::with_width(400))
     }
 }
 

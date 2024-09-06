@@ -28,11 +28,11 @@ impl View for AnimationsView {
                     let factor = if flips.get()[i] { 1.0 } else { -1.0 };
                     HStack::new((
                         Text::new(format!("{}", animation))
-                            .frame_with(Alignment::Trailing, Frame::width(100)),
+                            .frame_with(Alignment::Trailing, Frame::with_width(100)),
                         Circle::new()
                             .frame(radius)
                             .offset(Vec2::with_x(factor * (width - radius) / 2.0))
-                            .frame(Frame::width(width)),
+                            .frame(Frame::with_width(width)),
                     ))
                 })
             ),
