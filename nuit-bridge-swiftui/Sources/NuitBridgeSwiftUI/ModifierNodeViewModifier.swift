@@ -47,6 +47,8 @@ struct ModifierNodeViewModifier: ViewModifier {
             content.scaleEffect(CGFloat(factor), anchor: .init(anchor))
         case let .rotationEffect(angle: angle, anchor: anchor):
             content.rotationEffect(.init(angle), anchor: .init(anchor))
+        case let .help(text: text):
+            content.help(text)
         }
     }
 }

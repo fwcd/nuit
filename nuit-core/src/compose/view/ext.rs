@@ -84,6 +84,10 @@ pub trait ViewExt: Sized {
         self.rotation_effect_around(UnitPoint::CENTER, angle)
     }
 
+    fn help(self, text: impl Into<String>) -> Modified<Self> {
+        self.modifier(ModifierNode::Help { text: text.into() })
+    }
+
     fn on_appear(self, action: impl Fn() + 'static) -> Handler<Self, impl Fn(Event)> {
         Handler::new(self, move |e| {
             if let Event::Appear = e {

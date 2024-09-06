@@ -9,4 +9,5 @@ enum ModifierNode: Codable, Hashable {
     case foregroundStyle(style: Style)
     case scaleEffect(factor: Double, anchor: UnitPoint)
     case rotationEffect(angle: Angle, anchor: UnitPoint)
+    case help(text: String)
 }
