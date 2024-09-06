@@ -88,7 +88,3 @@ Using the Adwaita/GTK4 backend the app looks as follows:
 > ```sh
 > NUIT_BACKEND=adwaita cargo run --example counter
 > ```
-
-## Note on Contributions
-
-While the project is under GPL and you should feel free to use and modify the code under this license, I currently cannot take (GPL-only) contributions, since I intend to use this framework for apps on the app store (for which I dual-license it myself). I may decide to go with a CLA or a more permissive license in the future, but for now the project is open-source, not open-contribution.

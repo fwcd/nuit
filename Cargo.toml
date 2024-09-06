@@ -36,7 +36,7 @@ members = [
 [workspace.package]
 version = "0.1.2"
 edition = "2021"
-license = "GPL-3.0-or-later"
+license = "MPL-2.0"
 homepage = "https://github.com/fwcd/nuit"
 
 [workspace.dependencies]
