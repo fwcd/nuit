@@ -4,7 +4,7 @@ use nuit_derive::ApproxEq;
 use serde::{Deserialize, Serialize};
 
 /// A geometric angle.
-#[derive(Debug, Clone, Copy, PartialEq, ApproxEq, Serialize, Deserialize)]
+#[derive(Debug, Default, Clone, Copy, PartialEq, ApproxEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Angle {
     radians: f64,
