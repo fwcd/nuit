@@ -17,6 +17,9 @@ jobs:
         run: sudo apt-get install -y libadwaita-1-dev libgtk-4-dev
       - name: Test package
         run: cargo test
+      - name: Publish nuit-derive
+        run: cargo publish --token ${{ secrets.CRATES_IO_TOKEN }}
+        working-directory: nuit-derive
       - name: Publish nuit-core
         run: cargo publish --token ${{ secrets.CRATES_IO_TOKEN }}
         working-directory: nuit-core
@@ -26,8 +29,5 @@ jobs:
       - name: Publish nuit-bridge-swiftui
         run: cargo publish --token ${{ secrets.CRATES_IO_TOKEN }}
         working-directory: nuit-bridge-swiftui
-      - name: Publish nuit-derive
-        run: cargo publish --token ${{ secrets.CRATES_IO_TOKEN }}
-        working-directory: nuit-derive
       - name: Publish nuit
         run: cargo publish --token ${{ secrets.CRATES_IO_TOKEN }}
