@@ -1,6 +1,8 @@
 use serde::{Serialize, Deserialize};
 
-use crate::{Color, Material};
+use crate::Color;
+
+use super::{SemanticStyle, Material};
 
 /// A color or pattern for filling or stroking.
 #[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
@@ -9,6 +11,7 @@ pub enum Style {
     Color { color: Color },
     Hierarchical { level: usize },
     Material { material: Material },
+    Semantic { style: SemanticStyle },
 }
 
 impl Style {
