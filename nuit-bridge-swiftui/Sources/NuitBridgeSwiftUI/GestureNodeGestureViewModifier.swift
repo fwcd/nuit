@@ -18,6 +18,15 @@ struct GestureNodeViewModifier: ViewModifier {
                 DragGesture(minimumDistance: minimumDistance)
                     .onChanged { value in
                         let event = DragEvent(
+                            kind: .updated,
+                            startLocation: Vec2(value.startLocation),
+                            location: Vec2(value.location)
+                        )
+                        root.fire(event: .gesture(gesture: .drag(drag: event)), for: idPath)
+                    }
+                    .onEnded { value in
+                        let event = DragEvent(
+                            kind: .ended,
                             startLocation: Vec2(value.startLocation),
                             location: Vec2(value.location)
                         )
