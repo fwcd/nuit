@@ -5,6 +5,8 @@ use std::rc::Rc;
 use adw::{glib::{self, Object}, gtk::{self, Align, Button, Label, Orientation, Text}, prelude::{BoxExt, ButtonExt, EditableExt, WidgetExt}, subclass::prelude::*};
 use nuit_core::{clone, Event, Id, IdPath, IdPathBuf, Identified, Node};
 
+use crate::convert::ToGtk;
+
 // See https://gtk-rs.org/gtk4-rs/stable/latest/book/g_object_subclassing.html
 
 glib::wrapper! {
@@ -98,15 +100,17 @@ impl NodeWidget {
                 }
                 self.append(&button);
             },
-            Node::HStack { spacing, wrapped } => {
+            Node::HStack { spacing, alignment, wrapped } => {
                 let gtk_box = gtk::Box::new(Orientation::Horizontal, *spacing as i32);
+                gtk_box.set_valign(alignment.to_gtk());
                 for (child_path, child) in wrapped.value().children_from(&IdPathBuf::from(wrapped.id().clone())) {
                     gtk_box.append(&self.create_child_with_path(child.clone(), &child_path))
                 }
                 self.append(&gtk_box);
             },
-            Node::VStack { spacing, wrapped } => {
+            Node::VStack { spacing, alignment, wrapped } => {
                 let gtk_box = gtk::Box::new(Orientation::Vertical, *spacing as i32);
+                gtk_box.set_halign(alignment.to_gtk());
                 for (child_path, child) in wrapped.value().children_from(&IdPathBuf::from(wrapped.id().clone())) {
                     gtk_box.append(&self.create_child_with_path(child.clone(), &child_path))
                 }

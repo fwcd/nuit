@@ -12,9 +12,9 @@ indirect enum Node: Codable, Hashable {
     case group(children: [Identified<Node>])
 
     // MARK: Layout
-    case vStack(spacing: Double, wrapped: Identified<Node>)
-    case hStack(spacing: Double, wrapped: Identified<Node>)
-    case zStack(spacing: Double, wrapped: Identified<Node>)
+    case vStack(alignment: HorizontalAlignment, spacing: Double, wrapped: Identified<Node>)
+    case hStack(alignment: VerticalAlignment, spacing: Double, wrapped: Identified<Node>)
+    case zStack(alignment: Alignment, spacing: Double, wrapped: Identified<Node>)
     case list(wrapped: Identified<Node>)
     case overlay(wrapped: Identified<Node>, alignment: Alignment, overlayed: Identified<Node>)
 

@@ -44,17 +44,17 @@ struct NodeView: View {
             }
 
         // MARK: Layout
-        case let .vStack(spacing: spacing, wrapped: wrapped):
-            VStack(spacing: spacing) {
+        case let .vStack(alignment: alignment, spacing: spacing, wrapped: wrapped):
+            VStack(alignment: .init(alignment), spacing: spacing) {
                 NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
             }
-        case let .hStack(spacing: spacing, wrapped: wrapped):
-            HStack(spacing: spacing) {
+        case let .hStack(alignment: alignment, spacing: spacing, wrapped: wrapped):
+            HStack(alignment: .init(alignment), spacing: spacing) {
                 NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
             }
-        case let .zStack(spacing: _, wrapped: wrapped):
+        case let .zStack(alignment: alignment, spacing: _, wrapped: wrapped):
             // TODO: Apply spacing on visionOS
-            ZStack {
+            ZStack(alignment: .init(alignment)) {
                 NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
             }
         case let .list(wrapped: wrapped):

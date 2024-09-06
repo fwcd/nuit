@@ -1,7 +1,7 @@
 use nuit_derive::Diff;
 use serde::{Serialize, Deserialize};
 
-use crate::{Alignment, Id, IdPath, IdPathBuf, Identified};
+use crate::{Alignment, HorizontalAlignment, Id, IdPath, IdPathBuf, Identified, VerticalAlignment};
 
 use super::{GestureNode, ModifierNode, ShapeNode};
 
@@ -22,9 +22,9 @@ pub enum Node {
     Group { children: Vec<Identified<Node>> },
 
     // Layout
-    VStack { spacing: f64, wrapped: Box<Identified<Node>> },
-    HStack { spacing: f64, wrapped: Box<Identified<Node>> },
-    ZStack { spacing: f64, wrapped: Box<Identified<Node>> },
+    VStack { alignment: HorizontalAlignment, spacing: f64, wrapped: Box<Identified<Node>> },
+    HStack { alignment: VerticalAlignment, spacing: f64, wrapped: Box<Identified<Node>> },
+    ZStack { alignment: Alignment, spacing: f64, wrapped: Box<Identified<Node>> },
     List { wrapped: Box<Identified<Node>> },
     Overlay { wrapped: Box<Identified<Node>>, alignment: Alignment, overlayed: Box<Identified<Node>> },
 

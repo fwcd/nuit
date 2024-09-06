@@ -1,5 +1,6 @@
 #![feature(reentrant_lock)]
 
+mod convert;
 mod node_widget;
 
 use std::sync::{Arc, ReentrantLock};
