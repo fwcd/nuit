@@ -39,6 +39,8 @@ struct ModifierNodeViewModifier: ViewModifier {
             } else {
                 content
             }
+        case let .font(font: font):
+            content.font(.init(font))
         case let .foregroundStyle(style: style):
             content.foregroundStyle(AnyShapeStyle(style))
         case let .scaleEffect(factor: factor, anchor: anchor):

@@ -1,9 +1,9 @@
 use serde::{Serialize, Deserialize};
 
-use crate::{Alignment, Angle, Frame, Insets, Style, UnitPoint, Vec2};
+use crate::{Alignment, Angle, Font, Frame, Insets, Style, UnitPoint, Vec2};
 
 /// A rendered modifier.
-#[derive(Debug, Copy, Clone, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", rename_all_fields = "camelCase")]
 pub enum ModifierNode {
     Padding { insets: Insets },
@@ -12,6 +12,7 @@ pub enum ModifierNode {
     Opacity { opacity: f64 },
     Frame { frame: Frame, alignment: Alignment },
     Fill { style: Style },
+    Font { font: Font },
     ForegroundStyle { style: Style },
     ScaleEffect { factor: f64, anchor: UnitPoint },
     RotationEffect { angle: Angle, anchor: UnitPoint },

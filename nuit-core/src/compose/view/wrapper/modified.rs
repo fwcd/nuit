@@ -31,7 +31,7 @@ impl<T> View for Modified<T> where T: View {
     fn render(&self, context: &Context) -> Node {
         Node::Modified {
             wrapped: Box::new(self.wrapped.render(&context.child(0)).identify(0)),
-            modifier: self.modifier,
+            modifier: self.modifier.clone(),
         }
     }
 }
