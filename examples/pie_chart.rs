@@ -13,7 +13,7 @@ impl View for PieChartView {
             Sector::new(Angle::with_degrees(30.0), Angle::FULL, 0)
                 .fill(Color::BLUE)
                 .frame(160)
-                .overlay_at(Alignment::Leading, Text::new("Majority").padding(Insets::default())),
+                .overlay_at(Alignment::LEADING, Text::new("Majority").padding(Insets::default())),
             Sector::new(Angle::ZERO, Angle::with_degrees(30.0), 0)
                 .fill(Color::CYAN)
                 .frame(240),
