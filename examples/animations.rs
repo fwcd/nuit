@@ -1,5 +1,7 @@
 #![feature(type_alias_impl_trait, impl_trait_in_assoc_type)]
 
+use std::time::Duration;
+
 use nuit::{Alignment, Animation, Bind, Button, Circle, ForEach, Frame, HStack, Rectangle, State, Text, VStack, Vec2, View, ViewExt, ZStack};
 
 #[derive(Bind)]
@@ -57,10 +59,11 @@ impl<const COUNT: usize> View for AnimationsView<COUNT> {
 }
 
 fn main() {
+    let duration = Duration::from_secs(5);
     nuit::run_app(AnimationsView::new([
-        Animation::LINEAR,
-        Animation::EASE_IN,
-        Animation::EASE_OUT,
-        Animation::EASE_IN_OUT,
+        Animation::linear(Some(duration)),
+        Animation::ease_in(Some(duration)),
+        Animation::ease_out(Some(duration)),
+        Animation::ease_in_out(Some(duration)),
     ]));
 }
