@@ -48,7 +48,7 @@ impl<T> State<T> where T: 'static + Clone {
         self.add_change(value, None)
     }
 
-    pub fn set_with_animation(&self, value: impl Into<T>, animation: Animation) {
+    pub fn set_with(&self, animation: Animation, value: impl Into<T>) {
         self.add_change(value, Some(animation))
     }
 

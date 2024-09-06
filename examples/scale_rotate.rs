@@ -31,13 +31,13 @@ impl View for ScaleRotateView {
                 .frame(100),
             HStack::new((
                 Button::new(Text::new("Rotate"), move || {
-                    rotation.set_with_animation(rotation.get() + Angle::QUARTER, Animation::LINEAR);
+                    rotation.set_with(Animation::LINEAR, rotation.get() + Angle::QUARTER);
                 }),
                 Button::new(Text::new("Scale up"), clone!(scale => move || {
-                    scale.set_with_animation(scale.get() + 0.5, Animation::LINEAR);
+                    scale.set_with(Animation::LINEAR, scale.get() + 0.5);
                 })),
                 Button::new(Text::new("Scale down"), move || {
-                    scale.set_with_animation(scale.get() - 0.5, Animation::LINEAR);
+                    scale.set_with(Animation::LINEAR, scale.get() - 0.5);
                 }),
             ))
         ))

@@ -47,7 +47,7 @@ impl<const COUNT: usize> View for AnimationsView<COUNT> {
                         Button::new(Text::new("Flip"), clone!(flips => move || {
                             let mut value = flips.get();
                             value[i] = !value[i];
-                            flips.set_with_animation(value, animation);
+                            flips.set_with(animation, value);
                         })),
                     ))
                 })

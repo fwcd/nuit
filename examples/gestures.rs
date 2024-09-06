@@ -60,7 +60,7 @@ impl View for DragView {
             .on_drag(move |event| {
                 match event.kind() {
                     DragEventKind::Updated => offset.set(event.translation()),
-                    DragEventKind::Ended => offset.set_with_animation(Vec2::default(), Animation::default()),
+                    DragEventKind::Ended => offset.set_with(Animation::default(), Vec2::default()),
                 }
             })
     }
