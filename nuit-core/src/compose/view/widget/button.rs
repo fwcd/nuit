@@ -2,6 +2,8 @@ use nuit_derive::Bind;
 
 use crate::{View, Node, Context, Event, IdPath, Id, IdentifyExt};
 
+use super::Text;
+
 /// A widget that performs an action when pressed/tapped.
 #[derive(Debug, Clone, PartialEq, Eq, Bind)]
 pub struct Button<T, F> {
@@ -13,6 +15,15 @@ impl<T, F> Button<T, F> {
     pub fn new(label: T, action: F) -> Self {
         Self {
             label,
+            action: Some(action),
+        }
+    }
+}
+
+impl<F> Button<Text, F> {
+    pub fn with_text(label: impl Into<String>, action: F) -> Self {
+        Self {
+            label: Text::new(label),
             action: Some(action),
         }
     }
