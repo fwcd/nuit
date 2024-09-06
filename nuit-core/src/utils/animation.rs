@@ -33,23 +33,23 @@ impl Animation {
     }
 
     /// Creates an animation with a linear curve and the given duration (or default if none).
-    pub fn linear(duration: Option<Duration>) -> Self {
-        Self::curve(AnimationCurve::Linear, duration)
+    pub fn linear(duration: Duration) -> Self {
+        Self::curve(AnimationCurve::Linear, Some(duration))
     }
 
     /// Creates an animation with an ease-in curve and the given duration (or default if none).
-    pub fn ease_in(duration: Option<Duration>) -> Self {
-        Self::curve(AnimationCurve::EaseIn, duration)
+    pub fn ease_in(duration: Duration) -> Self {
+        Self::curve(AnimationCurve::EaseIn, Some(duration))
     }
 
     /// Creates an animation with an ease-out curve and the given duration (or default if none).
-    pub fn ease_out(duration: Option<Duration>) -> Self {
-        Self::curve(AnimationCurve::EaseOut, duration)
+    pub fn ease_out(duration: Duration) -> Self {
+        Self::curve(AnimationCurve::EaseOut, Some(duration))
     }
 
     /// Creates an animation with an ease-in/out curve and the given duration (or default if none).
-    pub fn ease_in_out(duration: Option<Duration>) -> Self {
-        Self::curve(AnimationCurve::EaseInOut, duration)
+    pub fn ease_in_out(duration: Duration) -> Self {
+        Self::curve(AnimationCurve::EaseInOut, Some(duration))
     }
 }
 
