@@ -12,7 +12,6 @@ mod ffi;
 mod node;
 mod root;
 mod state;
-mod storage;
 mod utils;
 
 pub use binding::*;
@@ -23,7 +22,6 @@ pub use ffi::*;
 pub use node::*;
 pub use root::*;
 pub use state::*;
-pub use storage::*;
 pub use utils::*;
 
 // We alias the crate (nuit-core) to nuit to make nuit-derive's derive macros
