@@ -21,6 +21,16 @@ impl Style {
     pub const QUATERNARY: Self = Self::hierarchical(3);
     pub const QUINARY: Self = Self::hierarchical(4);
 
+    pub const FOREGROUND: Self = Self::semantic(SemanticStyle::Foreground);
+    pub const BACKGROUND: Self = Self::semantic(SemanticStyle::Background);
+    pub const SELECTION: Self = Self::semantic(SemanticStyle::Selection);
+    pub const SEPARATOR: Self = Self::semantic(SemanticStyle::Separator);
+    pub const TINT: Self = Self::semantic(SemanticStyle::Tint);
+    pub const PLACEHOLDER: Self = Self::semantic(SemanticStyle::Placeholder);
+    pub const LINK: Self = Self::semantic(SemanticStyle::Link);
+    pub const FILL: Self = Self::semantic(SemanticStyle::Fill);
+    pub const WINDOW_BACKGROUND: Self = Self::semantic(SemanticStyle::WindowBackground);
+
     pub const fn color(color: Color) -> Self {
         Self::Color { color }
     }
@@ -31,6 +41,10 @@ impl Style {
 
     pub const fn material(material: Material) -> Self {
         Self::Material { material }
+    }
+
+    pub const fn semantic(style: SemanticStyle) -> Self {
+        Self::Semantic { style }
     }
 }
 
