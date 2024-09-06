@@ -25,6 +25,7 @@ impl<const N: usize> View for StylesView<N> {
                         Circle::new()
                             .frame(20)
                             .foreground_style(style.clone())
+                            .help(format!("{style:?}"))
                     }),
                 ))
             })
