@@ -2,7 +2,7 @@ import SwiftUI
 
 extension SwiftUI.Alignment {
     init(_ alignment: Alignment) {
-        switch (alignment) {
+        switch alignment {
         case .topLeading: self = .topLeading
         case .top: self = .top
         case .topTrailing: self = .topTrailing
