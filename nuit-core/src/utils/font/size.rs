@@ -33,6 +33,12 @@ impl FontSize {
     }
 }
 
+impl From<usize> for FontSize {
+    fn from(size: usize) -> Self {
+        Self::Custom { size: size as f64 }
+    }
+}
+
 impl From<f64> for FontSize {
     fn from(size: f64) -> Self {
         Self::Custom { size }
