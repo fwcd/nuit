@@ -8,7 +8,7 @@ func runApp(cRoot: UnsafePointer<CRoot>) {
     cRoot.pointee.set_update_callback(cRoot) { updateJsonCString in
         let updateJson = String(cString: updateJsonCString!)
         let update = try! JSONDecoder().decode(Update.self, from: updateJson.data(using: .utf8)!)
-        NuitApp.root.triggerUpdate()
+        NuitApp.root.trigger(update: update)
     }
 
     NuitApp.main()

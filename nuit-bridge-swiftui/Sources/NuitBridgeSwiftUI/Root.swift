@@ -1,6 +1,7 @@
 import CNuitBridgeSwiftUI
 import Foundation
 import Combine
+import SwiftUI
 
 /// The central state of the Nuit application.
 class Root: ObservableObject {
@@ -20,8 +21,10 @@ class Root: ObservableObject {
         self.cRoot = cRoot
     }
 
-    func triggerUpdate() {
-        objectWillChange.send()
+    func trigger(update: Update) {
+        withAnimation(update.animation.map(SwiftUI.Animation.init)) {
+            objectWillChange.send()
+        }
     }
 
     func fire(event: Event, for idPath: [Id]) {
