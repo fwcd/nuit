@@ -1,4 +1,4 @@
-use crate::{Alignment, Angle, DragEvent, DragGesture, Event, Frame, Gesture, Handler, Insets, Modified, ModifierNode, Style, TapGesture, UnitPoint, Vec2, View};
+use crate::{Alignment, Angle, DragEvent, DragGesture, Event, Font, Frame, Gesture, Handler, Insets, Modified, ModifierNode, Style, TapGesture, UnitPoint, Vec2, View};
 
 use super::{Gestured, Overlay};
 
@@ -58,6 +58,10 @@ pub trait ViewExt: Sized {
 
     fn frame(self, frame: impl Into<Frame>) -> Modified<Self> {
         self.frame_with(Alignment::Center, frame)
+    }
+
+    fn font(self, font: impl Into<Font>) -> Modified<Self> {
+        self.modifier(ModifierNode::Font { font: font.into() })
     }
 
     fn foreground_style(self, style: impl Into<Style>) -> Modified<Self> {
