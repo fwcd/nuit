@@ -13,14 +13,40 @@ pub struct ForEach<V> {
 // where the composite type appears not to implement View.
 
 impl<V> ForEach<V> where V: View {
+    /// Creates new views from the given collection.
     pub fn new<I: HasId>(collection: impl IntoIterator<Item = I>, view_func: impl Fn(I) -> V) -> Self {
         Self {
             children: collection
                 .into_iter()
-                .map(|i| {
-                    let id = i.id();
-                    view_func(i).identify(id)
+                .map(|item| {
+                    let id = item.id();
+                    view_func(item).identify(id)
                 })
+                .collect()
+        }
+    }
+
+    /// Creates new views from the given collection, additionally taking the index.
+    pub fn with_index<I: HasId>(collection: impl IntoIterator<Item = I>, view_func: impl Fn(usize, I) -> V) -> Self {
+        Self {
+            children: collection
+                .into_iter()
+                .enumerate()
+                .map(|(i, item)| {
+                    let id = item.id();
+                    view_func(i, item).identify(id)
+                })
+                .collect()
+        }
+    }
+
+    /// Creates new views from the given collection, identified by their index.
+    pub fn with_index_id<I>(collection: impl IntoIterator<Item = I>, view_func: impl Fn(usize, I) -> V) -> Self {
+        Self {
+            children: collection
+                .into_iter()
+                .enumerate()
+                .map(|(i, item)| view_func(i, item).identify(i))
                 .collect()
         }
     }
