@@ -1,12 +1,14 @@
 use proc_macro::TokenStream;
 use quote::quote;
-use syn::{Data, DeriveInput, Field, Fields, Ident, Type, TypeParam};
+use syn::{Data, DeriveInput, Field, Fields, Ident, Type};
 
 pub fn derive(input: TokenStream) -> TokenStream {
     let input: DeriveInput = syn::parse(input).unwrap();
     let name = &input.ident;
 
-    let type_params: Vec<TypeParam> = input.generics.type_params().cloned().collect();
+    let const_params: Vec<_> = input.generics.const_params().collect();
+    let const_idents: Vec<_> = input.generics.const_params().map(|p| p.ident.clone()).collect();
+    let type_params: Vec<_> = input.generics.type_params().collect();
 
     let state_fields: Vec<Ident> = match input.data {
         Data::Struct(s) => match s.fields {
@@ -23,7 +25,7 @@ pub fn derive(input: TokenStream) -> TokenStream {
     let indices = 0..state_fields.len();
 
     let impl_block = quote! {
-        impl<#(#type_params),*> ::nuit::Bind for #name<#(#type_params),*> {
+        impl <#(#const_params,)* #(#type_params,)*> ::nuit::Bind for #name <#(#const_idents,)* #(#type_params,)*> {
             fn bind(&self, context: &::nuit::Context) {
                 #(self.#state_fields.link(context.storage().clone(), ::nuit::StateKey::new(context.id_path(), #indices));)*
             }
