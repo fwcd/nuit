@@ -1,6 +1,6 @@
 use serde::{Serialize, Deserialize};
 
-use super::{Color, Material};
+use crate::{Color, Material};
 
 /// A color or pattern for filling or stroking.
 #[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
