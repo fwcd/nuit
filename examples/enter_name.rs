@@ -2,15 +2,9 @@
 
 use nuit::{Text, VStack, View, ViewExt, State, HStack, TextField, Bind, Insets, Frame, ForEach, clone};
 
-#[derive(Bind)]
+#[derive(Bind, Default)]
 struct EnterNameView {
     raw_names: State<String>,
-}
-
-impl EnterNameView {
-    fn new() -> Self {
-        Self { raw_names: State::new("") }
-    }
 }
 
 impl View for EnterNameView {
@@ -35,5 +29,5 @@ impl View for EnterNameView {
 }
 
 fn main() {
-    nuit::run_app(EnterNameView::new());
+    nuit::run_app(EnterNameView::default());
 }

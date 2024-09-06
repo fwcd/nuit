@@ -24,15 +24,9 @@ impl<F> View for IncrementView<F> where F: Fn() + Clone + 'static {
     }
 }
 
-#[derive(Bind)]
+#[derive(Bind, Default)]
 struct CounterView {
     count: State<i32>,
-}
-
-impl CounterView {
-    fn new() -> Self {
-        Self { count: State::new(0) }
-    }
 }
 
 impl View for CounterView {
@@ -50,5 +44,5 @@ impl View for CounterView {
 }
 
 fn main() {
-    nuit::run_app(CounterView::new());
+    nuit::run_app(CounterView::default());
 }

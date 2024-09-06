@@ -2,15 +2,9 @@
 
 use nuit::{Backend, Bind, Button, ConfigBuilder, State, Text, VStack, View};
 
-#[derive(Bind)]
+#[derive(Bind, Default)]
 struct CounterView {
     count: State<i32>,
-}
-
-impl CounterView {
-    fn new() -> Self {
-        Self { count: State::new(0) }
-    }
 }
 
 impl View for CounterView {
@@ -29,7 +23,7 @@ impl View for CounterView {
 
 fn main() {
     nuit::run_app(
-        ConfigBuilder::from(CounterView::new())
+        ConfigBuilder::from(CounterView::default())
             .preferred_backend(Backend::Adwaita)
     );
 }
