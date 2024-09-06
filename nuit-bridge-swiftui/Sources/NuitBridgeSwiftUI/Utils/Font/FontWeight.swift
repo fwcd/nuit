@@ -1,4 +1,4 @@
-enum FontWeight: Codable, Hashable {
+enum FontWeight: String, Codable, Hashable {
     case black
     case bold
     case heavy

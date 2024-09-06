@@ -1,4 +1,4 @@
-enum FontLevel: Codable, Hashable {
+enum FontLevel: String, Codable, Hashable {
     case extraLargeTitle2
     case extraLargeTitle
     case largeTitle
