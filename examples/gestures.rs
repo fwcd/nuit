@@ -25,11 +25,14 @@ impl View for TapView {
         Circle::new()
             .fill(color.get())
             .frame(150)
-            .overlay(Text::new(match self.taps {
-                1 => "Tap me!".to_owned(),
-                2 => "Double-tap me!".to_owned(),
-                i => format!("Tap me {} times!", i),
-            }))
+            .overlay(
+                Text::new(match self.taps {
+                    1 => "Tap me!".to_owned(),
+                    2 => "Double-tap me!".to_owned(),
+                    i => format!("Tap me {} times!", i),
+                })
+                .foreground_style(color.get().invert_rgb())
+            )
             .on_taps(self.taps, move || {
                 color.set(Color::random_rgb());
             })
@@ -49,7 +52,10 @@ impl View for DragView {
         Circle::new()
             .fill(Color::BLACK)
             .frame(150)
-            .overlay(Text::new("Drag me!"))
+            .overlay(
+                Text::new("Drag me!")
+                    .foreground_style(Color::WHITE)
+            )
             .offset(offset.get())
             .on_drag(move |event| {
                 offset.set(event.translation());
