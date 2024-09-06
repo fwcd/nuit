@@ -52,13 +52,6 @@ impl<const COUNT: usize> View for AnimationsView<COUNT> {
                     ))
                 })
             ),
-            Button::new(Text::new("Flip all"), move || {
-                let mut value = flips.get();
-                for (i, animation) in animations.into_iter().enumerate() {
-                    value[i] = !value[i];
-                    flips.set_with_animation(value, animation);
-                }
-            }),
         ))
     }
 }
