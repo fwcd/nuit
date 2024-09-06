@@ -2,7 +2,7 @@
 
 use std::time::Duration;
 
-use nuit::{Alignment, Animation, Bind, Button, Circle, ForEach, Frame, HStack, Rectangle, State, Text, VStack, Vec2, View, ViewExt, ZStack};
+use nuit::{clone, Alignment, Animation, Bind, Button, Circle, ForEach, Frame, HStack, Rectangle, State, Text, VStack, Vec2, View, ViewExt, ZStack};
 
 #[derive(Bind)]
 struct AnimationsView<const COUNT: usize> {
@@ -44,10 +44,15 @@ impl<const COUNT: usize> View for AnimationsView<COUNT> {
                                 .offset(Vec2::with_x(factor * inner_width / 2.0))
                         ))
                         .frame(Frame::with_width(width)),
+                        Button::new(Text::new("Flip"), clone!(flips => move || {
+                            let mut value = flips.get();
+                            value[i] = !value[i];
+                            flips.set_with_animation(value, animation);
+                        })),
                     ))
                 })
             ),
-            Button::new(Text::new("Click me!"), move || {
+            Button::new(Text::new("Flip all"), move || {
                 let mut value = flips.get();
                 for (i, animation) in animations.into_iter().enumerate() {
                     value[i] = !value[i];
