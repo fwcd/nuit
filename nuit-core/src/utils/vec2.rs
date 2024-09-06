@@ -24,6 +24,20 @@ impl<T> Vec2<T> {
     }
 }
 
+impl<T> Vec2<T> where T: Default {
+    /// Creates a new vector with the given x component and the default y.
+    #[inline]
+    pub fn with_x(x: T) -> Self {
+        Self { x, y: T::default() }
+    }
+
+    /// Creates a new vector with the given y component and the default x.
+    #[inline]
+    pub fn with_y(y: T) -> Self {
+        Self { x: T::default(), y }
+    }
+}
+
 impl<T> Vec2<T> where T: Add<Output = T> + Mul<Output = T> + Copy {
     /// The squared length of this vector.
     #[inline]
