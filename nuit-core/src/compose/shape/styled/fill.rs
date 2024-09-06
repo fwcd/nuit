@@ -20,7 +20,7 @@ impl<T> Shape for Fill<T> where T: Shape {
     fn render(&self) -> ShapeNode {
         ShapeNode::Fill {
             wrapped: Box::new(self.wrapped.render()),
-            style: self.style,
+            style: self.style.clone(),
         }
     }
 }
