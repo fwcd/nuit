@@ -101,3 +101,9 @@ impl Borrow<IdPath> for IdPathBuf {
         self.deref()
     }
 }
+
+impl From<&IdPath> for IdPathBuf {
+    fn from(id_path: &IdPath) -> Self {
+        id_path.to_owned()
+    }
+}
