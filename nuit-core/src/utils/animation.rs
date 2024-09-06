@@ -66,7 +66,7 @@ impl fmt::Display for Animation {
             Self::Curve { curve, duration_seconds } => {
                 write!(f, "{}", curve)?;
                 if let Some(duration_seconds) = duration_seconds {
-                    write!(f, " ({} seconds)", duration_seconds)?;
+                    write!(f, " ({}s)", duration_seconds)?;
                 }
             },
         }
