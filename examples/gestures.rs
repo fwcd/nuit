@@ -1,6 +1,6 @@
 #![feature(type_alias_impl_trait, impl_trait_in_assoc_type)]
 
-use nuit::{Bind, Circle, Color, DragEventKind, HStack, ShapeExt, State, Text, Vec2, View, ViewExt};
+use nuit::{Animation, Bind, Circle, Color, DragEventKind, HStack, ShapeExt, State, Text, Vec2, View, ViewExt};
 
 #[derive(Bind)]
 struct TapView {
@@ -60,7 +60,7 @@ impl View for DragView {
             .on_drag(move |event| {
                 match event.kind() {
                     DragEventKind::Updated => offset.set(event.translation()),
-                    DragEventKind::Ended => offset.set(Vec2::default()),
+                    DragEventKind::Ended => offset.set_with_animation(Vec2::default(), Animation::default()),
                 }
             })
     }
