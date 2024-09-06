@@ -121,4 +121,12 @@ mod tests {
             Color::with_hsv(Angle::QUARTER - Angle::FULL, 1.0, 1.0)
         );
     }
+
+    #[test]
+    fn invert() {
+        assert_approx_eq!(Color::BLACK.invert_rgb(), Color::WHITE);
+        assert_approx_eq!(Color::CYAN.invert_rgb(), Color::RED);
+        assert_approx_eq!(Color::RED.invert_rgb(), Color::CYAN);
+        assert_approx_eq!(Color::YELLOW.invert_rgb(), Color::BLUE);
+    }
 }
