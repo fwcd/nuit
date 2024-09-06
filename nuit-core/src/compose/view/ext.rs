@@ -57,7 +57,7 @@ pub trait ViewExt: Sized {
     }
 
     fn foreground_style(self, style: impl Into<Style>) -> Modified<Self> {
-        self.modifier(ModifierNode::Fill { style: style.into() })
+        self.modifier(ModifierNode::ForegroundStyle { style: style.into() })
     }
 
     fn on_appear(self, action: impl Fn() + 'static) -> Handler<Self, impl Fn(Event)> {
