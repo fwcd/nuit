@@ -17,7 +17,7 @@ impl<T> Zero for Vec2<T> where T: Zero {
 }
 
 impl<T> Vec2<T> {
-    /// Creates a new vector from the given cube components.
+    /// Creates a new vector from the given components.
     #[inline]
     pub const fn new(x: T, y: T) -> Self {
         Self { x, y }
