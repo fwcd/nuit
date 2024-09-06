@@ -59,3 +59,9 @@ impl From<Material> for Style {
         Self::Material { material }
     }
 }
+
+impl From<SemanticStyle> for Style {
+    fn from(style: SemanticStyle) -> Self {
+        Self::Semantic { style }
+    }
+}
