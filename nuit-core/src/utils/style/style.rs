@@ -2,16 +2,22 @@ use serde::{Serialize, Deserialize};
 
 use crate::Color;
 
-use super::{SemanticStyle, Material};
+use super::{BlendMode, Material, SemanticStyle, Shadow};
 
 /// A color or pattern for filling or stroking.
-#[derive(Debug, Clone, Copy, PartialEq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", rename_all_fields = "camelCase")]
 pub enum Style {
+    // Primitive
     Color { color: Color },
     Hierarchical { level: usize },
     Material { material: Material },
     Semantic { style: SemanticStyle },
+
+    // Modifiers
+    BlendMode { wrapped: Box<Style>, blend_mode: BlendMode },
+    Opacity { wrapped: Box<Style>, opacity: f64 },
+    Shadow { wrapped: Box<Style>, shadow: Shadow },
 }
 
 impl Style {
@@ -45,6 +51,18 @@ impl Style {
 
     pub const fn semantic(style: SemanticStyle) -> Self {
         Self::Semantic { style }
+    }
+
+    pub fn blend_mode(self, blend_mode: BlendMode) -> Self {
+        Self::BlendMode { wrapped: Box::new(self), blend_mode }
+    }
+
+    pub fn opacity(self, opacity: f64) -> Self {
+        Self::Opacity { wrapped: Box::new(self), opacity }
+    }
+
+    pub fn shadow(self, shadow: Shadow) -> Self {
+        Self::Shadow { wrapped: Box::new(self), shadow }
     }
 }
 
