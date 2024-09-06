@@ -2,15 +2,9 @@
 
 use nuit::{VStack, View, Bind, State, Picker, Id, Text, Button, clone};
 
-#[derive(Bind)]
+#[derive(Bind, Default)]
 struct PickerView {
     selection: State<Id>,
-}
-
-impl PickerView {
-    fn new() -> Self {
-        Self { selection: State::new(0) }
-    }
 }
 
 impl View for PickerView {
@@ -35,5 +29,5 @@ impl View for PickerView {
 }
 
 fn main() {
-    nuit::run_app(PickerView::new());
+    nuit::run_app(PickerView::default());
 }

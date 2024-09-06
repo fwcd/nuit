@@ -24,6 +24,12 @@ impl Id {
     }
 }
 
+impl Default for Id {
+    fn default() -> Self {
+        Self::Index(0)
+    }
+}
+
 impl fmt::Display for Id {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
