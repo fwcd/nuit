@@ -30,7 +30,7 @@ impl View for AnimationsView {
                         Text::new(format!("{}", animation))
                             .frame_with(Alignment::Trailing, Frame::width(100)),
                         Circle::new()
-                            .frame(Frame::exact(radius, radius))
+                            .frame(radius)
                             .offset(Vec2::with_x(factor * (width - radius) / 2.0))
                             .frame(Frame::width(width)),
                     ))
