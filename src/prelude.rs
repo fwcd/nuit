@@ -1,4 +1,4 @@
-//! Types used by almost every nuit program.
+//! Types used by almost every Nuit program.
 
 pub use crate::{
     Access,
