@@ -1,0 +1,9 @@
+{
+    "rust-analyzer.check.command": "clippy",
+    "rust-analyzer.check.extraArgs": [
+        "--",
+        "-W", "clippy::pedantic",
+        "-W", "clippy::missing-const-for-fn",
+        "-W", "clippy::use-self",
+    ]
+}

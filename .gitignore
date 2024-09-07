@@ -1,4 +1,6 @@
 .DS_Store
-.vscode
 target
 Cargo.lock
+
+.vscode/*
+!.vscode/settings.json
