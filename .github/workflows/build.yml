@@ -26,3 +26,5 @@ jobs:
       run: brew install libadwaita gtk4
     - name: Build and Test
       run: cargo test --all --all-features
+    - name: Run Clippy
+      run: cargo clippy --all-targets --all-features
