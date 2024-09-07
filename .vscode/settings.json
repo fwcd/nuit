@@ -1,4 +1,8 @@
 {
+  // NOTE: This should be kept in sync with scripts/lint. Unfortunately it looks
+  // like we cannot just let rust-analyzer invoke our script, so we'll have to
+  // sync this manually until we figure out how to configure clippy directly
+  // (e.g. via the Cargo.toml).
   "rust-analyzer.check.command": "clippy",
   "rust-analyzer.check.extraArgs": [
     "--",

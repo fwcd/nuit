@@ -3,6 +3,11 @@
 set -e
 cd "$(dirname $0)/.."
 
+# NOTE: This should be kept in sync with .vscode/settings.json. Unfortunately it
+# looks like we cannot just let rust-analyzer invoke our script, so we'll have
+# to sync this manually until we figure out how to configure clippy directly
+# (e.g. via the Cargo.toml).
+
 # TODO: Figure out if we can configure this properly from Cargo.toml
 # [lints.clippy] seems to be unstable currently.
 
