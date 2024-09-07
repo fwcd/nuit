@@ -4,6 +4,10 @@ use crate::clone;
 
 use super::Animation;
 
+// TODO: Extract a trait from get/set/set_with and implement it for `State` too. This would let us implement `project` generically.
+// TODO: Move this to a top-level `binding` folder/module?
+// TODO: Add tests
+
 /// A pair of a getter and a setter, encapsulating a reference to some value.
 #[derive(Clone)]
 pub struct Binding<T> {
