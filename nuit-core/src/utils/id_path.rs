@@ -15,42 +15,51 @@ pub struct IdPath([Id]);
 pub struct IdPathBuf(Vec<Id>);
 
 impl IdPath {
+    #[must_use]
     pub fn root() -> &'static Self {
         Self::ref_cast(&[])
     }
 
+    #[must_use]
     pub fn is_root(&self) -> bool {
         self.0.is_empty()
     }
 
+    #[must_use]
     pub fn head(&self) -> Option<Id> {
         self.0.first().cloned()
     }
 
+    #[must_use]
     pub fn tail(&self) -> &Self {
         Self::ref_cast(&self.0[1..])
     }
 
+    #[must_use]
     pub fn child(&self, id: impl Into<Id>) -> IdPathBuf {
         self.to_owned().child(id)
     }
 
+    #[must_use]
     pub fn join(&self, path: &IdPath) -> IdPathBuf {
         self.to_owned().join(path)
     }
 }
 
 impl IdPathBuf {
+    #[must_use]
     pub fn root() -> Self {
         Self(Vec::new())
     }
 
+    #[must_use]
     pub fn child(&self, id: impl Into<Id>) -> Self {
         let mut components = self.0.clone();
         components.push(id.into());
         Self(components)
     }
 
+    #[must_use]
     pub fn join(&self, path: &IdPath) -> Self {
         let mut components = self.0.clone();
         components.extend(path.0.iter().cloned());
@@ -92,13 +101,13 @@ impl Deref for IdPathBuf {
 
 impl AsRef<IdPath> for IdPathBuf {
     fn as_ref(&self) -> &IdPath {
-        self.deref()
+        self
     }
 }
 
 impl Borrow<IdPath> for IdPathBuf {
     fn borrow(&self) -> &IdPath {
-        self.deref()
+        self
     }
 }
 

@@ -24,16 +24,19 @@ impl FontSize {
     pub const CAPTION2: Self = Self::level(FontLevel::Caption2);
     pub const FOOTNOTE: Self = Self::level(FontLevel::Footnote);
 
+    #[must_use]
     pub const fn level(level: FontLevel) -> Self {
         Self::Level { level }
     }
 
+    #[must_use]
     pub const fn custom(size: f64) -> Self {
         Self::Custom { size }
     }
 }
 
 impl From<usize> for FontSize {
+    #[allow(clippy::cast_precision_loss)]
     fn from(size: usize) -> Self {
         Self::Custom { size: size as f64 }
     }

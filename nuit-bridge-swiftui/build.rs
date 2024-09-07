@@ -87,7 +87,7 @@ fn find_swift_runtime_libs() {
         .expect("Could not parse Swift target info");
 
     for path in target_info.paths.runtime_library_paths {
-        println!("cargo:rustc-link-search=native={}", path);
+        println!("cargo:rustc-link-search=native={path}");
     }
 }
 
@@ -122,15 +122,13 @@ fn build_nuit_bridge_swiftui() {
         .unwrap()
         .success();
 
-    if !build_succeeded {
-        panic!("Swift build failed");
-    }
+    assert!(build_succeeded, "Swift build failed");
 
     let root = manifest_dir();
 
-    println!("cargo:rustc-link-search=native={}/{}/{}", out_dir, target, profile);
+    println!("cargo:rustc-link-search=native={out_dir}/{target}/{profile}");
     println!("cargo:rustc-link-lib=static=nuit-bridge-swiftui");
-    println!("cargo:rerun-if-changed={}/Sources/**/*.swift", root);
+    println!("cargo:rerun-if-changed={root}/Sources/**/*.swift");
 }
 
 fn main() {

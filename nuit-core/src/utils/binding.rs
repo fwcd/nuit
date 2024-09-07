@@ -12,12 +12,13 @@ impl<T> Binding<T> where T: 'static {
         Self { get: Rc::new(get), set: Rc::new(set) }
     }
 
+    #[must_use]
     pub fn get(&self) -> T {
         (self.get)()
     }
 
     pub fn set(&self, value: T) {
-        (self.set)(value)
+        (self.set)(value);
     }
 }
 

@@ -17,14 +17,17 @@ impl Context {
         }
     }
 
+    #[must_use]
     pub fn storage(&self) -> &Rc<Storage> {
         &self.storage
     }
 
+    #[must_use]
     pub fn id_path(&self) -> &IdPath {
         &self.id_path
     }
 
+    #[must_use]
     pub fn child(&self, id: impl Into<Id>) -> Self {
         Self {
             id_path: self.id_path.child(id),

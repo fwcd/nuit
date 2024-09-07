@@ -25,7 +25,7 @@ impl<T> State<T> where T: 'static + Clone {
         self.storage.borrow().is_some() && self.key.borrow().is_some()
     }
 
-    pub fn link(&self, storage: Rc<Storage>, key: StateKey) {
+    pub fn link(&self, storage: &Rc<Storage>, key: StateKey) {
         *self.storage.borrow_mut() = Some(storage.clone());
         *self.key.borrow_mut() = Some(key.clone());
 
@@ -45,11 +45,11 @@ impl<T> State<T> where T: 'static + Clone {
     }
 
     pub fn set(&self, value: impl Into<T>) {
-        self.add_change(value, None)
+        self.add_change(value, None);
     }
 
     pub fn set_with(&self, animation: Animation, value: impl Into<T>) {
-        self.add_change(value, Some(animation))
+        self.add_change(value, Some(animation));
     }
 
     pub fn binding(&self) -> Binding<T> {

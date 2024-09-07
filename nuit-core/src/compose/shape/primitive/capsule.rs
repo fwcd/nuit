@@ -5,6 +5,7 @@ use crate::{Shape, ShapeNode};
 pub struct Capsule;
 
 impl Capsule {
+    #[must_use]
     pub const fn new() -> Self {
         Self
     }

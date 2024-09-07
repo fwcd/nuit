@@ -17,8 +17,8 @@ impl View for EnterNameView {
                 Text::new("Please enter some names:"),
                 TextField::new(raw_names.binding()),
             )),
-            ForEach::new(raw_names.get().split(",").map(|s| s.trim().to_owned()).filter(|s| !s.is_empty()), |name| {
-                Text::new(format!("Hi {}!", name))
+            ForEach::new(raw_names.get().split(',').map(|s| s.trim().to_owned()).filter(|s| !s.is_empty()), |name| {
+                Text::new(format!("Hi, {name}!"))
                     .on_appear(clone!(name => move || println!("A wild {} appeared!", name)))
                     .on_disappear(clone!(name => move || println!("{} disappeared!", name)))
             }),

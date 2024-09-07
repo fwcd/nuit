@@ -1,4 +1,4 @@
-use std::{ffi::{c_void, c_char, CString, CStr}, str};
+use std::{ffi::{c_char, c_void, CStr, CString}, ptr, str};
 
 use crate::{Root, View};
 
@@ -30,7 +30,7 @@ extern "C" fn fire_event_json_impl<T>(c_root: *const CRoot, raw_id_path_json: *c
         let root = (*c_root).wrapped as *const Root<T>;
         let id_path_json = str::from_utf8(CStr::from_ptr(raw_id_path_json).to_bytes()).expect("Could not decode id path JSON");
         let event_json = str::from_utf8(CStr::from_ptr(raw_event_json).to_bytes()).expect("Could not decode event JSON");
-        (*root).fire_event_json(id_path_json, event_json)
+        (*root).fire_event_json(id_path_json, event_json);
     }
 }
 
@@ -40,7 +40,7 @@ extern "C" fn set_update_callback_impl<T>(c_root: *const CRoot, update_callback:
         (*root).set_update_callback(move |update| {
             let update_json = serde_json::to_string(update).expect("Could not encode update to JSON");
             let update_json_c_string = CString::new(update_json).expect("Could not convert update JSON to C string");
-            update_callback(update_json_c_string.as_ptr())
+            update_callback(update_json_c_string.as_ptr());
         });
     }
 }
@@ -49,7 +49,7 @@ impl CRoot {
     /// Safely uses a [`CRoot`] while returning ownership once the method returns.
     pub fn scope_from<T, U>(root: &mut Box<Root<T>>, action: impl FnOnce(&CRoot) -> U) -> U where T: View {
         let c_root = Self {
-            wrapped: &mut **root as *mut Root<T> as *mut c_void,
+            wrapped: ptr::from_mut(&mut **root).cast::<c_void>(),
             render_json: render_json_impl::<T>,
             fire_event_json: fire_event_json_impl::<T>,
             set_update_callback: set_update_callback_impl::<T>,

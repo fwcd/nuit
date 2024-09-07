@@ -13,7 +13,7 @@ pub fn derive(input: TokenStream) -> TokenStream {
             Fields::Unit => Vec::new(),
             Fields::Named(fs) => fs.named.into_iter().map(|f| f.ident.expect("#[derive(ApproxEq)] requires all fields to be named")).collect(),
             // TODO: Support unnamed fields
-            _ => panic!("#[derive(ApproxEq)] requires named fields!"),
+            Fields::Unnamed(_) => panic!("#[derive(ApproxEq)] requires named fields!"),
         },
         // TODO: Support enums
         _ => panic!("#[derive(ApproxEq)] only works on structs!")

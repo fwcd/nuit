@@ -37,30 +37,37 @@ impl Style {
     pub const FILL: Self = Self::semantic(SemanticStyle::Fill);
     pub const WINDOW_BACKGROUND: Self = Self::semantic(SemanticStyle::WindowBackground);
 
+    #[must_use]
     pub const fn color(color: Color) -> Self {
         Self::Color { color }
     }
 
+    #[must_use]
     pub const fn hierarchical(level: usize) -> Self {
         Self::Hierarchical { level }
     }
 
+    #[must_use]
     pub const fn material(material: Material) -> Self {
         Self::Material { material }
     }
 
+    #[must_use]
     pub const fn semantic(style: SemanticStyle) -> Self {
         Self::Semantic { style }
     }
 
+    #[must_use]
     pub fn blend_mode(self, blend_mode: BlendMode) -> Self {
         Self::BlendMode { wrapped: Box::new(self), blend_mode }
     }
 
+    #[must_use]
     pub fn opacity(self, opacity: f64) -> Self {
         Self::Opacity { wrapped: Box::new(self), opacity }
     }
 
+    #[must_use]
     pub fn shadow(self, shadow: Shadow) -> Self {
         Self::Shadow { wrapped: Box::new(self), shadow }
     }

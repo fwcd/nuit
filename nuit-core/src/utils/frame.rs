@@ -19,14 +19,17 @@ pub enum Frame {
 }
 
 impl Frame {
+    #[must_use]
     pub fn with_width(width: impl Into<f64>) -> Self {
         Self::Exact { width: Some(width.into()), height: None }
     }
 
+    #[must_use]
     pub fn with_height(height: impl Into<f64>) -> Self {
         Self::Exact { width: None, height: Some(height.into()) }
     }
 
+    #[must_use]
     pub fn exact(width: impl Into<f64>, height: impl Into<f64>) -> Self {
         Self::Exact { width: Some(width.into()), height: Some(height.into()) }
     }
@@ -35,6 +38,7 @@ impl Frame {
 macro_rules! impl_exact_from {
     ($($tys:ty),*) => {
         $(impl From<$tys> for Frame {
+            #[allow(clippy::cast_lossless, clippy::cast_precision_loss)]
             fn from(value: $tys) -> Self {
                 Self::exact(value as f64, value as f64)
             }

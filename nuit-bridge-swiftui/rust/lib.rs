@@ -1,3 +1,5 @@
+#![allow(clippy::doc_markdown)]
+
 #[cfg(target_vendor = "apple")]
 use nuit_core::CRoot;
 

@@ -34,7 +34,7 @@ impl<const COUNT: usize> View for AnimationsView<COUNT> {
                 ForEach::with_index_id(animations, |i, animation| {
                     let factor = if flips.get()[i] { 1.0 } else { -1.0 };
                     HStack::from((
-                        Text::new(format!("{}", animation))
+                        Text::new(format!("{animation}"))
                             .frame_with(Alignment::TRAILING, Frame::with_width(100)),
                         ZStack::from((
                             Rectangle::new()

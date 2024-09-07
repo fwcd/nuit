@@ -25,18 +25,22 @@ impl Font {
     pub const CAPTION2: Self = Self::with_level(FontLevel::Caption2);
     pub const FOOTNOTE: Self = Self::with_level(FontLevel::Footnote);
 
+    #[must_use]
     pub fn system(size: impl Into<FontSize>, design: Option<FontDesign>, weight: Option<FontWeight>) -> Self {
         Self::System { size: size.into(), design, weight }
     }
 
+    #[must_use]
     pub fn custom(name: impl Into<String>, size: impl Into<f64>) -> Self {
         Self::Custom { name: name.into(), size: size.into() }
     }
 
+    #[must_use]
     pub fn with_size(size: impl Into<FontSize>) -> Self {
         Self::System { size: size.into(), design: None, weight: None }
     }
 
+    #[must_use]
     pub const fn with_level(level: FontLevel) -> Self {
         Self::System { size: FontSize::level(level), design: None, weight: None }
     }

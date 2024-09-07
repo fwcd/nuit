@@ -49,11 +49,22 @@ impl<T> Root<T> where T: View {
         new_render
     }
 
+    /// Renders the root view to JSON. Mainly intended for FFI use.
+    /// 
+    /// # Panics
+    /// 
+    /// Panics if the view cannot be serialized as JSON. We consider this a bug.
     pub fn render_json(&self) -> String {
         let node = self.render();
         serde_json::to_string(&node).expect("Could not serialize view")
     }
 
+    /// Fires an event at the given path, both represented as raw JSON. Mainly
+    /// intended for FFI use.
+    /// 
+    /// # Panics
+    /// 
+    /// Panics if the view cannot be deserialized from JSON. We consider this a bug.
     pub fn fire_event_json(&self, id_path_json: &str, event_json: &str) {
         let id_path: IdPathBuf = serde_json::from_str(id_path_json).expect("Could not deserialize id path");
         let event: Event = serde_json::from_str(event_json).expect("Could not deserialize event");

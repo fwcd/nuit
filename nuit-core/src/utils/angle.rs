@@ -17,31 +17,37 @@ impl Angle {
     pub const FULL: Self = Self::with_radians(2.0 * PI);
 
     /// Creates an angle from the given value in radians.
+    #[must_use]
     pub const fn with_radians(radians: f64) -> Self {
         Self { radians }
     }
 
     /// Creates an angle from the given value in degrees.
+    #[must_use]
     pub const fn with_degrees(degrees: f64) -> Self {
         Self::with_radians(degrees * PI / 180.0)
     }
 
     /// Creates an angle from the given fractional value between 0 and 1.
+    #[must_use]
     pub const fn with_fractional(fractional: f64) -> Self {
         Self::with_radians(fractional * 2.0 * PI)
     }
 
     /// The value in radians.
+    #[must_use]
     pub const fn radians(self) -> f64 {
         self.radians
     }
 
     /// The value in degrees.
+    #[must_use]
     pub const fn degrees(self) -> f64 {
         self.radians * 180.0 / PI
     }
 
     /// The fractional value between 0 and 1.
+    #[must_use]
     pub const fn fractional(self) -> f64 {
         self.radians / (2.0 * PI)
     }

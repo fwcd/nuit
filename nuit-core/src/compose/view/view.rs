@@ -72,7 +72,7 @@ impl<T> View for (T,) where T: View {
         if let Some(head) = event_path.head() {
             match head {
                 Id::Index(0) => self.0.fire(event, event_path.tail(), &context.child(0)),
-                i => panic!("Cannot fire event for child id {} on 1-tuple", i)
+                i => panic!("Cannot fire event for child id {i} on 1-tuple")
             }
         }
     }

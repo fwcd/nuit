@@ -5,6 +5,7 @@ use crate::{Shape, ShapeNode};
 pub struct Circle;
 
 impl Circle {
+    #[must_use]
     pub const fn new() -> Self {
         Self
     }

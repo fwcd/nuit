@@ -33,8 +33,8 @@ impl Default for Id {
 impl fmt::Display for Id {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            Self::Index(value) => write!(f, "{}", value),
-            Self::String(value) => write!(f, "{}", value),
+            Self::Index(value) => write!(f, "{value}"),
+            Self::String(value) => write!(f, "{value}"),
         }
     }
 }

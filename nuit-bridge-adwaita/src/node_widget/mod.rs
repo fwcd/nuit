@@ -60,6 +60,10 @@ impl NodeWidget {
         Self::new(node, id_path, fire_event)
     }
 
+    // TODO: Address the pass-by-value lint once we figure out a proper solution
+    // to the diffing problem
+
+    #[allow(clippy::cast_possible_truncation, clippy::needless_pass_by_value)]
     pub fn update(&self, node: Node) {
         let imp = imp::NodeWidget::from_obj(self);
         imp.node.replace(node.clone());
@@ -105,7 +109,7 @@ impl NodeWidget {
                 let gtk_box = gtk::Box::new(Orientation::Horizontal, *spacing as i32);
                 gtk_box.set_valign(alignment.to_gtk());
                 for (child_path, child) in wrapped.value().children_from(&IdPathBuf::from(wrapped.id().clone())) {
-                    gtk_box.append(&self.create_child_with_path(child.clone(), &child_path))
+                    gtk_box.append(&self.create_child_with_path(child.clone(), &child_path));
                 }
                 self.append(&gtk_box);
             },
@@ -113,14 +117,14 @@ impl NodeWidget {
                 let gtk_box = gtk::Box::new(Orientation::Vertical, *spacing as i32);
                 gtk_box.set_halign(alignment.to_gtk());
                 for (child_path, child) in wrapped.value().children_from(&IdPathBuf::from(wrapped.id().clone())) {
-                    gtk_box.append(&self.create_child_with_path(child.clone(), &child_path))
+                    gtk_box.append(&self.create_child_with_path(child.clone(), &child_path));
                 }
                 self.append(&gtk_box);
             },
             Node::Modified { wrapped, modifier: _ } => {
                 // TODO: Implement modifiers
                 eprintln!("Warning: Modifiers are not supported yet and ignored");
-                self.append(&self.create_child_from_identified(wrapped))
+                self.append(&self.create_child_from_identified(wrapped));
             },
             // TODO: Add remaining node types
             _ => {

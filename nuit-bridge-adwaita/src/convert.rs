@@ -27,8 +27,8 @@ impl ToGtk for VerticalAlignment {
             VerticalAlignment::Top => Align::Start,
             VerticalAlignment::Center => Align::Center,
             VerticalAlignment::Bottom => Align::End,
-            VerticalAlignment::FirstTextBaseline => Align::Baseline,
-            VerticalAlignment::LastTextBaseline => Align::Baseline,
+            VerticalAlignment::FirstTextBaseline
+            | VerticalAlignment::LastTextBaseline => Align::Baseline,
         }
     }
 }

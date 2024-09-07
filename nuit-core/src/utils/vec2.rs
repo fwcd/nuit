@@ -19,6 +19,7 @@ impl<T> Zero for Vec2<T> where T: Zero {
 impl<T> Vec2<T> {
     /// Creates a new vector from the given components.
     #[inline]
+    #[must_use]
     pub const fn new(x: T, y: T) -> Self {
         Self { x, y }
     }
@@ -27,12 +28,14 @@ impl<T> Vec2<T> {
 impl<T> Vec2<T> where T: Default {
     /// Creates a new vector with the given x component and the default y.
     #[inline]
+    #[must_use]
     pub fn with_x(x: T) -> Self {
         Self { x, y: T::default() }
     }
 
     /// Creates a new vector with the given y component and the default x.
     #[inline]
+    #[must_use]
     pub fn with_y(y: T) -> Self {
         Self { x: T::default(), y }
     }

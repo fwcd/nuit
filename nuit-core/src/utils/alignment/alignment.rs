@@ -24,26 +24,31 @@ impl Alignment {
     pub const BOTTOM_TRAILING: Self = Self::new(HorizontalAlignment::Trailing, VerticalAlignment::Bottom);
 
     /// Creates a new alignment from the given horizontal and vertical alignments.
+    #[must_use]
     pub const fn new(horizontal: HorizontalAlignment, vertical: VerticalAlignment) -> Self {
         Self { horizontal, vertical }
     }
 
     /// Creates a new, vertically centered alignment from the given horizontal alignment.
+    #[must_use]
     pub const fn with_horizontal(horizontal: HorizontalAlignment) -> Self {
         Self { horizontal, vertical: VerticalAlignment::Center }
     }
 
     /// Creates a new, horizontally centered alignment from the given vertical alignment.
+    #[must_use]
     pub const fn with_vertical(vertical: VerticalAlignment) -> Self {
         Self { horizontal: HorizontalAlignment::Center, vertical }
     }
 
     /// The horizontal component of this alignment.
+    #[must_use]
     pub const fn horizontal(self) -> HorizontalAlignment {
         self.horizontal
     }
 
     /// The vertical component of this alignment.
+    #[must_use]
     pub const fn vertical(self) -> VerticalAlignment {
         self.vertical
     }

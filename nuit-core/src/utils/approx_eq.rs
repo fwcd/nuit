@@ -7,6 +7,7 @@ pub trait ApproxEq<Rhs = Self> {
 macro_rules! impl_primitive_approx_eq {
     ($($tys:ty),*) => {
         $(impl ApproxEq for $tys {
+            #[allow(clippy::cast_lossless, clippy::cast_precision_loss)]
             fn approx_eq(&self, other: &Self, tolerance: f64) -> bool {
                 ((self - other) as f64).abs() <= tolerance
             }

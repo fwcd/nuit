@@ -4,10 +4,14 @@
     macro_metavar_expr,
 )]
 
-// We allow module inception as a design choice, to keep the mod.rs files
-// focused on "just" declaring and re-exporting and to make the files easier to
-// locate e.g. in an editor or IDE.
-#![allow(clippy::module_inception)]
+#![allow(
+    clippy::float_cmp,
+    // We allow module inception as a design choice, to keep the mod.rs files
+    // focused on "just" declaring and re-exporting and to make the files easier to
+    // locate e.g. in an editor or IDE.
+    clippy::module_inception,
+    clippy::module_name_repetitions,
+)]
 
 mod compose;
 mod context;

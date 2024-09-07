@@ -13,6 +13,8 @@
 //! nuit::run_app(Text::new("Hello world!"));
 //! ```
 
+#![allow(clippy::module_name_repetitions, clippy::doc_markdown)]
+
 mod backend;
 mod config;
 
@@ -33,7 +35,14 @@ impl Default for Backend {
     }
 }
 
-/// Blocks and presents the given view to the user.
+/// Blocks and presents the given view to the user. This is the main entry point
+/// for apps using Nuit.
+/// 
+/// # Panics
+/// 
+/// This may panic in a number of cases, e.g. if the backend is unsupported or
+/// if JSON serialization fails. Clients should assume this may panic at any
+/// time if something goes wrong.
 pub fn run_app<T>(config: impl Into<Config<T>>) where T: View + 'static {
     let config: Config<T> = config.into();
     let backend = config.preferred_backend().unwrap_or_default();

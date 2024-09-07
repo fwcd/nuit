@@ -12,6 +12,7 @@ pub struct Storage {
 }
 
 impl Storage {
+    #[must_use]
     pub fn new() -> Self {
         Self {
             state: RefCell::new(HashMap::new()),

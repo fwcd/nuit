@@ -27,39 +27,46 @@ impl Color {
     pub const YELLOW: Self = Self::with_rgb(1.0, 1.0, 0.0);
 
     /// Creates a new color with the given RGBA components.
+    #[must_use]
     pub const fn new(red: f64, green: f64, blue: f64, alpha: f64) -> Self {
         Self { red, green, blue, alpha }
     }
 
     /// Creates a new color with the given RGB components and alpha 1.
+    #[must_use]
     pub const fn with_rgb(red: f64, green: f64, blue: f64) -> Self {
         Self::new(red, green, blue, 1.0)
     }
 
     /// Creates a new color with the given grayscale value and alpha 1.
+    #[must_use]
     pub const fn with_grayscale(gray: f64) -> Self {
         Self::new(gray, gray, gray, 1.0)
     }
 
     /// A random RGBA color.
     #[cfg(feature = "rand")]
+    #[must_use]
     pub fn random_rgba() -> Self {
         Self::new(rand::random(), rand::random(), rand::random(), rand::random())
     }
 
     /// A random RGB color with alpha 1.
     #[cfg(feature = "rand")]
+    #[must_use]
     pub fn random_rgb() -> Self {
         Self::with_rgb(rand::random(), rand::random(), rand::random())
     }
 
     /// A random grayscale color with alpha 1.
     #[cfg(feature = "rand")]
+    #[must_use]
     pub fn random_grayscale() -> Self {
         Self::with_grayscale(rand::random())
     }
 
     /// Creates a new color with the given HSV value and alpha.
+    #[must_use]
     pub fn with_hsva(hue: Angle, saturation: f64, value: f64, alpha: f64) -> Self {
         let hue_degrees = hue.degrees().rem_euclid(360.0);
 
@@ -90,11 +97,13 @@ impl Color {
     }
 
     /// Creates a new color with the given HSV value.
+    #[must_use]
     pub fn with_hsv(hue: Angle, saturation: f64, value: f64) -> Self {
         Self::with_hsva(hue, saturation, value, 1.0)
     }
 
     /// The inverted color with the same alpha.
+    #[must_use]
     pub fn invert_rgb(self) -> Self {
         Self::new(1.0 - self.red, 1.0 - self.green, 1.0 - self.blue, self.alpha)
     }

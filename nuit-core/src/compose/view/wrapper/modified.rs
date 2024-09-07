@@ -23,7 +23,7 @@ impl<T> View for Modified<T> where T: View {
         if let Some(head) = event_path.head() {
             match head {
                 Id::Index(0) => self.wrapped.fire(event, event_path.tail(), &context.child(0)),
-                i => panic!("Cannot fire event for child id {} on Modified which only has one child", i)
+                i => panic!("Cannot fire event for child id {i} on Modified which only has one child")
             }
         }
     }

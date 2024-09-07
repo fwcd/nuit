@@ -10,7 +10,7 @@ pub trait Gesture: Bind {
 
     fn fire(&self, event: &GestureEvent, event_path: &IdPath, context: &Context) {
         self.bind(context);
-        self.body().fire(event, event_path, context)
+        self.body().fire(event, event_path, context);
     }
 
     fn render(&self, context: &Context) -> GestureNode {

@@ -29,7 +29,7 @@ impl<F> Gesture for TapGesture<F> where F: Fn() {
         if let GestureEvent::Tap {} = event {
             (self.action)();
         } else {
-            eprintln!("Warning: Ignoring non-tap gesture event {:?} targeted to TapGesture at {:?}", event, event_path)
+            eprintln!("Warning: Ignoring non-tap gesture event {event:?} targeted to TapGesture at {event_path:?}");
         }
     }
 

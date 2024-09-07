@@ -13,21 +13,25 @@ pub struct DragEvent {
 
 impl DragEvent {
     /// The kind of the drag event.
-    pub fn kind(&self) -> DragEventKind {
+    #[must_use]
+    pub const fn kind(&self) -> DragEventKind {
         self.kind
     }
 
     /// The starting point of the drag.
-    pub fn start_location(&self) -> Vec2<f64> {
+    #[must_use]
+    pub const fn start_location(&self) -> Vec2<f64> {
         self.start_location
     }
 
     /// The current point of the drag.
-    pub fn location(&self) -> Vec2<f64> {
+    #[must_use]
+    pub const fn location(&self) -> Vec2<f64> {
         self.location
     }
 
     /// The distance moved during the gesture.
+    #[must_use]
     pub fn translation(&self) -> Vec2<f64> {
         self.location - self.start_location
     }

@@ -19,7 +19,7 @@ impl<F> View for IncrementView<F> where F: Fn() + Clone + 'static {
     fn body(&self) -> Self::Body {
         let action = self.action.clone();
         Button::with_text("Increment", move || {
-            action()
+            action();
         })
     }
 }

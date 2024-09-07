@@ -26,7 +26,7 @@ impl View for FontsView {
                     FontLevel::Caption2,
                     FontLevel::Footnote,
                 ], |_, level| {
-                    Text::new(format!("{:?}", level))
+                    Text::new(format!("{level:?}"))
                         .font(Font::with_level(level))
                 })
             ),

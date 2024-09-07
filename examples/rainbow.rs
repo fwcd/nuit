@@ -10,7 +10,7 @@ impl View for RainbowView {
 
     fn body(&self) -> Self::Body {
         let total = 7i32;
-        let fraction = |i| i as f64 / total as f64;
+        let fraction = |i| f64::from(i) / f64::from(total);
         let radius = |i| 50.0 + fraction(i) * 100.0;
         ZStack::from(
             ForEach::new((0..total).rev(), |i| {

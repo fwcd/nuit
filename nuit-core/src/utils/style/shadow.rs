@@ -22,14 +22,17 @@ pub enum ShadowKind {
 }
 
 impl Shadow {
+    #[must_use]
     pub const fn new(kind: ShadowKind, color: Color, radius: f64, offset: Vec2<f64>) -> Self {
         Self { kind, color, radius, offset }
     }
 
+    #[must_use]
     pub const fn drop(color: Color, radius: f64, offset: Vec2<f64>) -> Self {
         Self::new(ShadowKind::Drop, color, radius, offset)
     }
 
+    #[must_use]
     pub const fn inner(color: Color, radius: f64, offset: Vec2<f64>) -> Self {
         Self::new(ShadowKind::Inner, color, radius, offset)
     }

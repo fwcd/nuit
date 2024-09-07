@@ -14,6 +14,7 @@ macro_rules! impl_stack {
 
         impl<T> $name<T> {
             #[doc = concat!("Creates a new ", stringify!($name), " with the given alignment, spacing and wrapped view.")]
+            #[must_use]
             pub fn new(alignment: impl Into<$alignment>, spacing: impl Into<f64>, wrapped: T) -> Self {
                 Self {
                     alignment: alignment.into(),
@@ -23,6 +24,7 @@ macro_rules! impl_stack {
             }
 
             #[doc = concat!("Creates a new ", stringify!($name), " with the given spacing and wrapped view.")]
+            #[must_use]
             pub fn with_spacing(spacing: impl Into<f64>, wrapped: T) -> Self {
                 Self {
                     alignment: Default::default(),
@@ -32,6 +34,7 @@ macro_rules! impl_stack {
             }
 
             #[doc = concat!("Creates a new ", stringify!($name), " with the given alignment and wrapped view.")]
+            #[must_use]
             pub fn with_alignment(alignment: impl Into<$alignment>, wrapped: T) -> Self {
                 Self {
                     alignment: alignment.into(),

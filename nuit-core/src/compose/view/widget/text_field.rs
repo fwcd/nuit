@@ -9,6 +9,7 @@ pub struct TextField {
 }
 
 impl TextField {
+    #[must_use]
     pub fn new(content: Binding<String>) -> Self {
         Self { content }
     }

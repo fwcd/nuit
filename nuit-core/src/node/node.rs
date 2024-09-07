@@ -35,10 +35,12 @@ pub enum Node {
 }
 
 impl Node {
+    #[must_use]
     pub fn children(&self) -> Vec<(IdPathBuf, &Node)> {
         self.children_from(IdPath::root())
     }
 
+    #[must_use]
     pub fn children_from(&self, path: &IdPath) -> Vec<(IdPathBuf, &Node)> {
         match self {
             Self::Group { children } => children.iter()

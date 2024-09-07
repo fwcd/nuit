@@ -28,26 +28,31 @@ impl Animation {
     pub const EASE_IN_OUT: Self = Self::Curve { curve: AnimationCurve::EaseInOut, duration_seconds: None };
 
     /// Creates an animation with the given curve and the given duration (or default if none).
+    #[must_use]
     pub fn curve(curve: AnimationCurve, duration: Option<Duration>) -> Self {
         Self::Curve { curve, duration_seconds: duration.map(|d| d.as_secs_f64()) }
     }
 
     /// Creates an animation with a linear curve and the given duration (or default if none).
+    #[must_use]
     pub fn linear(duration: Duration) -> Self {
         Self::curve(AnimationCurve::Linear, Some(duration))
     }
 
     /// Creates an animation with an ease-in curve and the given duration (or default if none).
+    #[must_use]
     pub fn ease_in(duration: Duration) -> Self {
         Self::curve(AnimationCurve::EaseIn, Some(duration))
     }
 
     /// Creates an animation with an ease-out curve and the given duration (or default if none).
+    #[must_use]
     pub fn ease_out(duration: Duration) -> Self {
         Self::curve(AnimationCurve::EaseOut, Some(duration))
     }
 
     /// Creates an animation with an ease-in/out curve and the given duration (or default if none).
+    #[must_use]
     pub fn ease_in_out(duration: Duration) -> Self {
         Self::curve(AnimationCurve::EaseInOut, Some(duration))
     }
@@ -64,9 +69,9 @@ impl fmt::Display for Animation {
         match self {
             Self::Default {} => write!(f, "Default")?,
             Self::Curve { curve, duration_seconds } => {
-                write!(f, "{}", curve)?;
+                write!(f, "{curve}")?;
                 if let Some(duration_seconds) = duration_seconds {
-                    write!(f, " ({}s)", duration_seconds)?;
+                    write!(f, " ({duration_seconds}s)")?;
                 }
             },
         }

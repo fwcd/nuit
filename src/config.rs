@@ -31,6 +31,7 @@ pub struct ConfigBuilder<T> {
 }
 
 impl<T> ConfigBuilder<T> {
+    #[must_use]
     pub fn preferred_backend(mut self, backend: Backend) -> Self {
         self.preferred_backend = Some(backend);
         self

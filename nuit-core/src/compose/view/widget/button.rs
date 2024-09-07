@@ -12,6 +12,7 @@ pub struct Button<T, F> {
 }
 
 impl<T, F> Button<T, F> {
+    #[must_use]
     pub fn new(label: T, action: F) -> Self {
         Self {
             label,
@@ -21,6 +22,7 @@ impl<T, F> Button<T, F> {
 }
 
 impl<F> Button<Text, F> {
+    #[must_use]
     pub fn with_text(label: impl Into<String>, action: F) -> Self {
         Self {
             label: Text::new(label),
@@ -34,7 +36,7 @@ impl<T, F> View for Button<T, F> where T: View, F: Fn() + 'static {
         if let Some(head) = event_path.head() {
             match head {
                 Id::Index(0) => self.label.fire(event, event_path.tail(), &context.child(0)),
-                i => panic!("Cannot fire event for child id {} on Button which only has one child", i)
+                i => panic!("Cannot fire event for child id {i} on Button which only has one child"),
             }
         } else if let Event::ButtonTap {} = event {
             if let Some(ref action) = self.action {

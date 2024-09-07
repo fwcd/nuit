@@ -5,6 +5,7 @@ use crate::{Shape, ShapeNode};
 pub struct Rectangle;
 
 impl Rectangle {
+    #[must_use]
     pub const fn new() -> Self {
         Self
     }

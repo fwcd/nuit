@@ -5,6 +5,7 @@ use crate::{Shape, ShapeNode};
 pub struct Ellipse;
 
 impl Ellipse {
+    #[must_use]
     pub const fn new() -> Self {
         Self
     }

@@ -63,12 +63,12 @@ fn main() {
             BlendMode::Lighten,
             BlendMode::Screen
         ].map(|bm| Style::FOREGROUND.blend_mode(bm)).into()),
-        ("Opacity", (0..5).map(|i| Style::FOREGROUND.opacity(i as f64 * 2.0 / 10.0)).collect()),
+        ("Opacity", (0..5).map(|i| Style::FOREGROUND.opacity(f64::from(i) * 2.0 / 10.0)).collect()),
         ("Shadow", [
             ShadowKind::Drop,
             ShadowKind::Inner
         ].into_iter().flat_map(|sk| (1..4).map(move |r|
-            Shadow::new(sk, Color::MAGENTA, r as f64 * 2.0, Vec2::ZERO)
+            Shadow::new(sk, Color::MAGENTA, f64::from(r) * 2.0, Vec2::ZERO)
         )).map(|s| Style::FOREGROUND.shadow(s)).collect()),
     ]));
 }

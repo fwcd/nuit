@@ -17,7 +17,7 @@ pub fn derive(input: TokenStream) -> TokenStream {
                 .filter(|Field { ty, .. }| is_state_type(ty))
                 .map(|f| f.ident.expect("#[derive(Bind)] requires all state fields to be named"))
                 .collect(),
-            _ => panic!("#[derive(Bind)] requires named fields!"),
+            Fields::Unnamed(_) => panic!("#[derive(Bind)] requires named fields!"),
         },
         _ => panic!("#[derive(Bind)] only works on structs!")
     };
@@ -27,7 +27,7 @@ pub fn derive(input: TokenStream) -> TokenStream {
     let impl_block = quote! {
         impl <#(#const_params,)* #(#type_params,)*> ::nuit::Bind for #name <#(#const_idents,)* #(#type_params,)*> {
             fn bind(&self, context: &::nuit::Context) {
-                #(self.#state_fields.link(context.storage().clone(), ::nuit::StateKey::new(context.id_path(), #indices));)*
+                #(self.#state_fields.link(context.storage(), ::nuit::StateKey::new(context.id_path(), #indices));)*
             }
         }
     };

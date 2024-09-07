@@ -30,7 +30,7 @@ impl<F> Gesture for DragGesture<F> where F: Fn(&DragEvent) {
         if let GestureEvent::Drag { drag } = event {
             (self.action)(drag);
         } else {
-            eprintln!("Warning: Ignoring non-drag gesture event {:?} targeted to DragGesture at {:?}", event, event_path)
+            eprintln!("Warning: Ignoring non-drag gesture event {event:?} targeted to DragGesture at {event_path:?}");
         }
     }
 

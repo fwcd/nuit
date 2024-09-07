@@ -14,6 +14,7 @@ pub struct ForEach<V> {
 
 impl<V> ForEach<V> where V: View {
     /// Creates new views from the given collection.
+    #[must_use]
     pub fn new<I: HasId>(collection: impl IntoIterator<Item = I>, view_func: impl Fn(I) -> V) -> Self {
         Self {
             children: collection
@@ -27,6 +28,7 @@ impl<V> ForEach<V> where V: View {
     }
 
     /// Creates new views from the given collection, additionally taking the index.
+    #[must_use]
     pub fn with_index<I: HasId>(collection: impl IntoIterator<Item = I>, view_func: impl Fn(usize, I) -> V) -> Self {
         Self {
             children: collection
@@ -41,6 +43,7 @@ impl<V> ForEach<V> where V: View {
     }
 
     /// Creates new views from the given collection, identified by their index.
+    #[must_use]
     pub fn with_index_id<I>(collection: impl IntoIterator<Item = I>, view_func: impl Fn(usize, I) -> V) -> Self {
         Self {
             children: collection
