@@ -45,8 +45,10 @@ impl<T> Binding<T> where T: 'static {
         (self.change)(value, Some(animation));
     }
 
-    /// Binds to a "sub-value" using the given projection.
-    pub fn map<U>(&self, projection: impl Fn(&mut T) -> &mut U + Clone + 'static) -> Binding<U> where U: Clone + 'static {
+    /// Binds to a "sub-value" using the given projection. This is conceptually
+    /// analogous to the `map` function on iterators, but slightly less generic
+    /// due to the requirement to operate on mutable references.
+    pub fn project<U>(&self, projection: impl Fn(&mut T) -> &mut U + Clone + 'static) -> Binding<U> where U: Clone + 'static {
         let get = self.get.clone();
         let change = self.change.clone();
         Binding::new(
