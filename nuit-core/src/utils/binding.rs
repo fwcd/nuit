@@ -1,5 +1,7 @@
 use std::{rc::Rc, fmt};
 
+use crate::clone;
+
 use super::Animation;
 
 /// A pair of a getter and a setter, encapsulating a reference to some value.
@@ -42,12 +44,29 @@ impl<T> Binding<T> where T: 'static {
     pub fn set_with(&self, animation: Animation, value: T) {
         (self.change)(value, Some(animation));
     }
+
+    /// Binds to a "sub-value" using the given projection.
+    pub fn map<U>(&self, projection: impl Fn(&mut T) -> &mut U + Clone + 'static) -> Binding<U> where U: Clone + 'static {
+        let get = self.get.clone();
+        let change = self.change.clone();
+        Binding::new(
+            clone!(get, projection => move || projection(&mut get()).clone()),
+            move |new, animation| {
+                let mut value = get();
+                *projection(&mut value) = new;
+                change(value, animation);
+            }
+        )
+    }
 }
 
 impl<T> Binding<T> where T: Clone + 'static {
     /// Creates a binding to the given value with an empty setter.
     pub fn constant(value: T) -> Self {
-        Self::new(move || value.clone(), |_, _| {})
+        Self::new(
+            move || value.clone(),
+            |_, _| {},
+        )
     }
 }
 
