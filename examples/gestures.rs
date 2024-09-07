@@ -29,7 +29,7 @@ impl View for TapView {
                 Text::new(match self.taps {
                     1 => "Tap me!".to_owned(),
                     2 => "Double-tap me!".to_owned(),
-                    i => format!("Tap me {} times!", i),
+                    i => format!("Tap me {i} times!"),
                 })
                 .foreground_style(color.get().invert_rgb())
             )

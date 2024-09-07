@@ -42,6 +42,12 @@ impl fmt::Display for Id {
 macro_rules! impl_id_from_integer {
     ($($tys:ty),*) => {
         $(impl From<$tys> for Id {
+            // We intentionally allow wrapping around here for convenience.
+            // Yes, this will wrap in edge cases where a u64 larger than
+            // i64::MAX is converted, but we expect view trees containing more
+            // than i64::MAX values to be so exceedingly unlikely that we opt
+            // for the convenience here.
+            #[allow(clippy::cast_lossless, clippy::cast_possible_wrap)]
             fn from(value: $tys) -> Self {
                 Self::Index(value as i64)
             }

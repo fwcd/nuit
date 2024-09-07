@@ -9,7 +9,7 @@ macro_rules! impl_integer_has_id {
     ($($tys:ty),*) => {
         $(impl HasId for $tys {
             fn id(&self) -> Id {
-                Id::index(*self as i64)
+                Id::from(*self)
             }
         })*
     };
