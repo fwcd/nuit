@@ -9,13 +9,13 @@ impl View for LoopsView {
     type Body = impl View;
 
     fn body(&self) -> Self::Body {
-        VStack::new((
-            HStack::new(
+        VStack::from((
+            HStack::from(
                 ForEach::new(["Hello", "World"], |s| {
                     Text::new(s)
                 }),
             ),
-            HStack::new(
+            HStack::from(
                 ForEach::new(0..10, |i| {
                     Text::new(format!("{i}"))
                 })

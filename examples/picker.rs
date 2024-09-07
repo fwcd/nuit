@@ -12,7 +12,7 @@ impl View for PickerView {
 
     fn body(&self) -> Self::Body {
         let selection = self.selection.clone();
-        VStack::new((
+        VStack::from((
             Picker::new("Favorite Color", selection.binding(), (
                 Text::new("Red"),
                 Text::new("Green"),

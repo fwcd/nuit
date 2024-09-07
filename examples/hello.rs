@@ -9,7 +9,7 @@ impl View for HelloView {
     type Body = impl View;
 
     fn body(&self) -> Self::Body {
-        VStack::new((
+        VStack::from((
             Text::new("Hello"),
             Text::new("World"),
         ))

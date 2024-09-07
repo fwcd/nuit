@@ -9,7 +9,7 @@ impl View for ShapesView {
     type Body = impl View;
 
     fn body(&self) -> Self::Body {
-        VStack::new(
+        VStack::from(
             (
                 Capsule::new(),
                 Circle::new(),

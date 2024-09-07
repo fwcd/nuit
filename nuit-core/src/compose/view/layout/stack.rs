@@ -13,16 +13,16 @@ macro_rules! impl_stack {
         }
 
         impl<T> $name<T> {
-            #[doc = concat!("Creates a new ", stringify!($name), " from given wrapped view.")]
-            pub fn new(wrapped: T) -> Self {
+            #[doc = concat!("Creates a new ", stringify!($name), " with the given alignment, spacing and wrapped view.")]
+            pub fn new(alignment: impl Into<$alignment>, spacing: impl Into<f64>, wrapped: T) -> Self {
                 Self {
-                    alignment: Default::default(),
-                    spacing: DEFAULT_SPACING,
+                    alignment: alignment.into(),
+                    spacing: spacing.into(),
                     wrapped,
                 }
             }
 
-            #[doc = concat!("Creates a new ", stringify!($name), " from given wrapped view with the given spacing.")]
+            #[doc = concat!("Creates a new ", stringify!($name), " with the given spacing and wrapped view.")]
             pub fn with_spacing(spacing: impl Into<f64>, wrapped: T) -> Self {
                 Self {
                     alignment: Default::default(),
@@ -31,10 +31,20 @@ macro_rules! impl_stack {
                 }
             }
 
-            #[doc = concat!("Creates a new ", stringify!($name), " from given wrapped view with the given alignment.")]
+            #[doc = concat!("Creates a new ", stringify!($name), " with the given alignment and wrapped view.")]
             pub fn with_alignment(alignment: impl Into<$alignment>, wrapped: T) -> Self {
                 Self {
                     alignment: alignment.into(),
+                    spacing: DEFAULT_SPACING,
+                    wrapped,
+                }
+            }
+        }
+
+        impl<T> From<T> for $name<T> {
+            fn from(wrapped: T) -> Self {
+                Self {
+                    alignment: Default::default(),
                     spacing: DEFAULT_SPACING,
                     wrapped,
                 }

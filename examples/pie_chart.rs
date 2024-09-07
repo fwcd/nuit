@@ -9,7 +9,7 @@ impl View for PieChartView {
     type Body = impl View;
 
     fn body(&self) -> Self::Body {
-        ZStack::new((
+        ZStack::from((
             Sector::new(Angle::with_degrees(30.0), Angle::FULL, 0)
                 .fill(Color::BLUE)
                 .frame(160)

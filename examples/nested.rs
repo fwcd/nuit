@@ -34,7 +34,7 @@ impl View for CounterView {
 
     fn body(&self) -> Self::Body {
         let count = self.count.clone();
-        VStack::new((
+        VStack::from((
             Text::new(format!("Count: {}", count.get())),
             IncrementView::new(move || {
                 count.set(count.get() + 1);

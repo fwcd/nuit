@@ -29,14 +29,14 @@ impl<const COUNT: usize> View for AnimationsView<COUNT> {
         let radius = 10.0;
         let inner_width = width - 2.0 * radius;
 
-        VStack::new((
-            VStack::new(
+        VStack::from((
+            VStack::from(
                 ForEach::with_index_id(animations, |i, animation| {
                     let factor = if flips.get()[i] { 1.0 } else { -1.0 };
-                    HStack::new((
+                    HStack::from((
                         Text::new(format!("{}", animation))
                             .frame_with(Alignment::TRAILING, Frame::with_width(100)),
-                        ZStack::new((
+                        ZStack::from((
                             Rectangle::new()
                                 .frame(Frame::exact(inner_width, 2)),
                             Circle::new()

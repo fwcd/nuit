@@ -9,7 +9,7 @@ impl View for AlignmentsView {
     type Body = impl View;
 
     fn body(&self) -> Self::Body {
-        ZStack::new(
+        ZStack::from(
             ForEach::with_index_id([
                 ("Top leading", Alignment::TOP_LEADING),
                 ("Top", Alignment::TOP),

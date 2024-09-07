@@ -12,8 +12,8 @@ impl View for EnterNameView {
 
     fn body(&self) -> Self::Body {
         let raw_names = self.raw_names.clone();
-        VStack::new((
-            HStack::new((
+        VStack::from((
+            HStack::from((
                 Text::new("Please enter some names:"),
                 TextField::new(raw_names.binding()),
             )),

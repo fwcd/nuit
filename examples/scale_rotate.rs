@@ -29,7 +29,7 @@ impl View for ScaleRotateView {
                 .rotation_effect(rotation.get())
                 .scale_effect(scale.get())
                 .frame(100),
-            HStack::new((
+            HStack::from((
                 Button::with_text("Rotate", move || {
                     rotation.set_with(Animation::LINEAR, rotation.get() + Angle::QUARTER);
                 }),

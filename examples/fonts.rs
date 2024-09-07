@@ -10,7 +10,7 @@ impl View for FontsView {
 
     fn body(&self) -> Self::Body {
         HStack::with_spacing(50, (
-            VStack::new(
+            VStack::from(
                 ForEach::with_index_id([
                     FontLevel::ExtraLargeTitle2,
                     FontLevel::ExtraLargeTitle,
@@ -30,7 +30,7 @@ impl View for FontsView {
                         .font(Font::with_level(level))
                 })
             ),
-            VStack::new(
+            VStack::from(
                 ForEach::with_index_id([
                     FontWeight::Black,
                     FontWeight::Bold,
@@ -46,7 +46,7 @@ impl View for FontsView {
                         .font(Font::system(18, None, Some(weight)))
                 })
             ),
-            VStack::new(
+            VStack::from(
                 ForEach::with_index_id([
                     FontDesign::Default,
                     FontDesign::Monospaced,
@@ -57,7 +57,7 @@ impl View for FontsView {
                         .font(Font::system(18, Some(design), None))
                 })
             ),
-            VStack::new(
+            VStack::from(
                 ForEach::new((0..10).rev(), |i| {
                     let size = i * 4 + 8;
                     Text::new(format!("{size}"))

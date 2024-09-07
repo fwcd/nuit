@@ -73,7 +73,7 @@ impl View for GesturesView {
     type Body = impl View;
 
     fn body(&self) -> Self::Body {
-        HStack::new((
+        HStack::from((
             TapView::new(1),
             TapView::new(2),
             DragView::default(),

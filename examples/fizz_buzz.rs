@@ -20,12 +20,12 @@ impl View for FizzBuzzView {
         let count = self.count.clone();
         let fizz = count.get() % 3 == 0;
         let buzz = count.get() % 5 == 0;
-        VStack::new((
+        VStack::from((
             Button::with_text("Increment", clone!(count => move || {
                 count.set(count.get() + 1);
             })),
             If::new_or_else(fizz || buzz, || {
-                HStack::new((
+                HStack::from((
                     If::new(fizz, || Text::new("Fizz")),
                     If::new(buzz, || Text::new("Buzz")),
                 ))

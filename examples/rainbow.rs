@@ -12,7 +12,7 @@ impl View for RainbowView {
         let total = 7i32;
         let fraction = |i| i as f64 / total as f64;
         let radius = |i| 50.0 + fraction(i) * 100.0;
-        ZStack::new(
+        ZStack::from(
             ForEach::new((0..total).rev(), |i| {
                 let outer_radius = radius(i);
                 let inner_radius = radius(-1);

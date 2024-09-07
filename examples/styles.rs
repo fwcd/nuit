@@ -17,9 +17,9 @@ impl<const N: usize> View for StylesView<N> {
     type Body = impl View;
 
     fn body(&self) -> Self::Body {
-        VStack::new(
+        VStack::from(
             ForEach::with_index_id(&self.styles, |_, (label, styles)| {
-                HStack::new((
+                HStack::from((
                     Text::new(*label),
                     ForEach::with_index_id(styles, |_, style| {
                         Circle::new()
