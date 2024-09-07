@@ -1,3 +1,4 @@
+#[cfg(target_vendor = "apple")]
 use nuit_core::CRoot;
 
 #[cfg(target_vendor = "apple")]
