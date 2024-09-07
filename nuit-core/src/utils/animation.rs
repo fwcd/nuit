@@ -82,10 +82,10 @@ impl fmt::Display for Animation {
 impl fmt::Display for AnimationCurve {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
-            AnimationCurve::Linear => write!(f, "Linear"),
-            AnimationCurve::EaseIn => write!(f, "Ease in"),
-            AnimationCurve::EaseOut => write!(f, "Ease out"),
-            AnimationCurve::EaseInOut => write!(f, "Ease in/out"),
+            Self::Linear => write!(f, "Linear"),
+            Self::EaseIn => write!(f, "Ease in"),
+            Self::EaseOut => write!(f, "Ease out"),
+            Self::EaseInOut => write!(f, "Ease in/out"),
         }
     }
 }

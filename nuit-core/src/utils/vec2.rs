@@ -55,7 +55,7 @@ impl<T> Add for Vec2<T> where T: Add<Output = T> {
     }
 }
 
-impl<T> AddAssign<Vec2<T>> for Vec2<T> where T: AddAssign {
+impl<T> AddAssign for Vec2<T> where T: AddAssign {
     fn add_assign(&mut self, rhs: Self) {
         self.x += rhs.x;
         self.y += rhs.y;
@@ -70,7 +70,7 @@ impl<T> Sub for Vec2<T> where T: Sub<Output = T> {
     }
 }
 
-impl<T> SubAssign<Vec2<T>> for Vec2<T> where T: SubAssign {
+impl<T> SubAssign for Vec2<T> where T: SubAssign {
     fn sub_assign(&mut self, rhs: Self) {
         self.x -= rhs.x;
         self.y -= rhs.y;

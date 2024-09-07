@@ -158,7 +158,7 @@ impl<'a> From<&'a Ident> for TypeNode {
     }
 }
 
-impl<S, C> From<(S, C)> for TypeNode where S: ToString, C: IntoIterator, C::Item: Into<TypeNode> {
+impl<S, C> From<(S, C)> for TypeNode where S: ToString, C: IntoIterator, C::Item: Into<Self> {
     fn from((name, args): (S, C)) -> Self {
         Self(name.to_string(), args.into_iter().map(Into::into).collect())
     }

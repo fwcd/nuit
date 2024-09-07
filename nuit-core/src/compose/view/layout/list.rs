@@ -9,7 +9,7 @@ pub struct List<T> {
 }
 
 impl<T> List<T> {
-    pub fn new(wrapped: T) -> Self {
+    pub const fn new(wrapped: T) -> Self {
         Self {
             wrapped
         }

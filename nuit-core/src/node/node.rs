@@ -36,12 +36,12 @@ pub enum Node {
 
 impl Node {
     #[must_use]
-    pub fn children(&self) -> Vec<(IdPathBuf, &Node)> {
+    pub fn children(&self) -> Vec<(IdPathBuf, &Self)> {
         self.children_from(IdPath::root())
     }
 
     #[must_use]
-    pub fn children_from(&self, path: &IdPath) -> Vec<(IdPathBuf, &Node)> {
+    pub fn children_from(&self, path: &IdPath) -> Vec<(IdPathBuf, &Self)> {
         match self {
             Self::Group { children } => children.iter()
                 .flat_map(|c| c.value().children_from(&path.child(c.id().clone())).into_iter())
@@ -53,6 +53,6 @@ impl Node {
 
 impl Default for Node {
     fn default() -> Self {
-        Node::Empty {}
+        Self::Empty {}
     }
 }

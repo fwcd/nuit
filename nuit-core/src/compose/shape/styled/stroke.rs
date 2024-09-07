@@ -8,7 +8,7 @@ pub struct Stroke<T> {
 }
 
 impl<T> Stroke<T> {
-    pub fn new(wrapped: T, style: Style) -> Self {
+    pub const fn new(wrapped: T, style: Style) -> Self {
         Self {
             wrapped,
             style,

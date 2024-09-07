@@ -21,7 +21,7 @@ impl IdPath {
     }
 
     #[must_use]
-    pub fn is_root(&self) -> bool {
+    pub const fn is_root(&self) -> bool {
         self.0.is_empty()
     }
 
@@ -41,14 +41,14 @@ impl IdPath {
     }
 
     #[must_use]
-    pub fn join(&self, path: &IdPath) -> IdPathBuf {
+    pub fn join(&self, path: &Self) -> IdPathBuf {
         self.to_owned().join(path)
     }
 }
 
 impl IdPathBuf {
     #[must_use]
-    pub fn root() -> Self {
+    pub const fn root() -> Self {
         Self(Vec::new())
     }
 

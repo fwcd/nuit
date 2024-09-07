@@ -15,7 +15,7 @@ impl<T> Config<T> {
         view.into()
     }
 
-    pub fn preferred_backend(&self) -> Option<Backend> {
+    pub const fn preferred_backend(&self) -> Option<Backend> {
         self.preferred_backend
     }
 
@@ -32,7 +32,7 @@ pub struct ConfigBuilder<T> {
 
 impl<T> ConfigBuilder<T> {
     #[must_use]
-    pub fn preferred_backend(mut self, backend: Backend) -> Self {
+    pub const fn preferred_backend(mut self, backend: Backend) -> Self {
         self.preferred_backend = Some(backend);
         self
     }

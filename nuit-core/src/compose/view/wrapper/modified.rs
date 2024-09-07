@@ -10,7 +10,7 @@ pub struct Modified<T> {
 }
 
 impl<T> Modified<T> {
-    pub fn new(wrapped: T, modifier: ModifierNode) -> Self {
+    pub const fn new(wrapped: T, modifier: ModifierNode) -> Self {
         Self {
             wrapped,
             modifier,

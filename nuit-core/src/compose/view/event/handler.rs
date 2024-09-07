@@ -10,7 +10,7 @@ pub struct Handler<T, F> {
 }
 
 impl<T, F> Handler<T, F> {
-    pub fn new(wrapped: T, handle_event: F) -> Self {
+    pub const fn new(wrapped: T, handle_event: F) -> Self {
         Self {
             wrapped,
             handle_event,

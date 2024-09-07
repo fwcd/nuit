@@ -28,9 +28,9 @@ impl Default for Backend {
     #[allow(unreachable_code)]
     fn default() -> Self {
         #[cfg(feature = "swiftui")]
-        return Backend::SwiftUI;
+        return Self::SwiftUI;
         #[cfg(feature = "adwaita")]
-        return Backend::Adwaita;
+        return Self::Adwaita;
         panic!("A backend must be enabled via Nuit's crate features!");
     }
 }

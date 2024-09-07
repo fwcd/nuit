@@ -8,7 +8,7 @@ pub struct Fill<T> {
 }
 
 impl<T> Fill<T> {
-    pub fn new(wrapped: T, style: Style) -> Self {
+    pub const fn new(wrapped: T, style: Style) -> Self {
         Self {
             wrapped,
             style,

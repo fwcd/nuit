@@ -10,7 +10,7 @@ pub struct Gestured<T, G> {
 }
 
 impl<T, G> Gestured<T, G> {
-    pub fn new(wrapped: T, gesture: G) -> Self {
+    pub const fn new(wrapped: T, gesture: G) -> Self {
         Self { wrapped, gesture }
     }
 }

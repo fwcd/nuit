@@ -18,7 +18,7 @@ impl<T> Root<T> {
         }
     }
 
-    pub fn storage(&self) -> &Rc<Storage> {
+    pub const fn storage(&self) -> &Rc<Storage> {
         &self.storage
     }
 }

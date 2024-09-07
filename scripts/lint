@@ -6,4 +6,7 @@ cd "$(dirname $0)/.."
 # TODO: Figure out if we can configure this properly from Cargo.toml
 # [lints.clippy] seems to be unstable currently.
 
-cargo clippy --all-targets --all-features -- -W clippy::pedantic
+cargo clippy --all-targets --all-features -- \
+  -W clippy::pedantic \
+  -W clippy::missing-const-for-fn \
+  -W clippy::use-self

@@ -8,7 +8,7 @@ pub struct RoundedRectangle {
 
 impl RoundedRectangle {
     #[must_use]
-    pub fn new(corner_size: Vec2<f64>) -> Self {
+    pub const fn new(corner_size: Vec2<f64>) -> Self {
         Self { corner_size }
     }
 

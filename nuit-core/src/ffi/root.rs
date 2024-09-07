@@ -47,7 +47,7 @@ extern "C" fn set_update_callback_impl<T>(c_root: *const CRoot, update_callback:
 
 impl CRoot {
     /// Safely uses a [`CRoot`] while returning ownership once the method returns.
-    pub fn scope_from<T, U>(root: &mut Box<Root<T>>, action: impl FnOnce(&CRoot) -> U) -> U where T: View {
+    pub fn scope_from<T, U>(root: &mut Box<Root<T>>, action: impl FnOnce(&Self) -> U) -> U where T: View {
         let c_root = Self {
             wrapped: ptr::from_mut(&mut **root).cast::<c_void>(),
             render_json: render_json_impl::<T>,

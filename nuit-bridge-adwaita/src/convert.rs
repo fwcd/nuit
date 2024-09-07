@@ -12,9 +12,9 @@ impl ToGtk for HorizontalAlignment {
 
     fn to_gtk(self) -> Self::GtkValue {
         match self {
-            HorizontalAlignment::Leading => Align::Start,
-            HorizontalAlignment::Center => Align::Center,
-            HorizontalAlignment::Trailing => Align::End,
+            Self::Leading => Align::Start,
+            Self::Center => Align::Center,
+            Self::Trailing => Align::End,
         }
     }
 }
@@ -24,11 +24,11 @@ impl ToGtk for VerticalAlignment {
 
     fn to_gtk(self) -> Self::GtkValue {
         match self {
-            VerticalAlignment::Top => Align::Start,
-            VerticalAlignment::Center => Align::Center,
-            VerticalAlignment::Bottom => Align::End,
-            VerticalAlignment::FirstTextBaseline
-            | VerticalAlignment::LastTextBaseline => Align::Baseline,
+            Self::Top => Align::Start,
+            Self::Center => Align::Center,
+            Self::Bottom => Align::End,
+            Self::FirstTextBaseline
+            | Self::LastTextBaseline => Align::Baseline,
         }
     }
 }

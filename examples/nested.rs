@@ -8,7 +8,7 @@ struct IncrementView<F> {
 }
 
 impl<F> IncrementView<F> {
-    pub fn new(action: F) -> Self {
+    pub const fn new(action: F) -> Self {
         Self { action }
     }
 }

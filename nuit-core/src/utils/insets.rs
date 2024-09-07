@@ -13,7 +13,7 @@ pub struct Insets {
 
 impl Default for Insets {
     fn default() -> Self {
-        Insets {
+        Self {
             top: 10.0,
             leading: 10.0,
             bottom: 10.0,

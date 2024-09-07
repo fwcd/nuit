@@ -13,7 +13,7 @@ pub struct Button<T, F> {
 
 impl<T, F> Button<T, F> {
     #[must_use]
-    pub fn new(label: T, action: F) -> Self {
+    pub const fn new(label: T, action: F) -> Self {
         Self {
             label,
             action: Some(action),

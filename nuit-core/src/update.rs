@@ -10,12 +10,12 @@ pub struct Update {
 
 impl Update {
     #[must_use]
-    pub fn new(animation: Option<Animation>) -> Self {
+    pub const fn new(animation: Option<Animation>) -> Self {
         Self { animation }
     }
 
     #[must_use]
-    pub fn with_animation(animation: Animation) -> Self {
+    pub const fn with_animation(animation: Animation) -> Self {
         Self { animation: Some(animation) }
     }
 }

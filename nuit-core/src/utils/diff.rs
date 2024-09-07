@@ -24,7 +24,7 @@ pub struct Difference<T> {
 
 impl<T> Difference<T> {
     #[must_use]
-    pub fn new() -> Self {
+    pub const fn new() -> Self {
         Self {
             removed: Vec::new(),
             changed: Vec::new(),

@@ -8,7 +8,7 @@ struct StylesView<const N: usize> {
 }
 
 impl<const N: usize> StylesView<N> {
-    pub fn new(styles: [(&'static str, Vec<Style>); N]) -> Self {
+    pub const fn new(styles: [(&'static str, Vec<Style>); N]) -> Self {
         Self { styles }
     }
 }

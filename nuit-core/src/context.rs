@@ -10,7 +10,7 @@ pub struct Context {
 }
 
 impl Context {
-    pub fn new(storage: Rc<Storage>) -> Self {
+    pub const fn new(storage: Rc<Storage>) -> Self {
         Self {
             id_path: IdPathBuf::root(),
             storage,
@@ -18,7 +18,7 @@ impl Context {
     }
 
     #[must_use]
-    pub fn storage(&self) -> &Rc<Storage> {
+    pub const fn storage(&self) -> &Rc<Storage> {
         &self.storage
     }
 
