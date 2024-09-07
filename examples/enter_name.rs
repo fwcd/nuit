@@ -1,6 +1,6 @@
 #![feature(type_alias_impl_trait, impl_trait_in_assoc_type)]
 
-use nuit::{Text, VStack, View, ViewExt, State, HStack, TextField, Bind, Insets, Frame, ForEach, clone};
+use nuit::{clone, Access, Bind, ForEach, Frame, HStack, Insets, State, Text, TextField, VStack, View, ViewExt};
 
 #[derive(Bind, Default)]
 struct EnterNameView {

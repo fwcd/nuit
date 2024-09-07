@@ -1,6 +1,6 @@
 #![feature(type_alias_impl_trait, impl_trait_in_assoc_type)]
 
-use nuit::{Text, HStack, VStack, View, Bind, Button, State, If, clone};
+use nuit::{clone, Access, Bind, Button, HStack, If, State, Text, VStack, View};
 
 #[derive(Bind)]
 struct FizzBuzzView {

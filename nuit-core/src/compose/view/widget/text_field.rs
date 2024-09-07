@@ -1,6 +1,6 @@
 use nuit_derive::Bind;
 
-use crate::{View, Node, Context, Binding, Event, IdPath};
+use crate::{Access, Binding, Context, Event, IdPath, Node, View};
 
 /// A user-modifiable text field.
 #[derive(Debug, Clone, Bind)]

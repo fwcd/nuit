@@ -1,6 +1,6 @@
 #![feature(type_alias_impl_trait, impl_trait_in_assoc_type)]
 
-use nuit::{Text, VStack, View, Bind, Button, State};
+use nuit::{Access, Bind, Button, State, Text, VStack, View};
 
 #[derive(Bind, Default)]
 struct CounterView {

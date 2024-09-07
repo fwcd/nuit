@@ -1,6 +1,6 @@
 use nuit_derive::Bind;
 
-use crate::{View, Node, Context, Binding, Event, IdPath, Id, IdentifyExt};
+use crate::{Access, Binding, Context, Event, Id, IdPath, IdentifyExt, Node, View};
 
 /// A view that lets the user choose a value.
 #[derive(Debug, Clone, Bind)]

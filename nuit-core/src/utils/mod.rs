@@ -1,8 +1,8 @@
+mod access;
 mod animation;
 mod alignment;
 mod angle;
 mod approx_eq;
-mod binding;
 mod clone;
 mod color;
 mod diff;
@@ -18,11 +18,11 @@ mod unit_point;
 mod vec2;
 mod zero;
 
+pub use access::*;
 pub use animation::*;
 pub use alignment::*;
 pub use angle::*;
 pub use approx_eq::*;
-pub use binding::*;
 pub use color::*;
 pub use diff::*;
 pub use font::*;

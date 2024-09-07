@@ -1,6 +1,6 @@
 use std::{cell::RefCell, rc::Rc};
 
-use crate::{Animation, Binding, Storage};
+use crate::{Access, Animation, Binding, Storage};
 
 use super::StateKey;
 
@@ -37,6 +37,10 @@ impl<T> State<T> where T: 'static + Clone {
 
         storage.initialize_if_needed(key, || self.initial_value.clone());
     }
+}
+
+impl<T> Access for State<T> where T: 'static + Clone {
+    type Value = T;
 
     /// Fetches the underlying value.
     /// 
@@ -46,43 +50,24 @@ impl<T> State<T> where T: 'static + Clone {
     /// performed by (the usually derived) [`Bind::bind`] implementation before
     /// [`View::render`] is called, so calling this method in the render
     /// implementation is generally safe (and encouraged).
-    pub fn get(&self) -> T {
+    fn get(&self) -> T {
         let storage = self.storage.borrow();
         let storage = storage.as_ref().expect("Storage not linked before calling State::get");
         storage.get::<T>(self.key.borrow().as_ref().unwrap())
     }
 
+    /// Changes the underlying value.
+    /// 
+    /// # Panics
+    /// 
+    /// This will panic if the storage has not been linked first. Linking is
+    /// performed by (the usually derived) [`Bind::bind`] implementation before
+    /// [`View::render`] is called, so calling this method in the render
+    /// implementation is generally safe (and encouraged).
     fn change(&self, value: impl Into<T>, animation: Option<Animation>) {
         let storage = self.storage.borrow();
         let storage = storage.as_ref().expect("Storage not linked before calling State::change");
         storage.add_change(self.key.borrow().clone().unwrap(), value.into(), animation);
-    }
-
-    /// Sets the underlying value. This synchronously triggers a view update.
-    /// 
-    /// # Panics
-    /// 
-    /// This will panic if the storage has not been linked first. Linking is
-    /// performed by (the usually derived) [`Bind::bind`] implementation before
-    /// [`View::render`] is called, so calling this method in the render
-    /// implementation is generally safe (and encouraged).
-    pub fn set(&self, value: impl Into<T>) {
-        assert!(self.is_linked(), "Storage not linked before calling State::set");
-        self.change(value, None);
-    }
-
-    /// Sets the underlying value with the given animation. This synchronously
-    /// triggers a view update.
-    /// 
-    /// # Panics
-    /// 
-    /// This will panic if the storage has not been linked first. Linking is
-    /// performed by (the usually derived) [`Bind::bind`] implementation before
-    /// [`View::render`] is called, so calling this method in the render
-    /// implementation is generally safe (and encouraged).
-    pub fn set_with(&self, animation: Animation, value: impl Into<T>) {
-        assert!(self.is_linked(), "Storage not linked before calling State::set_with");
-        self.change(value, Some(animation));
     }
 
     /// Obtains a [`Binding`] to the underlying value.
@@ -93,14 +78,9 @@ impl<T> State<T> where T: 'static + Clone {
     /// performed by (the usually derived) [`Bind::bind`] implementation before
     /// [`View::render`] is called, so calling this method in the render
     /// implementation is generally safe (and encouraged).
-    pub fn binding(&self) -> Binding<T> {
+    fn binding(&self) -> Binding<T> {
         assert!(self.is_linked(), "Storage not linked before calling State::binding");
-        let self1 = self.clone();
-        let self2 = self.clone();
-        Binding::new(
-            move || self1.get(),
-            move |value, animation| self2.change(value, animation),
-        )
+        Binding::from_access(self.clone())
     }
 }
 
