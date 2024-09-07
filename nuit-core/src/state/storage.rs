@@ -7,6 +7,7 @@ pub struct Storage {
     state: RefCell<HashMap<StateKey, Box<dyn Any>>>,
     changes: RefCell<HashMap<StateKey, Box<dyn Any>>>,
     preapply: Cell<bool>,
+    #[allow(clippy::type_complexity)]
     update_callback: RefCell<Option<Box<dyn Fn(&Update)>>>,
 }
 
@@ -56,11 +57,17 @@ impl Storage {
 
     fn fire_update_callback(&self, update: &Update) {
         if let Some(update_callback) = self.update_callback.borrow().as_ref() {
-            update_callback(&update);
+            update_callback(update);
         }
     }
 
     pub fn set_update_callback(&self, update_callback: impl Fn(&Update) + 'static) {
         *self.update_callback.borrow_mut() = Some(Box::new(update_callback));
+    }
+}
+
+impl Default for Storage {
+    fn default() -> Self {
+        Self::new()
     }
 }

@@ -20,7 +20,7 @@ impl<T> View for List<T> where T: View {
     fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) {
         if let Some(head) = event_path.head() {
             match head {
-                Id::Index(0) => self.wrapped.fire(event, &event_path.tail(), &context.child(0)),
+                Id::Index(0) => self.wrapped.fire(event, event_path.tail(), &context.child(0)),
                 i => panic!("Cannot fire event for child id {} on List which only has one child", i)
             }
         }

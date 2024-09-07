@@ -23,7 +23,7 @@ pub fn run_app<T>(root: Root<T>) where T: View + 'static {
         }));
 
         root.lock().set_update_callback(clone!(root, node_widget => move |_update| {
-            node_widget.update(Root::render(&mut root.lock()));
+            node_widget.update(Root::render(&root.lock()));
         }));
 
         let content = Box::new(Orientation::Vertical, 0);

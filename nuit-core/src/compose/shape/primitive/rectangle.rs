@@ -1,11 +1,11 @@
 use crate::{Shape, ShapeNode};
 
 /// A rectangular shape.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Default, Clone, PartialEq, Eq)]
 pub struct Rectangle;
 
 impl Rectangle {
-    pub fn new() -> Self {
+    pub const fn new() -> Self {
         Self
     }
 }

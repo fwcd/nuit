@@ -14,7 +14,7 @@ pub fn derive(input: TokenStream) -> TokenStream {
         Data::Struct(s) => match s.fields {
             Fields::Unit => Vec::new(),
             Fields::Named(fs) => fs.named.into_iter()
-                .filter(|Field { ty, .. }| is_state_type(&ty))
+                .filter(|Field { ty, .. }| is_state_type(ty))
                 .map(|f| f.ident.expect("#[derive(Bind)] requires all state fields to be named"))
                 .collect(),
             _ => panic!("#[derive(Bind)] requires named fields!"),
@@ -41,7 +41,7 @@ fn is_state_type(ty: &Type) -> bool {
         Type::Path(ty_path) => {
             let segments = &ty_path.path.segments;
             if let Some(segment) = segments.first() {
-                segment.ident.to_string() == "State"
+                segment.ident == "State"
             } else {
                 false
             }

@@ -53,7 +53,7 @@ impl IdPathBuf {
 
     pub fn join(&self, path: &IdPath) -> Self {
         let mut components = self.0.clone();
-        components.extend(path.0.into_iter().cloned());
+        components.extend(path.0.iter().cloned());
         Self(components)
     }
 }

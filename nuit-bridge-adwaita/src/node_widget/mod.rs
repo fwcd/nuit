@@ -15,10 +15,11 @@ glib::wrapper! {
 }
 
 impl NodeWidget {
+    #[allow(clippy::type_complexity)]
     fn new(
         node: Node,
         id_path: IdPathBuf,
-        fire_event: Option<Rc<Box<dyn Fn(&IdPath, &Event)>>>,
+        fire_event: Option<Rc<dyn Fn(&IdPath, &Event)>>,
     ) -> Self {
         let widget: Self = Object::builder().build();
 
@@ -36,7 +37,7 @@ impl NodeWidget {
     }
 
     pub fn root(node: Node, fire_event: impl Fn(&IdPath, &Event) + 'static) -> Self {
-        Self::new(node, IdPathBuf::root(), Some(Rc::new(Box::new(fire_event))))
+        Self::new(node, IdPathBuf::root(), Some(Rc::new(fire_event)))
     }
 
     fn create_child_with_id(&self, node: Node, id: &Id) -> Self {
@@ -60,7 +61,7 @@ impl NodeWidget {
     }
 
     pub fn update(&self, node: Node) {
-        let imp = imp::NodeWidget::from_obj(&self);
+        let imp = imp::NodeWidget::from_obj(self);
         imp.node.replace(node.clone());
 
         let id_path = imp.id_path.borrow();
@@ -75,7 +76,7 @@ impl NodeWidget {
         match &node {
             Node::Empty {} => {},
             Node::Text { content } => {
-                let label = Label::new(Some(&content));
+                let label = Label::new(Some(content));
                 self.append(&label);
             },
             Node::TextField { content } => {
@@ -91,7 +92,7 @@ impl NodeWidget {
                 let button = Button::new();
                 match label.value() {
                     Node::Text { content } => button.set_label(content),
-                    _ => button.set_child(Some(&self.create_child_from_identified(&label))),
+                    _ => button.set_child(Some(&self.create_child_from_identified(label))),
                 }
                 if let Some(ref fire_event) = *fire_event {
                     button.connect_clicked(clone!(fire_event, id_path => move |_button| {
@@ -119,7 +120,7 @@ impl NodeWidget {
             Node::Modified { wrapped, modifier: _ } => {
                 // TODO: Implement modifiers
                 eprintln!("Warning: Modifiers are not supported yet and ignored");
-                self.append(&self.create_child_from_identified(&wrapped))
+                self.append(&self.create_child_from_identified(wrapped))
             },
             // TODO: Add remaining node types
             _ => {

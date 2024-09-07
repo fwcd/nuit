@@ -27,6 +27,6 @@ impl<T, F> View for Handler<T, F> where T: View, F: Fn(Event) {
     }
 
     fn render(&self, context: &Context) -> Node {
-        self.wrapped.render(&context)
+        self.wrapped.render(context)
     }
 }

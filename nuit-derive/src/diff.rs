@@ -70,7 +70,7 @@ fn create_variant_match_arms(variants: Vec<Variant>, self_ty_name: &Ident) -> Ve
         let ident = v.ident;
         let fields: Vec<(Ident, DiffFieldKind)> = match v.fields {
             Fields::Named(fs) => fs.named.into_iter()
-                .map(|f| (f.ident.expect("#[derive(Diff)] currently requires fields to be named"), DiffFieldKind::from_type(f.ty, &self_ty_name)))
+                .map(|f| (f.ident.expect("#[derive(Diff)] currently requires fields to be named"), DiffFieldKind::from_type(f.ty, self_ty_name)))
                 .collect(),
             // TODO: Support unnamed/unit fields
             _ => panic!("#[derive(Diff)] currently only supports enum variants with named fields"),
@@ -140,7 +140,7 @@ struct TypeNode(String, Vec<TypeNode>);
 
 impl TypeNode {
     fn normalize_self(self, self_ty_name: &str) -> Self {
-        let name = if &self.0 == self_ty_name { SELF.to_owned() } else { self.0 };
+        let name = if self.0 == self_ty_name { SELF.to_owned() } else { self.0 };
         let args = self.1.into_iter().map(|t| t.normalize_self(self_ty_name)).collect();
         Self(name, args)
     }
@@ -167,6 +167,7 @@ impl<S, C> From<(S, C)> for TypeNode where S: ToString, C: IntoIterator, C::Item
 impl From<Type> for TypeNode {
     fn from(ty: Type) -> Self {
         // TODO: Support qualified/parenthesized/... types
+        #[allow(clippy::single_match)]
         match ty {
             Type::Path(ty_path) => {
                 let segments = ty_path.path.segments;

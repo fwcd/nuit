@@ -24,8 +24,8 @@ impl<T, O> View for Overlay<T, O> where T: View, O: View {
     fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) {
         if let Some(head) = event_path.head() {
             match head {
-                Id::Index(0) => self.wrapped.fire(event, &event_path.tail(), &context.child(0)),
-                Id::Index(1) => self.overlayed.fire(event, &event_path.tail(), &context.child(1)),
+                Id::Index(0) => self.wrapped.fire(event, event_path.tail(), &context.child(0)),
+                Id::Index(1) => self.overlayed.fire(event, event_path.tail(), &context.child(1)),
                 i => panic!("Cannot fire event for child id {} on Overlay which only has two childs", i)
             }
         }

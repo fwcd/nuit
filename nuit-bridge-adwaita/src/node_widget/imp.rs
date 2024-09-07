@@ -10,7 +10,12 @@ use nuit_core::{Event, IdPath, IdPathBuf, Node};
 pub struct NodeWidget {
     pub node: Cell<Node>,
     pub id_path: RefCell<IdPathBuf>,
-    pub fire_event: RefCell<Option<Rc<Box<dyn Fn(&IdPath, &Event)>>>>,
+
+    // Yeah, this is a complex type. We need interior mutability to access it
+    // via `&self` (RefCell), optionality to allow default-constructing it
+    // (Option) and cloneability (Rc).
+    #[allow(clippy::type_complexity)]
+    pub fire_event: RefCell<Option<Rc<dyn Fn(&IdPath, &Event)>>>,
 }
 
 #[glib::object_subclass]

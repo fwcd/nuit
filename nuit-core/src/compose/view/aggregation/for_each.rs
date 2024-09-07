@@ -58,7 +58,7 @@ impl<V> View for ForEach<V> where V: View {
     fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) {
         if let Some(head) = event_path.head() {
             if let Some(view) = self.children.iter().find(|view| view.id() == &head) {
-                view.value().fire(event, &event_path.tail(), &context.child(view.id().clone()));
+                view.value().fire(event, event_path.tail(), &context.child(view.id().clone()));
             }
         }
     }

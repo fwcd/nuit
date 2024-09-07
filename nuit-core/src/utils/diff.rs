@@ -10,7 +10,7 @@ pub trait Diff: Sized {
     fn diff<'a>(&'a self, old: &'a Self) -> Difference<&'a Self> {
         let mut difference = Difference::new();
         self.record_diff(old, IdPath::root(), &mut difference);
-        return difference;
+        difference
     }
 }
 

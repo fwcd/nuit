@@ -78,7 +78,7 @@ fn find_swift_runtime_libs() {
     let target_with_version = target_with_version();
 
     let raw_target_info = Command::new("swift")
-        .args(&["-target", &target_with_version, "-print-target-info"])
+        .args(["-target", &target_with_version, "-print-target-info"])
         .output()
         .unwrap()
         .stdout;
@@ -100,14 +100,14 @@ fn build_nuit_bridge_swiftui() {
     let sdk = target_sdk();
     let sdk_path = str::from_utf8(
         &Command::new("xcrun")
-            .args(&["--sdk", &sdk, "--show-sdk-path"])
+            .args(["--sdk", &sdk, "--show-sdk-path"])
             .output()
             .unwrap()
             .stdout
     ).unwrap().trim().to_owned();
 
     let build_succeeded = Command::new("xcrun")
-        .args(&[
+        .args([
             // We have to make sure that we always use the macOS version of the
             // Swift Package Manager, even when cross-compiling for iOS.
             "--sdk", "macosx",

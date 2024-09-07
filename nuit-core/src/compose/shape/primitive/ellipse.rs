@@ -1,11 +1,11 @@
 use crate::{Shape, ShapeNode};
 
 /// An elliptic shape.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Default, Clone, PartialEq, Eq)]
 pub struct Ellipse;
 
 impl Ellipse {
-    pub fn new() -> Self {
+    pub const fn new() -> Self {
         Self
     }
 }

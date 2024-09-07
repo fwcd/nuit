@@ -1,11 +1,11 @@
 use crate::{Shape, ShapeNode};
 
 /// A capsule shape.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Default, Clone, PartialEq, Eq)]
 pub struct Capsule;
 
 impl Capsule {
-    pub fn new() -> Self {
+    pub const fn new() -> Self {
         Self
     }
 }

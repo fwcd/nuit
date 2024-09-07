@@ -43,7 +43,8 @@ pub fn run_app<T>(config: impl Into<Config<T>>) where T: View + 'static {
     match backend {
         #[cfg(feature = "swiftui")]
         Backend::SwiftUI => {
-            let c_root = CRoot::from(Box::new(root));
+            let c_root = CRoot::from_typed(Box::new(root));
+
             #[cfg(target_vendor = "apple")]
             unsafe { nuit_bridge_swiftui::run_app(&c_root); }
             #[cfg(not(target_vendor = "apple"))]

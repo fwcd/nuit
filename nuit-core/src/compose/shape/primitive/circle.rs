@@ -1,11 +1,11 @@
 use crate::{Shape, ShapeNode};
 
 /// A circular shape.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Default, Clone, PartialEq, Eq)]
 pub struct Circle;
 
 impl Circle {
-    pub fn new() -> Self {
+    pub const fn new() -> Self {
         Self
     }
 }
