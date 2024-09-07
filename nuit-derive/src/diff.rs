@@ -28,7 +28,7 @@ pub fn derive(input: TokenStream) -> TokenStream {
                     new_child.value().record_diff(old_child.value(), &id_path.child(new_child.id().clone()), difference);
                 }
 
-                fn recurse_on_container<'a>(new_child_container: &'a Vec<Identified<#name>>, old_child_container: &'a Vec<Identified<#name>>, id_path: &IdPath, difference: &mut Difference<&'a #name>) {
+                fn recurse_on_container<'a>(new_child_container: &'a [Identified<#name>], old_child_container: &'a [Identified<#name>], id_path: &IdPath, difference: &mut Difference<&'a #name>) {
                     let new_children: HashMap<&Id, &Identified<#name>> = new_child_container.iter().map(|c| (c.id(), c)).collect();
                     let old_children: HashMap<&Id, &Identified<#name>> = old_child_container.iter().map(|c| (c.id(), c)).collect();
 
