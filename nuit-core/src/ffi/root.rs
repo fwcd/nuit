@@ -46,32 +46,15 @@ extern "C" fn set_update_callback_impl<T>(c_root: *const CRoot, update_callback:
 }
 
 impl CRoot {
-    /// Creates a [`CRoot`] from the given boxed [`Root<T>`] for FFI.
-    /// 
-    /// # Ownership
-    /// 
-    /// Full ownership is transferred to the [`CRoot`], hence **this will leak
-    /// the root unless converted back via [`CRoot::into_typed`]**, since the
-    /// [`CRoot`] does not have a [`Drop`] implementation (due to type erasure
-    /// making it impossible). For most uses this will likely not be an issue
-    /// though since the root will likely be held for the entire duration of the
-    /// application.
-    pub fn from_typed<T>(root: Box<Root<T>>) -> Self where T: View {
-        Self {
-            wrapped: Box::into_raw(root) as *mut c_void,
+    /// Safely uses a [`CRoot`] while returning ownership once the method returns.
+    pub fn scope_from<T, U>(root: &mut Box<Root<T>>, action: impl FnOnce(&CRoot) -> U) -> U where T: View {
+        let c_root = Self {
+            wrapped: &mut **root as *mut Root<T> as *mut c_void,
             render_json: render_json_impl::<T>,
             fire_event_json: fire_event_json_impl::<T>,
             set_update_callback: set_update_callback_impl::<T>,
-        }
-    }
+        };
 
-    /// Creates a `Root<T>` from a `CRoot`.
-    /// 
-    /// # Safety
-    /// 
-    /// It is the caller's responsibility to ensure that the same `T` is used as
-    /// for the original instance, hence why this method is marked unsafe.
-    pub unsafe fn into_typed<T>(self) -> Box<Root<T>> where T: View {
-        Box::from_raw(self.wrapped as *mut Root<T>)
+        action(&c_root)
     }
 }
