@@ -22,9 +22,9 @@ jobs:
       - name: Install system dependencies
         run: sudo apt-get install -y libadwaita-1-dev libgtk-4-dev
       - name: Test package
-        run: cargo test --all --all-features
+        run: scripts/test
       - name: Lint package
-        run: cargo clippy --all-targets --all-features -- -W clippy::pedantic
+        run: scripts/lint
       - name: Publish nuit-derive
         run: cargo publish --token ${{ secrets.CRATES_IO_TOKEN }}
         working-directory: nuit-derive
