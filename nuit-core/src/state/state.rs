@@ -52,9 +52,9 @@ impl<T> State<T> where T: 'static + Clone {
         storage.get::<T>(self.key.borrow().as_ref().unwrap())
     }
 
-    fn add_change(&self, value: impl Into<T>, animation: Option<Animation>) {
+    fn change(&self, value: impl Into<T>, animation: Option<Animation>) {
         let storage = self.storage.borrow();
-        let storage = storage.as_ref().expect("Storage not linked before calling State::add_change");
+        let storage = storage.as_ref().expect("Storage not linked before calling State::change");
         storage.add_change(self.key.borrow().clone().unwrap(), value.into(), animation);
     }
 
@@ -68,7 +68,7 @@ impl<T> State<T> where T: 'static + Clone {
     /// implementation is generally safe (and encouraged).
     pub fn set(&self, value: impl Into<T>) {
         assert!(self.is_linked(), "Storage not linked before calling State::set");
-        self.add_change(value, None);
+        self.change(value, None);
     }
 
     /// Sets the underlying value with the given animation. This synchronously
@@ -82,7 +82,7 @@ impl<T> State<T> where T: 'static + Clone {
     /// implementation is generally safe (and encouraged).
     pub fn set_with(&self, animation: Animation, value: impl Into<T>) {
         assert!(self.is_linked(), "Storage not linked before calling State::set_with");
-        self.add_change(value, Some(animation));
+        self.change(value, Some(animation));
     }
 
     /// Obtains a [`Binding`] to the underlying value.
@@ -99,7 +99,7 @@ impl<T> State<T> where T: 'static + Clone {
         let self2 = self.clone();
         Binding::new(
             move || self1.get(),
-            move |value| self2.set(value),
+            move |value, animation| self2.change(value, animation),
         )
     }
 }
