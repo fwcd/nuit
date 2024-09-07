@@ -1,6 +1,7 @@
 #![feature(type_alias_impl_trait, impl_trait_in_assoc_type)]
 
-use nuit::{clone, Access, Bind, Button, Id, Picker, State, Text, VStack, View};
+use nuit::prelude::*;
+use nuit::{clone, Button, Id, Picker, Text, VStack};
 
 #[derive(Bind, Default)]
 struct PickerView {

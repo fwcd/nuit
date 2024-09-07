@@ -1,6 +1,7 @@
 #![feature(type_alias_impl_trait, impl_trait_in_assoc_type)]
 
-use nuit::{clone, Access, Angle, Animation, Bind, Button, Color, HStack, Rectangle, State, Text, VStack, View, ViewExt};
+use nuit::prelude::*;
+use nuit::{clone, Angle, Animation, Button, Color, HStack, Rectangle, Text, VStack};
 
 #[derive(Bind)]
 struct ScaleRotateView {

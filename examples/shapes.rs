@@ -1,6 +1,7 @@
 #![feature(type_alias_impl_trait, impl_trait_in_assoc_type)]
 
-use nuit::{Bind, Capsule, Circle, Color, Ellipse, Rectangle, RoundedRectangle, ShapeExt, VStack, View, ViewExt};
+use nuit::prelude::*;
+use nuit::{Capsule, Circle, Color, Ellipse, Rectangle, RoundedRectangle, VStack};
 
 #[derive(Bind)]
 struct ShapesView;

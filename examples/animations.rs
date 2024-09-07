@@ -2,7 +2,8 @@
 
 use std::time::Duration;
 
-use nuit::{clone, Access, Alignment, Animation, Bind, Button, Circle, ForEach, Frame, HStack, Rectangle, State, Text, VStack, Vec2, View, ViewExt, ZStack};
+use nuit::prelude::*;
+use nuit::{clone, Alignment, Animation, Button, Circle, ForEach, Frame, HStack, Rectangle, Text, VStack, Vec2, ZStack};
 
 #[derive(Bind)]
 struct AnimationsView<const COUNT: usize> {

@@ -1,6 +1,7 @@
 #![feature(type_alias_impl_trait, impl_trait_in_assoc_type)]
 
-use nuit::{Alignment, Angle, Bind, Color, Insets, Sector, ShapeExt, Text, View, ViewExt, ZStack};
+use nuit::prelude::*;
+use nuit::{Alignment, Angle, Color, Insets, Sector, Text, ZStack};
 
 #[derive(Bind)]
 struct PieChartView;

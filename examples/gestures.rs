@@ -1,6 +1,7 @@
 #![feature(type_alias_impl_trait, impl_trait_in_assoc_type)]
 
-use nuit::{Animation, Bind, Circle, Color, DragEventKind, HStack, ShapeExt, State, Text, Vec2, View, ViewExt};
+use nuit::prelude::*;
+use nuit::{Animation, Circle, Color, DragEventKind, HStack, Text, Vec2};
 
 #[derive(Bind)]
 struct TapView {
