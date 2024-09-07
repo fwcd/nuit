@@ -24,7 +24,7 @@ jobs:
       - name: Test package
         run: cargo test --all --all-features
       - name: Lint package
-        run: cargo clippy --all-targets --all-features
+        run: cargo clippy --all-targets --all-features -- -W clippy::pedantic
       - name: Publish nuit-derive
         run: cargo publish --token ${{ secrets.CRATES_IO_TOKEN }}
         working-directory: nuit-derive

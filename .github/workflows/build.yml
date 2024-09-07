@@ -32,4 +32,4 @@ jobs:
     - name: Build and Test
       run: cargo test --all --all-features
     - name: Lint
-      run: cargo clippy --all-targets --all-features
+      run: cargo clippy --all-targets --all-features -- -W clippy::pedantic
