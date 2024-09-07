@@ -13,3 +13,6 @@ insert_final_newline = true
 
 [*.yml]
 indent_size = 2
+
+[scripts/*]
+indent_size = 2
