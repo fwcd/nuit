@@ -45,3 +45,15 @@ impl Font {
         Self::System { size: FontSize::level(level), design: None, weight: None }
     }
 }
+
+impl From<FontSize> for Font {
+    fn from(size: FontSize) -> Self {
+        Self::with_size(size)
+    }
+}
+
+impl From<FontLevel> for Font {
+    fn from(level: FontLevel) -> Self {
+        Self::with_level(level)
+    }
+}
