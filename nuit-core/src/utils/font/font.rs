@@ -26,8 +26,8 @@ impl Font {
     pub const FOOTNOTE: Self = Self::with_level(FontLevel::Footnote);
 
     #[must_use]
-    pub fn system(size: impl Into<FontSize>, design: Option<FontDesign>, weight: Option<FontWeight>) -> Self {
-        Self::System { size: size.into(), design, weight }
+    pub fn system(size: impl Into<FontSize>, design: impl Into<Option<FontDesign>>, weight: impl Into<Option<FontWeight>>) -> Self {
+        Self::System { size: size.into(), design: design.into(), weight: weight.into() }
     }
 
     #[must_use]
