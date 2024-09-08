@@ -35,6 +35,7 @@ impl EdgeSet {
     }
 
     /// The raw value of this set.
+    #[must_use]
     pub const fn raw_value(self) -> u8 {
         self.raw_value
     }
