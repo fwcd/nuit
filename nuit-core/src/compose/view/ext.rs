@@ -1,4 +1,4 @@
-use crate::{Alignment, Angle, DragEvent, DragGesture, Event, Font, Frame, Gesture, Handler, Insets, Modified, ModifierNode, Style, TapGesture, UnitPoint, Vec2, View};
+use crate::{Alignment, Angle, DragEvent, DragGesture, EdgeSet, Event, Font, Frame, Gesture, Handler, Insets, Modified, ModifierNode, Style, TapGesture, UnitPoint, Vec2, View};
 
 use super::{Gestured, Overlay};
 
@@ -66,6 +66,14 @@ pub trait ViewExt: Sized {
 
     fn foreground_style(self, style: impl Into<Style>) -> Modified<Self> {
         self.modifier(ModifierNode::ForegroundStyle { style: style.into() })
+    }
+
+    fn background_ignoring_safe_area_edges(self, safe_area_ignoring_edges: EdgeSet, style: impl Into<Style>) -> Modified<Self> {
+        self.modifier(ModifierNode::Background { style: style.into(), safe_area_ignoring_edges })
+    }
+
+    fn background(self, style: impl Into<Style>) -> Modified<Self> {
+        self.background_ignoring_safe_area_edges(EdgeSet::ALL, style)
     }
 
     fn scale_effect_around(self, anchor: UnitPoint, factor: impl Into<f64>) -> Modified<Self> {
