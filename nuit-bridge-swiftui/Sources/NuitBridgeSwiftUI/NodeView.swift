@@ -34,6 +34,16 @@ struct NodeView: View {
             )) {
                 NodeView(node: content.value, idPath: idPath + [content.id])
             }
+        case let .slider(value: value, lowerBound: lowerBound, upperBound: upperBound, step: step):
+            let binding = Binding(
+                get: { value },
+                set: { root.fire(event: .updateSliderValue(value: $0), for: idPath) }
+            )
+            if let step {
+                Slider(value: binding, in: lowerBound...upperBound, step: step)
+            } else {
+                Slider(value: binding, in: lowerBound...upperBound)
+            }
 
         // MARK: Aggregation
         case let .child(wrapped: wrapped):
