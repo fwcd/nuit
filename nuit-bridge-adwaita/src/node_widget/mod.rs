@@ -2,7 +2,7 @@ mod imp;
 
 use std::rc::Rc;
 
-use adw::{glib::{self, Object}, gtk::{self, Align, Button, Label, Orientation, Text}, prelude::{BoxExt, ButtonExt, EditableExt, WidgetExt}, subclass::prelude::*};
+use adw::{glib::{self, Object}, gtk::{self, Align, Button, Label, Orientation, Scale, Text}, prelude::{BoxExt, ButtonExt, EditableExt, RangeExt, WidgetExt}, subclass::prelude::*};
 use nuit_core::{clone, Event, Id, IdPath, IdPathBuf, Identified, Node};
 
 use crate::convert::ToGtk;
@@ -104,6 +104,18 @@ impl NodeWidget {
                     }));
                 }
                 self.append(&button);
+            },
+            Node::Slider { value, lower_bound, upper_bound, step } => {
+                let scale = Scale::with_range(Orientation::Horizontal, *lower_bound, *upper_bound, step.unwrap_or(1e-32));
+                scale.set_value(*value);
+                scale.set_width_request(150);
+                if let Some(ref fire_event) = *fire_event {
+                    scale.connect_value_changed(clone!(fire_event, id_path => move |scale| {
+                        let value = scale.value();
+                        fire_event(&id_path, &Event::UpdateSliderValue { value });
+                    }));
+                }
+                self.append(&scale);
             },
             Node::HStack { spacing, alignment, wrapped } => {
                 let gtk_box = gtk::Box::new(Orientation::Horizontal, *spacing as i32);
