@@ -16,7 +16,7 @@ pub enum Node {
     TextField { content: String },
     Button { label: Box<Identified<Node>> },
     Picker { title: String, selection: Id, content: Box<Identified<Node>> },
-    Slider { value: f64, lower_bound: f64, upper_bound: f64 },
+    Slider { value: f64, lower_bound: f64, upper_bound: f64, step: Option<f64> },
 
     // Aggregation
     Child { wrapped: Box<Identified<Node>> },

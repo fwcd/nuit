@@ -1,4 +1,4 @@
-use core::range::RangeInclusive;
+use std::ops::RangeInclusive;
 
 use nuit_derive::Bind;
 
@@ -9,12 +9,18 @@ use crate::{Access, Binding, Context, Event, IdPath, Node, View};
 pub struct Slider {
     value: Binding<f64>,
     range: RangeInclusive<f64>,
+    step: Option<f64>,
 }
 
 impl Slider {
     #[must_use]
-    pub const fn new(value: Binding<f64>, range: RangeInclusive<f64>) -> Self {
-        Self { value, range }
+    pub const fn new(value: Binding<f64>, range: RangeInclusive<f64>, step: Option<f64>) -> Self {
+        Self { value, range, step }
+    }
+
+    #[must_use]
+    pub const fn with_default_step(value: Binding<f64>, range: RangeInclusive<f64>) -> Self {
+        Self { value, range, step: None }
     }
 }
 
@@ -29,8 +35,9 @@ impl View for Slider {
     fn render(&self, _context: &Context) -> Node {
         Node::Slider {
             value: self.value.get(),
-            lower_bound: self.range.start,
-            upper_bound: self.range.end,
+            lower_bound: *self.range.start(),
+            upper_bound: *self.range.end(),
+            step: self.step,
         }
     }
 }
