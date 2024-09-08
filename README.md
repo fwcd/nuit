@@ -42,8 +42,7 @@ For a more elaborate example, check out [the section below](#example).
 ## Example
 
 ```rust
-use nuit::prelude::*;
-use nuit::{Button, Text, VStack};
+use nuit::{prelude::*, Button, Text, VStack};
 
 #[derive(Bind, Default)]
 struct CounterView {

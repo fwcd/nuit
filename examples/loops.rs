@@ -1,7 +1,6 @@
 #![feature(type_alias_impl_trait, impl_trait_in_assoc_type)]
 
-use nuit::prelude::*;
-use nuit::{ForEach, HStack, Text, VStack};
+use nuit::{prelude::*, ForEach, HStack, Text, VStack};
 
 #[derive(Bind)]
 struct LoopsView;

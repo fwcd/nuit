@@ -1,7 +1,6 @@
 #![feature(type_alias_impl_trait, impl_trait_in_assoc_type)]
 
-use nuit::prelude::*;
-use nuit::{BlendMode, Circle, Color, ForEach, HStack, Shadow, ShadowKind, Style, Text, VStack, Vec2, Zero};
+use nuit::{prelude::*, BlendMode, Circle, Color, ForEach, HStack, Shadow, ShadowKind, Style, Text, VStack, Vec2, Zero};
 
 #[derive(Bind)]
 struct StylesView<const N: usize> {

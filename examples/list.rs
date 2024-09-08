@@ -1,7 +1,6 @@
 #![feature(type_alias_impl_trait, impl_trait_in_assoc_type)]
 
-use nuit::prelude::*;
-use nuit::{Text, List};
+use nuit::{prelude::*, List, Text};
 
 #[derive(Bind)]
 struct ListView;

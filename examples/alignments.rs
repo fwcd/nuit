@@ -1,7 +1,6 @@
 #![feature(type_alias_impl_trait, impl_trait_in_assoc_type)]
 
-use nuit::prelude::*;
-use nuit::{Alignment, ForEach, Text, ZStack};
+use nuit::{prelude::*, Alignment, ForEach, Text, ZStack};
 
 #[derive(Bind, Default)]
 struct AlignmentsView;

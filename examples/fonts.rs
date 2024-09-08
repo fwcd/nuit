@@ -1,7 +1,6 @@
 #![feature(type_alias_impl_trait, impl_trait_in_assoc_type)]
 
-use nuit::prelude::*;
-use nuit::{Font, FontDesign, FontLevel, FontWeight, ForEach, HStack, Text, VStack};
+use nuit::{prelude::*, Font, FontDesign, FontLevel, FontWeight, ForEach, HStack, Text, VStack};
 
 #[derive(Bind)]
 struct FontsView;

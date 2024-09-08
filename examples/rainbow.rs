@@ -1,7 +1,6 @@
 #![feature(type_alias_impl_trait, impl_trait_in_assoc_type)]
 
-use nuit::prelude::*;
-use nuit::{Angle, Color, ForEach, Insets, Sector, ZStack};
+use nuit::{prelude::*, Angle, Color, ForEach, Insets, Sector, ZStack};
 
 #[derive(Bind)]
 struct RainbowView;
