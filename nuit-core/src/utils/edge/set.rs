@@ -10,10 +10,33 @@ pub struct EdgeSet {
 }
 
 impl EdgeSet {
+    pub const EMPTY: Self = Self::new();
+
+    pub const TOP: Self = Self::from_raw_value(1 << (Edge::Top as u8));
+    pub const BOTTOM: Self = Self::from_raw_value(1 << (Edge::Bottom as u8));
+    pub const LEADING: Self = Self::from_raw_value(1 << (Edge::Leading as u8));
+    pub const TRAILING: Self = Self::from_raw_value(1 << (Edge::Trailing as u8));
+
+    // TODO: Figure out if we can construct these in a const context without hardcoding the bits
+    pub const HORIZONTAL: Self = Self::from_raw_value(0b1100);
+    pub const VERTICAL: Self = Self::from_raw_value(0b0011);
+    pub const ALL: Self = Self::from_raw_value(0b1111);
+
     /// Creates a set containing no edges.
     #[must_use]
     pub const fn new() -> Self {
         Self { raw_value: 0 }
+    }
+
+    /// Creates a set from the given raw value.
+    #[must_use]
+    pub const fn from_raw_value(raw_value: u8) -> Self {
+        Self { raw_value }
+    }
+
+    /// The raw value of this set.
+    pub const fn raw_value(self) -> u8 {
+        self.raw_value
     }
 
     /// Inserts the given edge into the set.
@@ -117,6 +140,18 @@ mod tests {
         assert!(!EdgeSet::new().contains(Edge::Bottom));
         assert!(!EdgeSet::new().contains(Edge::Leading));
         assert!(!EdgeSet::new().contains(Edge::Trailing));
+    }
+
+    #[test]
+    fn constants() {
+        assert_eq!(EdgeSet::EMPTY, EdgeSet::new());
+        assert_eq!(EdgeSet::TOP, Edge::Top.into());
+        assert_eq!(EdgeSet::BOTTOM, Edge::Bottom.into());
+        assert_eq!(EdgeSet::LEADING, Edge::Leading.into());
+        assert_eq!(EdgeSet::TRAILING, Edge::Trailing.into());
+        assert_eq!(EdgeSet::HORIZONTAL, Edge::HORIZONTAL.into());
+        assert_eq!(EdgeSet::VERTICAL, Edge::VERTICAL.into());
+        assert_eq!(EdgeSet::ALL, Edge::ALL.into());
     }
 
     #[test]

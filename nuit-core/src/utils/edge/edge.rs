@@ -13,6 +13,8 @@ pub enum Edge {
 
 impl Edge {
     pub const COUNT: usize = 4;
+    pub const HORIZONTAL: [Self; 2] = [Self::Leading, Self::Trailing];
+    pub const VERTICAL: [Self; 2] = [Self::Top, Self::Bottom];
     pub const ALL: [Self; Self::COUNT] = [Self::Top, Self::Bottom, Self::Leading, Self::Trailing];
 }
 
