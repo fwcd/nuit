@@ -3,4 +3,5 @@ enum Event: Codable, Hashable {
     case gesture(gesture: GestureEvent)
     case updateText(content: String)
     case updatePickerSelection(id: Id)
+    case updateSliderValue(value: Double)
 }
