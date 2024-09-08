@@ -7,6 +7,7 @@ enum ModifierNode: Codable, Hashable {
     case fill(style: Style)
     case font(font: Font)
     case foregroundStyle(style: Style)
+    case background(style: Style, safeAreaIgnoringEdges: EdgeSet)
     case scaleEffect(factor: Double, anchor: UnitPoint)
     case rotationEffect(angle: Angle, anchor: UnitPoint)
     case help(text: String)

@@ -43,6 +43,8 @@ struct ModifierNodeViewModifier: ViewModifier {
             content.font(.init(font))
         case let .foregroundStyle(style: style):
             content.foregroundStyle(AnyShapeStyle(style))
+        case let .background(style: style, safeAreaIgnoringEdges: edges):
+            content.background(AnyShapeStyle(style), ignoresSafeAreaEdges: .init(edges))
         case let .scaleEffect(factor: factor, anchor: anchor):
             content.scaleEffect(CGFloat(factor), anchor: .init(anchor))
         case let .rotationEffect(angle: angle, anchor: anchor):
