@@ -2,6 +2,7 @@
     associated_type_defaults,
     let_chains,
     macro_metavar_expr,
+    new_range_api,
 )]
 
 #![allow(

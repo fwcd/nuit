@@ -36,6 +36,7 @@ For a more elaborate example, check out [the section below](#example).
 > - [macro metavariable expressions](https://github.com/rust-lang/rust/issues/83527)
 > - [`let` chains](https://github.com/rust-lang/rust/issues/53667)
 > - [reentrant locks](https://github.com/rust-lang/rust/issues/121440)
+> - [new range API](https://github.com/rust-lang/rust/issues/125687)
 >
 > With `rustup` this can be configured conveniently on a per-directory basis `rustup override set nightly` or, as in this repository, automatically with a [`rust-toolchain.toml`](rust-toolchain.toml).
 

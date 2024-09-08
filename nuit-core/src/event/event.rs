@@ -13,6 +13,7 @@ pub enum Event {
     Gesture { gesture: GestureEvent },
     UpdateText { content: String },
     UpdatePickerSelection { id: Id },
+    UpdateSliderValue { value: f64 },
 
     // Lifecycle
     Appear,
