@@ -1,7 +1,7 @@
 use serde::{Serialize, Deserialize};
 use serde_json::Value;
 
-use crate::Id;
+use crate::{Geometry, Id};
 
 use super::GestureEvent;
 
@@ -19,6 +19,9 @@ pub enum Event {
     // Navigation
     UpdateNavigationPath { path: Vec<Value> },
     GetNavigationDestination { value: Value },
+
+    // Layout
+    GetGeometryReaderView { geometry: Geometry },
 
     // Lifecycle
     Appear,
