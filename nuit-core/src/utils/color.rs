@@ -32,16 +32,22 @@ impl Color {
         Self { red, green, blue, alpha }
     }
 
+    /// Creates a new color with the given RGBA components.
+    #[must_use]
+    pub const fn with_rgba(red: f64, green: f64, blue: f64, alpha: f64) -> Self {
+        Self::new(red, green, blue, alpha)
+    }
+
     /// Creates a new color with the given RGB components and alpha 1.
     #[must_use]
     pub const fn with_rgb(red: f64, green: f64, blue: f64) -> Self {
-        Self::new(red, green, blue, 1.0)
+        Self::with_rgba(red, green, blue, 1.0)
     }
 
     /// Creates a new color with the given grayscale value and alpha 1.
     #[must_use]
     pub const fn with_grayscale(gray: f64) -> Self {
-        Self::new(gray, gray, gray, 1.0)
+        Self::with_rgb(gray, gray, gray)
     }
 
     /// A random RGBA color.
@@ -105,7 +111,7 @@ impl Color {
     /// The inverted color with the same alpha.
     #[must_use]
     pub fn invert_rgb(self) -> Self {
-        Self::new(1.0 - self.red, 1.0 - self.green, 1.0 - self.blue, self.alpha)
+        Self::with_rgba(1.0 - self.red, 1.0 - self.green, 1.0 - self.blue, self.alpha)
     }
 }
 
