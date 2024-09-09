@@ -11,11 +11,6 @@ class Root: ObservableObject {
     /// A manually installed publisher since we don't use `@Published`.
     var objectWillChange = ObservableObjectPublisher()
 
-    /// The rendered root node.
-    var node: Node {
-        render()
-    }
-
     init(cRoot: UnsafePointer<CRoot>) {
         self.cRoot = cRoot
     }
@@ -28,7 +23,7 @@ class Root: ObservableObject {
 
     // MARK: High-level FFI wrappers
 
-    private func render() -> Node {
+    func render() -> Node {
         let json = renderJson()
         let node = try! JSONDecoder().decode(Node.self, from: json.data(using: .utf8)!)
         return node
