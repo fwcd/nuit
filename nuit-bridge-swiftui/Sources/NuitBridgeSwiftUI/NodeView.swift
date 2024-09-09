@@ -92,6 +92,22 @@ struct NodeView: View {
                     NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
                 }
             }
+        case let .navigationSplitView(sidebar: sidebar, content: content, detail: detail):
+            if content.value.isEmpty {
+                NavigationSplitView {
+                    NodeView(node: sidebar.value, idPath: idPath + [sidebar.id])
+                } detail: {
+                    NodeView(node: detail.value, idPath: idPath + [detail.id])
+                }
+            } else {
+                NavigationSplitView {
+                    NodeView(node: sidebar.value, idPath: idPath + [sidebar.id])
+                } content: {
+                    NodeView(node: content.value, idPath: idPath + [content.id])
+                } detail: {
+                    NodeView(node: detail.value, idPath: idPath + [detail.id])
+                }
+            }
         case let .navigationLink(label: label, value: value):
             NavigationLink(value: value) {
                 NodeView(node: label.value, idPath: idPath + [label.id])

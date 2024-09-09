@@ -23,6 +23,7 @@ indirect enum Node: Codable, Hashable {
 
     // MARK: Navigation
     case navigationStack(path: [Value]?, wrapped: Identified<Node>)
+    case navigationSplitView(sidebar: Identified<Node>, content: Identified<Node>, detail: Identified<Node>)
     case navigationLink(label: Identified<Node>, value: Value)
     case navigationDestination(wrapped: Identified<Node>)
 
@@ -30,4 +31,8 @@ indirect enum Node: Codable, Hashable {
     case shape(shape: ShapeNode)
     case gestured(wrapped: Identified<Node>, gesture: Identified<GestureNode>)
     case modified(wrapped: Identified<Node>, modifier: ModifierNode)
+
+    var isEmpty: Bool {
+        self == .empty
+    }
 }
