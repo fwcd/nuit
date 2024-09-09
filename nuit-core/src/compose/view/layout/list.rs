@@ -16,6 +16,12 @@ impl<T> List<T> {
     }
 }
 
+impl<T> From<T> for List<T> {
+    fn from(wrapped: T) -> Self {
+        Self::new(wrapped)
+    }
+}
+
 impl<T> View for List<T> where T: View {
     fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) {
         if let Some(head) = event_path.head() {
