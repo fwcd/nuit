@@ -13,9 +13,7 @@ class Root: ObservableObject {
 
     /// The rendered root node.
     var node: Node {
-        let json = renderJson()
-        let node = try! JSONDecoder().decode(Node.self, from: json.data(using: .utf8)!)
-        return node
+        render()
     }
 
     init(cRoot: UnsafePointer<CRoot>) {
@@ -28,19 +26,34 @@ class Root: ObservableObject {
         }
     }
 
+    // MARK: High-level FFI wrappers
+
+    private func render() -> Node {
+        let json = renderJson()
+        let node = try! JSONDecoder().decode(Node.self, from: json.data(using: .utf8)!)
+        return node
+    }
+
     @discardableResult
     func fire(event: Event, for idPath: [Id]) -> EventResponse {
         let encoder = JSONEncoder()
-        let idPathJson = String(data: try! encoder.encode(idPath), encoding: .utf8)
-        let eventJson = String(data: try! encoder.encode(event), encoding: .utf8)
-        let responseJsonCString = cRoot.pointee.fire_event_json(cRoot, idPathJson, eventJson)!
-        defer { nuit_c_string_drop(responseJsonCString) }
-        let responseJson = String(cString: responseJsonCString)
+        let idPathJson = String(data: try! encoder.encode(idPath), encoding: .utf8)!
+        let eventJson = String(data: try! encoder.encode(event), encoding: .utf8)!
+        let responseJson = fire(eventJson: eventJson, for: idPathJson)
         return try! JSONDecoder().decode(EventResponse.self, from: responseJson.data(using: .utf8)!)
     }
 
+    // MARK: JSON FFI wrappers
+
     private func renderJson() -> String {
         let cString = cRoot.pointee.render_json(cRoot)!
+        defer { nuit_c_string_drop(cString) }
+        return String(cString: cString)
+    }
+
+    @discardableResult
+    private func fire(eventJson: String, for idPathJson: String) -> String {
+        let cString = cRoot.pointee.fire_event_json(cRoot, idPathJson, eventJson)!
         defer { nuit_c_string_drop(cString) }
         return String(cString: cString)
     }
