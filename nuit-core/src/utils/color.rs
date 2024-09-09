@@ -263,4 +263,27 @@ mod tests {
         assert_approx_eq!(Color::RED.invert_rgb(), Color::CYAN);
         assert_approx_eq!(Color::YELLOW.invert_rgb(), Color::BLUE);
     }
+
+    #[test]
+    #[allow(clippy::unreadable_literal)]
+    fn integer_conversions() {
+        assert_approx_eq!(Color::RED, Color::from_rgb_u32(0xFF0000));
+        assert_approx_eq!(Color::GREEN, Color::from_rgb_u32(0x00FF00));
+        assert_approx_eq!(Color::BLUE, Color::from_rgb_u32(0x0000FF));
+        assert_approx_eq!(Color::RED, Color::from_rgba_u32(0xFF0000FF));
+        assert_approx_eq!(Color::RED, Color::from_argb_u32(0xFFFF0000));
+
+        let test_color = Color::new(1.0, 0.75, 0.5, 0.25);
+        assert_approx_eq!(test_color, Color::with_rgba_u8(255, 191, 127, 63), 0.1);
+        assert_eq!(test_color.red_u8(), 255);
+        assert_eq!(test_color.green_u8(), 191);
+        assert_eq!(test_color.blue_u8(), 127);
+        assert_eq!(test_color.alpha_u8(), 63);
+
+        let test_color = Color::with_rgba_u8(255, 191, 127, 63);
+        assert_eq!(test_color.red_u8(), 255);
+        assert_eq!(test_color.green_u8(), 191);
+        assert_eq!(test_color.blue_u8(), 127);
+        assert_eq!(test_color.alpha_u8(), 63);
+    }
 }
