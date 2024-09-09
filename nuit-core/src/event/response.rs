@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::Node;
 
-/// A UI event response.
+/// A response to a UI event.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", rename_all_fields = "camelCase")]
 pub enum EventResponse {
