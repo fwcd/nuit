@@ -1,5 +1,6 @@
 use nuit_derive::Diff;
 use serde::{Serialize, Deserialize};
+use serde_json::Value;
 
 use crate::{Alignment, HorizontalAlignment, Id, IdPath, IdPathBuf, Identified, VerticalAlignment};
 
@@ -30,7 +31,7 @@ pub enum Node {
     Overlay { wrapped: Box<Identified<Node>>, alignment: Alignment, overlayed: Box<Identified<Node>> },
 
     // Navigation
-    NavigationStack { wrapped: Box<Identified<Node>> },
+    NavigationStack { path: Option<Vec<Value>>, wrapped: Box<Identified<Node>> },
 
     // Wrapper
     Shape { shape: ShapeNode },

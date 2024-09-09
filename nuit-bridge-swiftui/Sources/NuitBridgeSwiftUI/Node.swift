@@ -22,7 +22,7 @@ indirect enum Node: Codable, Hashable {
     case overlay(wrapped: Identified<Node>, alignment: Alignment, overlayed: Identified<Node>)
 
     // MARK: Navigation
-    case navigationStack(wrapped: Identified<Node>)
+    case navigationStack(path: [Value]?, wrapped: Identified<Node>)
 
     // MARK: Wrapper
     case shape(shape: ShapeNode)

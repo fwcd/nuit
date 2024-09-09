@@ -79,9 +79,18 @@ struct NodeView: View {
                 }
         
         // MARK: Navigation
-        case let .navigationStack(wrapped: wrapped):
-            NavigationStack {
-                NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
+        case let .navigationStack(path: path, wrapped: wrapped):
+            if let path {
+                NavigationStack(path: Binding(
+                    get: { path },
+                    set: { root.fire(event: .updateNavigationPath(path: $0), for: idPath) }
+                )) {
+                    NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
+                }
+            } else {
+                NavigationStack {
+                    NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
+                }
             }
 
         // MARK: Wrapper
