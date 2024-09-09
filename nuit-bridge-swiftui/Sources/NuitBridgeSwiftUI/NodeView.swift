@@ -26,14 +26,14 @@ struct NodeView: View {
             Button {
                 root.fire(event: .buttonTap, for: idPath)
             } label: {
-                NodeView(node: label.value, idPath: idPath + [label.id])
+                childView(for: label)
             }
         case let .picker(title: title, selection: selection, content: content):
             Picker(title, selection: Binding(
                 get: { selection },
                 set: { root.fire(event: .updatePickerSelection(id: $0), for: idPath) }
             )) {
-                NodeView(node: content.value, idPath: idPath + [content.id])
+                childView(for: content)
             }
         case let .slider(value: value, lowerBound: lowerBound, upperBound: upperBound, step: step):
             let binding = Binding(
@@ -48,40 +48,40 @@ struct NodeView: View {
 
         // MARK: Aggregation
         case let .child(wrapped: wrapped):
-            NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
+            childView(for: wrapped)
         case let .group(children: children):
             ForEach(children) { child in
-                NodeView(node: child.value, idPath: idPath + [child.id])
+                childView(for: child)
             }
 
         // MARK: Layout
         case .geometryReader:
             GeometryReader { proxy in
                 if case let .node(node: node) = root.fire(event: .getGeometryReaderView(geometry: .init(proxy)), for: idPath) {
-                    NodeView(node: node.value, idPath: idPath + [node.id])
+                    childView(for: node)
                 }
             }
         case let .vStack(alignment: alignment, spacing: spacing, wrapped: wrapped):
             VStack(alignment: .init(alignment), spacing: spacing) {
-                NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
+                childView(for: wrapped)
             }
         case let .hStack(alignment: alignment, spacing: spacing, wrapped: wrapped):
             HStack(alignment: .init(alignment), spacing: spacing) {
-                NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
+                childView(for: wrapped)
             }
         case let .zStack(alignment: alignment, spacing: _, wrapped: wrapped):
             // TODO: Apply spacing on visionOS
             ZStack(alignment: .init(alignment)) {
-                NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
+                childView(for: wrapped)
             }
         case let .list(wrapped: wrapped):
             List {
-                NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
+                childView(for: wrapped)
             }
         case let .overlay(wrapped: wrapped, alignment: alignment, overlayed: overlayed):
-            NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
+            childView(for: wrapped)
                 .overlay(alignment: .init(alignment)) {
-                    NodeView(node: overlayed.value, idPath: idPath + [overlayed.id])
+                    childView(for: overlayed)
                 }
         
         // MARK: Navigation
@@ -91,27 +91,27 @@ struct NodeView: View {
                     get: { path },
                     set: { root.fire(event: .updateNavigationPath(path: $0), for: idPath) }
                 )) {
-                    NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
+                    childView(for: wrapped)
                 }
             } else {
                 NavigationStack {
-                    NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
+                    childView(for: wrapped)
                 }
             }
         case let .navigationSplitView(sidebar: sidebar, content: content, detail: detail):
             if content.value.isEmpty {
                 NavigationSplitView {
-                    NodeView(node: sidebar.value, idPath: idPath + [sidebar.id])
+                    childView(for: sidebar)
                 } detail: {
-                    NodeView(node: detail.value, idPath: idPath + [detail.id])
+                    childView(for: detail)
                 }
             } else {
                 NavigationSplitView {
-                    NodeView(node: sidebar.value, idPath: idPath + [sidebar.id])
+                    childView(for: sidebar)
                 } content: {
-                    NodeView(node: content.value, idPath: idPath + [content.id])
+                    childView(for: content)
                 } detail: {
-                    NodeView(node: detail.value, idPath: idPath + [detail.id])
+                    childView(for: detail)
                 }
             }
         case let .navigationLink(label: label, value: value):
@@ -119,10 +119,10 @@ struct NodeView: View {
                 NodeView(node: label.value, idPath: idPath + [label.id])
             }
         case let .navigationDestination(wrapped: wrapped):
-            NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
+            childView(for: wrapped)
                 .navigationDestination(for: Value.self) { value in
                     if case let .node(node: destination) = root.fire(event: .getNavigationDestination(value: value), for: idPath) {
-                        NodeView(node: destination.value, idPath: idPath + [destination.id])
+                        childView(for: destination)
                     }
                 }
 
@@ -130,11 +130,15 @@ struct NodeView: View {
         case let .shape(shape: shape):
             ShapeNodeView(shape: shape)
         case let .gestured(wrapped: wrapped, gesture: gesture):
-            NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
+            childView(for: wrapped)
                 .modifier(GestureNodeViewModifier(node: gesture.value, idPath: idPath + [gesture.id]))
         case let .modified(wrapped: wrapped, modifier: modifier):
-            NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
+            childView(for: wrapped)
                 .modifier(ModifierNodeViewModifier(modifier: modifier))
         }
+    }
+
+    private func childView(for child: Identified<Node>) -> some View {
+        NodeView(node: child.value, idPath: idPath + [child.id])
     }
 }
