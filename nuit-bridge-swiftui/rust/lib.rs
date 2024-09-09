@@ -10,7 +10,7 @@ extern "C" {
     pub fn run_app(root: *const CRoot);
 }
 
-#[cfg(test)]
+#[cfg(all(test, target_vendor = "apple"))]
 mod tests {
     use std::process::Command;
 
