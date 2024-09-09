@@ -2,7 +2,7 @@ use std::ops::RangeInclusive;
 
 use nuit_derive::Bind;
 
-use crate::{Access, Binding, Context, Event, IdPath, Node, View};
+use crate::{Access, Binding, Context, Event, EventResponse, IdPath, Node, View};
 
 /// A control for selecting numeric values from a bounded range.
 #[derive(Debug, Clone, Bind)]
@@ -25,11 +25,12 @@ impl Slider {
 }
 
 impl View for Slider {
-    fn fire(&self, event: &Event, event_path: &IdPath, _context: &Context) {
+    fn fire(&self, event: &Event, event_path: &IdPath, _context: &Context) -> EventResponse {
         assert!(event_path.is_root());
         if let Event::UpdateSliderValue { value } = event {
             self.value.set(*value);
         }
+        EventResponse::default()
     }
 
     fn render(&self, _context: &Context) -> Node {

@@ -1,6 +1,6 @@
 use nuit_derive::Bind;
 
-use crate::{Alignment, Context, Event, Id, IdPath, IdentifyExt, Node, View};
+use crate::{Alignment, Context, Event, EventResponse, Id, IdPath, IdentifyExt, Node, View};
 
 /// A view that lays out its children on top of each other.
 #[derive(Debug, Clone, PartialEq, Eq, Bind)]
@@ -22,13 +22,15 @@ impl<T, O> Overlay<T, O> {
 }
 
 impl<T, O> View for Overlay<T, O> where T: View, O: View {
-    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) {
+    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) -> EventResponse {
         if let Some(head) = event_path.head() {
             match head {
                 Id::Index(0) => self.wrapped.fire(event, event_path.tail(), &context.child(0)),
                 Id::Index(1) => self.overlayed.fire(event, event_path.tail(), &context.child(1)),
                 i => panic!("Cannot fire event for child id {i} on Overlay which only has two childs"),
             }
+        } else {
+            EventResponse::default()
         }
     }
 

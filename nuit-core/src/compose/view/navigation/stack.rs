@@ -1,7 +1,7 @@
 use nuit_derive::Bind;
 use serde::{de::DeserializeOwned, Serialize};
 
-use crate::{Access, Binding, Context, Event, Id, IdPath, IdentifyExt, Node, View};
+use crate::{Access, Binding, Context, Event, EventResponse, Id, IdPath, IdentifyExt, Node, View};
 
 #[derive(Debug, Clone, Bind)]
 pub struct NavigationStack<T, I> {
@@ -32,22 +32,25 @@ impl<T> From<T> for NavigationStack<T, ()> {
 }
 
 impl<T, I> View for NavigationStack<T, I> where T: View, I: Serialize + DeserializeOwned + 'static {
-    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) {
+    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) -> EventResponse {
         if let Some(head) = event_path.head() {
             match head {
                 Id::Index(0) => self.wrapped.fire(event, event_path.tail(), &context.child(0)),
                 i => panic!("Cannot fire event for child id {i} on NavigationStack which only has one child"),
             }
-        } else if let Event::UpdateNavigationPath { path } = event {
-            if let Some(path_binding) = &self.path {
-                let path = path.iter()
-                    .map(|item| serde_json::from_value(item.clone()))
-                    .collect::<Result<Vec<I>, _>>()
-                    .expect("Could not deserialize navigation path");
-                path_binding.set(path);
-            } else {
-                eprintln!("Warning: Ignoring navigation path update since no path binding it set.");
+        } else {
+            if let Event::UpdateNavigationPath { path } = event {
+                if let Some(path_binding) = &self.path {
+                    let path = path.iter()
+                        .map(|item| serde_json::from_value(item.clone()))
+                        .collect::<Result<Vec<I>, _>>()
+                        .expect("Could not deserialize navigation path");
+                    path_binding.set(path);
+                } else {
+                    eprintln!("Warning: Ignoring navigation path update since no path binding it set.");
+                }
             }
+            EventResponse::default()
         }
     }
 

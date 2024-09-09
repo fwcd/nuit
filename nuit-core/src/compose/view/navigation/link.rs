@@ -1,7 +1,7 @@
 use nuit_derive::Bind;
 use serde::Serialize;
 
-use crate::{Context, Event, Id, IdPath, IdentifyExt, Node, Text, View};
+use crate::{Context, Event, EventResponse, Id, IdPath, IdentifyExt, Node, Text, View};
 
 #[derive(Debug, Clone, PartialEq, Eq, Bind)]
 pub struct NavigationLink<L, V> {
@@ -27,12 +27,14 @@ impl<V> NavigationLink<Text, V> {
 }
 
 impl<L, V> View for NavigationLink<L, V> where L: View, V: Serialize {
-    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) {
+    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) -> EventResponse {
         if let Some(head) = event_path.head() {
             match head {
                 Id::Index(0) => self.label.fire(event, event_path.tail(), &context.child(0)),
                 i => panic!("Cannot fire event for child id {i} on NavigationLink which only has one child"),
             }
+        } else {
+            EventResponse::default()
         }
     }
 

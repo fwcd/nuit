@@ -1,4 +1,4 @@
-use crate::{Bind, Context, GestureEvent, GestureNode, IdPath};
+use crate::{Bind, Context, EventResponse, GestureEvent, GestureNode, IdPath};
 
 /// A composable gesture.
 pub trait Gesture: Bind {
@@ -8,9 +8,9 @@ pub trait Gesture: Bind {
         panic!("Gesture does not have a body!")
     }
 
-    fn fire(&self, event: &GestureEvent, event_path: &IdPath, context: &Context) {
+    fn fire(&self, event: &GestureEvent, event_path: &IdPath, context: &Context) -> EventResponse {
         self.bind(context);
-        self.body().fire(event, event_path, context);
+        self.body().fire(event, event_path, context)
     }
 
     fn render(&self, context: &Context) -> GestureNode {

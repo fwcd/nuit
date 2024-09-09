@@ -1,6 +1,6 @@
 use nuit_derive::Bind;
 
-use crate::{Context, Event, Id, IdPath, IdentifyExt, ModifierNode, Node, View};
+use crate::{Context, Event, EventResponse, Id, IdPath, IdentifyExt, ModifierNode, Node, View};
 
 /// A view that applies a modifier.
 #[derive(Debug, Clone, PartialEq, Bind)]
@@ -19,12 +19,14 @@ impl<T> Modified<T> {
 }
 
 impl<T> View for Modified<T> where T: View {
-    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) {
+    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) -> EventResponse {
         if let Some(head) = event_path.head() {
             match head {
                 Id::Index(0) => self.wrapped.fire(event, event_path.tail(), &context.child(0)),
                 i => panic!("Cannot fire event for child id {i} on Modified which only has one child")
             }
+        } else {
+            EventResponse::default()
         }
     }
 

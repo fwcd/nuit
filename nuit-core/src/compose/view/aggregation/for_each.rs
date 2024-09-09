@@ -1,6 +1,6 @@
 use nuit_derive::Bind;
 
-use crate::{Context, Event, HasId, IdPath, Identified, IdentifyExt, Node, View};
+use crate::{Context, Event, EventResponse, HasId, IdPath, Identified, IdentifyExt, Node, View};
 
 /// A group of views that is dynamically computed from a given collection.
 #[derive(Debug, Clone, PartialEq, Eq, Bind)]
@@ -58,11 +58,11 @@ impl<V> ForEach<V> where V: View {
 // TODO: Figure out if we can write the bound on references to avoid the clone
 
 impl<V> View for ForEach<V> where V: View {
-    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) {
-        if let Some(head) = event_path.head() {
-            if let Some(view) = self.children.iter().find(|view| view.id() == &head) {
-                view.value().fire(event, event_path.tail(), &context.child(view.id().clone()));
-            }
+    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) -> EventResponse {
+        if let Some(head) = event_path.head() && let Some(view) = self.children.iter().find(|view| view.id() == &head) {
+            view.value().fire(event, event_path.tail(), &context.child(view.id().clone()))
+        } else {
+            EventResponse::default()
         }
     }
 

@@ -1,6 +1,6 @@
 use nuit_derive::Bind;
 
-use crate::{Alignment, Context, Event, HorizontalAlignment, Id, IdPath, IdentifyExt, Node, VerticalAlignment, View, DEFAULT_SPACING};
+use crate::{Alignment, Context, Event, EventResponse, HorizontalAlignment, Id, IdPath, IdentifyExt, Node, VerticalAlignment, View, DEFAULT_SPACING};
 
 macro_rules! impl_stack {
     (#[doc = $doc:expr] $name:ident, $alignment:ident) => {
@@ -55,12 +55,14 @@ macro_rules! impl_stack {
         }
 
         impl<T> View for $name<T> where T: View {
-            fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) {
+            fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) -> EventResponse {
                 if let Some(head) = event_path.head() {
                     match head {
                         Id::Index(0) => self.wrapped.fire(event, &event_path.tail(), &context.child(0)),
                         i => panic!("Cannot fire event for child id {} on {} which only has one child", i, stringify!($name)),
                     }
+                } else {
+                    EventResponse::default()
                 }
             }
 

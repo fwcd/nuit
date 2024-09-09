@@ -1,6 +1,6 @@
 use nuit_derive::Bind;
 
-use crate::{Context, Event, Id, IdPath, IdentifyExt, Node, View};
+use crate::{Context, Event, EventResponse, Id, IdPath, IdentifyExt, Node, View};
 
 #[derive(Debug, Clone, PartialEq, Eq, Bind)]
 pub struct NavigationDestination<T, D> {
@@ -16,13 +16,15 @@ impl<T, D> NavigationDestination<T, D> {
 }
 
 impl<T, D> View for NavigationDestination<T, D> where T: View, D: View {
-    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) {
+    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) -> EventResponse {
         if let Some(head) = event_path.head() {
             match head {
                 Id::Index(0) => self.wrapped.fire(event, event_path.tail(), &context.child(0)),
                 Id::Index(1) => self.destination.fire(event, event_path.tail(), &context.child(1)),
                 i => panic!("Cannot fire event for child id {i} on NavigationDestination which only has two childs"),
             }
+        } else {
+            EventResponse::default()
         }
     }
 

@@ -1,6 +1,6 @@
 use nuit_derive::Bind;
 
-use crate::{View, Node, Context, Event, IdPath, Id, IdentifyExt};
+use crate::{View, Node, Context, Event, EventResponse, IdPath, Id, IdentifyExt};
 
 use super::Text;
 
@@ -32,16 +32,17 @@ impl<F> Button<Text, F> {
 }
 
 impl<T, F> View for Button<T, F> where T: View, F: Fn() + 'static {
-    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) {
+    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) -> EventResponse {
         if let Some(head) = event_path.head() {
             match head {
                 Id::Index(0) => self.label.fire(event, event_path.tail(), &context.child(0)),
                 i => panic!("Cannot fire event for child id {i} on Button which only has one child"),
             }
-        } else if let Event::ButtonTap {} = event {
-            if let Some(ref action) = self.action {
+        } else {
+            if let Event::ButtonTap {} = event && let Some(ref action) = self.action {
                 action();
             }
+            EventResponse::default()
         }
     }
 

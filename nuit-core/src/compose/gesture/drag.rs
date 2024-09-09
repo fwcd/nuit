@@ -1,6 +1,6 @@
 use nuit_derive::Bind;
 
-use crate::{Context, DragEvent, GestureEvent, GestureNode, IdPath};
+use crate::{Context, DragEvent, EventResponse, GestureEvent, GestureNode, IdPath};
 
 use super::Gesture;
 
@@ -25,13 +25,14 @@ impl<F> DragGesture<F> where F: Fn(&DragEvent) {
 }
 
 impl<F> Gesture for DragGesture<F> where F: Fn(&DragEvent) {
-    fn fire(&self, event: &GestureEvent, event_path: &IdPath, _context: &Context) {
+    fn fire(&self, event: &GestureEvent, event_path: &IdPath, _context: &Context) -> EventResponse {
         assert!(event_path.is_root());
         if let GestureEvent::Drag { drag } = event {
             (self.action)(drag);
         } else {
             eprintln!("Warning: Ignoring non-drag gesture event {event:?} targeted to DragGesture at {event_path:?}");
         }
+        EventResponse::default()
     }
 
     fn render(&self, _context: &Context) -> GestureNode {

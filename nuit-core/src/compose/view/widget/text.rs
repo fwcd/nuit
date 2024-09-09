@@ -1,6 +1,6 @@
 use nuit_derive::Bind;
 
-use crate::{View, Node, Context, Event, IdPath};
+use crate::{View, Node, Context, Event, EventResponse, IdPath};
 
 /// A text label.
 #[derive(Debug, Clone, PartialEq, Eq, Bind)]
@@ -17,7 +17,9 @@ impl Text {
 }
 
 impl View for Text {
-    fn fire(&self, _event: &Event, _id_path: &IdPath, _context: &Context) {}
+    fn fire(&self, _event: &Event, _id_path: &IdPath, _context: &Context) -> EventResponse {
+        EventResponse::default()
+    }
 
     fn render(&self, _context: &Context) -> Node {
         Node::Text { content: self.content.clone() }
