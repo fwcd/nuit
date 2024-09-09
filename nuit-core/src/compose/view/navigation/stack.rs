@@ -1,5 +1,5 @@
 use nuit_derive::Bind;
-use serde::Serialize;
+use serde::{de::DeserializeOwned, Serialize};
 
 use crate::{Access, Binding, Context, Event, Id, IdPath, IdentifyExt, Node, View};
 
@@ -31,12 +31,22 @@ impl<T> From<T> for NavigationStack<T, ()> {
     }
 }
 
-impl<T, I> View for NavigationStack<T, I> where T: View, I: Serialize + 'static {
+impl<T, I> View for NavigationStack<T, I> where T: View, I: Serialize + DeserializeOwned + 'static {
     fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) {
         if let Some(head) = event_path.head() {
             match head {
                 Id::Index(0) => self.wrapped.fire(event, event_path.tail(), &context.child(0)),
                 i => panic!("Cannot fire event for child id {i} on NavigationStack which only has one child"),
+            }
+        } else if let Event::UpdateNavigationPath { path } = event {
+            if let Some(path_binding) = &self.path {
+                let path = path.iter()
+                    .map(|item| serde_json::from_value(item.clone()))
+                    .collect::<Result<Vec<I>, _>>()
+                    .expect("Could not deserialize navigation path");
+                path_binding.set(path);
+            } else {
+                eprintln!("Warning: Ignoring navigation path update since no path binding it set.");
             }
         }
     }
@@ -46,8 +56,9 @@ impl<T, I> View for NavigationStack<T, I> where T: View, I: Serialize + 'static 
             path: self.path.as_ref().map(|path|
                 path.get()
                     .iter()
-                    .map(|item| serde_json::to_value(item).expect("Could not serialize navigation path"))
-                    .collect()
+                    .map(serde_json::to_value)
+                    .collect::<Result<Vec<_>, _>>()
+                    .expect("Could not serialize navigation path")
             ),
             wrapped: Box::new(self.wrapped.render(&context.child(0)).identify(0))
         }
