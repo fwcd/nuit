@@ -1,6 +1,6 @@
 use nuit_derive::Bind;
 
-use crate::{Context, Gesture, GestureEvent, GestureNode, IdPath};
+use crate::{Context, EventResponse, Gesture, GestureEvent, GestureNode, IdPath};
 
 /// A gesture recognizing a tap.
 #[derive(Bind)]
@@ -24,13 +24,14 @@ impl<F> TapGesture<F> where F: Fn() {
 }
 
 impl<F> Gesture for TapGesture<F> where F: Fn() {
-    fn fire(&self, event: &GestureEvent, event_path: &IdPath, _context: &Context) {
+    fn fire(&self, event: &GestureEvent, event_path: &IdPath, _context: &Context) -> EventResponse {
         assert!(event_path.is_root());
         if let GestureEvent::Tap {} = event {
             (self.action)();
         } else {
             eprintln!("Warning: Ignoring non-tap gesture event {event:?} targeted to TapGesture at {event_path:?}");
         }
+        EventResponse::default()
     }
 
     fn render(&self, _context: &Context) -> GestureNode {

@@ -1,4 +1,5 @@
 use serde::{Serialize, Deserialize};
+use serde_json::Value;
 
 use crate::Id;
 
@@ -14,6 +15,10 @@ pub enum Event {
     UpdateText { content: String },
     UpdatePickerSelection { id: Id },
     UpdateSliderValue { value: f64 },
+
+    // Navigation
+    UpdateNavigationPath { path: Vec<Value> },
+    GetNavigationDestination { value: Value },
 
     // Lifecycle
     Appear,

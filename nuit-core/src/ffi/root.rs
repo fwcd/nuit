@@ -8,10 +8,11 @@ pub struct CRoot {
     /// The opaque pointer to the owned underlying Rust `Root<T>`.
     wrapped: *mut c_void,
     /// Renders the view to an owned JSON-serialized node tree.
-    /// **Callers are responsible for calling `nuit_drop_string` on this string!**
+    /// **Callers are responsible for calling [`nuit::nuit_c_string_drop`] on this string!**
     render_json: extern "C" fn(*const CRoot) -> *const c_char,
     /// Fires an to the given JSON-serialized id path with the given JSON-serialized event.
-    fire_event_json: extern "C" fn(*const CRoot, *const c_char, *const c_char),
+    /// **Callers are responsible for calling [`nuit::nuit_c_string_drop`] on this string!**
+    fire_event_json: extern "C" fn(*const CRoot, *const c_char, *const c_char) -> *const c_char,
     /// Registers a callback that we (the Rust side) can use to trigger UI updates.
     set_update_callback: extern "C" fn(*const CRoot, extern "C" fn(*const c_char)),
 }
@@ -25,12 +26,14 @@ extern "C" fn render_json_impl<T>(c_root: *const CRoot) -> *const c_char where T
     }
 }
 
-extern "C" fn fire_event_json_impl<T>(c_root: *const CRoot, raw_id_path_json: *const c_char, raw_event_json: *const c_char) where T: View {
+extern "C" fn fire_event_json_impl<T>(c_root: *const CRoot, raw_id_path_json: *const c_char, raw_event_json: *const c_char) -> *const c_char where T: View {
     unsafe {
         let root = (*c_root).wrapped as *const Root<T>;
         let id_path_json = str::from_utf8(CStr::from_ptr(raw_id_path_json).to_bytes()).expect("Could not decode id path JSON");
         let event_json = str::from_utf8(CStr::from_ptr(raw_event_json).to_bytes()).expect("Could not decode event JSON");
-        (*root).fire_event_json(id_path_json, event_json);
+        let response_json = (*root).fire_event_json(id_path_json, event_json);
+        let c_string = CString::new(response_json).expect("Could not convert event response JSON to C string");
+        c_string.into_raw()
     }
 }
 

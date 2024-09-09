@@ -1,5 +1,6 @@
 use nuit_derive::Diff;
 use serde::{Serialize, Deserialize};
+use serde_json::Value;
 
 use crate::{Alignment, HorizontalAlignment, Id, IdPath, IdPathBuf, Identified, VerticalAlignment};
 
@@ -28,6 +29,12 @@ pub enum Node {
     ZStack { alignment: Alignment, spacing: f64, wrapped: Box<Identified<Node>> },
     List { wrapped: Box<Identified<Node>> },
     Overlay { wrapped: Box<Identified<Node>>, alignment: Alignment, overlayed: Box<Identified<Node>> },
+
+    // Navigation
+    NavigationStack { path: Option<Vec<Value>>, wrapped: Box<Identified<Node>> },
+    NavigationSplitView { sidebar: Box<Identified<Node>>, content: Box<Identified<Node>>, detail: Box<Identified<Node>> },
+    NavigationLink { label: Box<Identified<Node>>, value: Value },
+    NavigationDestination { wrapped: Box<Identified<Node>> },
 
     // Wrapper
     Shape { shape: ShapeNode },

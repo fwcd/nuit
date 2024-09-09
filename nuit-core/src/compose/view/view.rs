@@ -1,4 +1,4 @@
-use crate::{Node, Bind, Context, Event, IdPath, Id, IdentifyExt};
+use crate::{Node, Bind, Context, Event, EventResponse, IdPath, Id, IdentifyExt};
 
 /// The primary view trait. Represents a lightweight UI component.
 pub trait View: Bind {
@@ -10,9 +10,9 @@ pub trait View: Bind {
 
     // TODO: Return an error type from fire to avoid panicking on wrong paths?
 
-    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) {
+    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) -> EventResponse {
         self.bind(context);
-        self.body().fire(event, event_path, context);
+        self.body().fire(event, event_path, context)
     }
 
     fn render(&self, context: &Context) -> Node {
@@ -24,12 +24,14 @@ pub trait View: Bind {
 macro_rules! impl_tuple_view {
     ($($tvs:ident),*) => {
         impl<$($tvs),*> View for ($($tvs,)*) where $($tvs: View),* {
-            fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) {
+            fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) -> EventResponse {
                 if let Some(head) = event_path.head() {
                     match head {
                         $(${ignore($tvs)} Id::Index(${index()}) => self.${index()}.fire(event, &event_path.tail(), &context.child(${index()})),)*
                         i => panic!("Cannot fire event for child id {} on a {}-tuple", i, ${count($tvs, 0)})
                     }
+                } else {
+                    EventResponse::default()
                 }
             }
 
@@ -54,7 +56,9 @@ impl View for NeverView {}
 // overhead of using a Group requiring a Vec.
 
 impl View for () {
-    fn fire(&self, _event: &Event, _id_path: &IdPath, _context: &Context) {}
+    fn fire(&self, _event: &Event, _id_path: &IdPath, _context: &Context) -> EventResponse {
+        EventResponse::default()
+    }
 
     fn render(&self, _context: &Context) -> Node {
         Node::Empty {}
@@ -68,12 +72,14 @@ impl<T> View for (T,) where T: View {
         self.0.body()
     }
 
-    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) {
+    fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) -> EventResponse {
         if let Some(head) = event_path.head() {
             match head {
                 Id::Index(0) => self.0.fire(event, event_path.tail(), &context.child(0)),
                 i => panic!("Cannot fire event for child id {i} on 1-tuple")
             }
+        } else {
+            EventResponse::default()
         }
     }
 

@@ -1,6 +1,8 @@
-use crate::{Alignment, Angle, DragEvent, DragGesture, EdgeSet, Event, Font, Frame, Gesture, Handler, Insets, Modified, ModifierNode, Style, TapGesture, UnitPoint, Vec2, View};
+use serde::de::DeserializeOwned;
 
-use super::{Gestured, Overlay};
+use crate::{Alignment, Angle, DragEvent, DragGesture, EdgeSet, Event, Font, Frame, Gesture, Handler, Insets, Modified, ModifierNode, NavigationTitleDisplayMode, Style, TapGesture, UnitPoint, Vec2, View};
+
+use super::{Gestured, NavigationDestination, Overlay};
 
 /// An extension trait with various convenience methods for views.
 pub trait ViewExt: Sized {
@@ -94,6 +96,27 @@ pub trait ViewExt: Sized {
 
     fn help(self, text: impl Into<String>) -> Modified<Self> {
         self.modifier(ModifierNode::Help { text: text.into() })
+    }
+
+    fn navigation_title(self, title: impl Into<String>) -> Modified<Self> {
+        self.modifier(ModifierNode::NavigationTitle { title: title.into() })
+    }
+
+    fn navigation_subtitle(self, subtitle: impl Into<String>) -> Modified<Self> {
+        self.modifier(ModifierNode::NavigationSubtitle { subtitle: subtitle.into() })
+    }
+
+    fn navigation_title_display_mode(self, display_mode: impl Into<NavigationTitleDisplayMode>) -> Modified<Self> {
+        self.modifier(ModifierNode::NavigationTitleDisplayMode { display_mode: display_mode.into() })
+    }
+
+    fn navigation_destination<F, V, D>(self, destination_func: F) -> NavigationDestination<Self, F, V, D>
+    where
+        F: Fn(V) -> D,
+        V: DeserializeOwned,
+        D: View,
+    {
+        NavigationDestination::new(self, destination_func)
     }
 
     fn on_appear(self, action: impl Fn() + 'static) -> Handler<Self, impl Fn(Event)> {

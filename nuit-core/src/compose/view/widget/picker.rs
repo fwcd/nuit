@@ -1,6 +1,6 @@
 use nuit_derive::Bind;
 
-use crate::{Access, Binding, Context, Event, Id, IdPath, IdentifyExt, Node, View};
+use crate::{Access, Binding, Context, Event, EventResponse, Id, IdPath, IdentifyExt, Node, View};
 
 /// A view that lets the user choose a value.
 #[derive(Debug, Clone, Bind)]
@@ -17,11 +17,12 @@ impl<C> Picker<C> {
 }
 
 impl<C> View for Picker<C> where C: View {
-    fn fire(&self, event: &Event, event_path: &IdPath, _context: &Context) {
+    fn fire(&self, event: &Event, event_path: &IdPath, _context: &Context) -> EventResponse {
         assert!(event_path.is_root());
         if let Event::UpdatePickerSelection { id } = event {
             self.selection.set(id.clone());
         }
+        EventResponse::default()
     }
 
     fn render(&self, context: &Context) -> Node {
