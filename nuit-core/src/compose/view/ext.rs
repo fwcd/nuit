@@ -1,4 +1,4 @@
-use crate::{Alignment, Angle, DragEvent, DragGesture, EdgeSet, Event, Font, Frame, Gesture, Handler, Insets, Modified, ModifierNode, Style, TapGesture, UnitPoint, Vec2, View};
+use crate::{Alignment, Angle, DragEvent, DragGesture, EdgeSet, Event, Font, Frame, Gesture, Handler, Insets, Modified, ModifierNode, NavigationTitleDisplayMode, Style, TapGesture, UnitPoint, Vec2, View};
 
 use super::{Gestured, Overlay};
 
@@ -102,6 +102,10 @@ pub trait ViewExt: Sized {
 
     fn navigation_subtitle(self, subtitle: impl Into<String>) -> Modified<Self> {
         self.modifier(ModifierNode::NavigationSubtitle { subtitle: subtitle.into() })
+    }
+
+    fn navigation_title_display_mode(self, display_mode: impl Into<NavigationTitleDisplayMode>) -> Modified<Self> {
+        self.modifier(ModifierNode::NavigationTitleDisplayMode { display_mode: display_mode.into() })
     }
 
     fn on_appear(self, action: impl Fn() + 'static) -> Handler<Self, impl Fn(Event)> {

@@ -1,6 +1,6 @@
 use serde::{Serialize, Deserialize};
 
-use crate::{Alignment, Angle, EdgeSet, Font, Frame, Insets, Style, UnitPoint, Vec2};
+use crate::{Alignment, Angle, EdgeSet, Font, Frame, Insets, NavigationTitleDisplayMode, Style, UnitPoint, Vec2};
 
 /// A rendered modifier.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -20,4 +20,5 @@ pub enum ModifierNode {
     Help { text: String },
     NavigationTitle { title: String },
     NavigationSubtitle { subtitle: String },
+    NavigationTitleDisplayMode { display_mode: NavigationTitleDisplayMode },
 }

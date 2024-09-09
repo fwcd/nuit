@@ -15,4 +15,5 @@ enum ModifierNode: Codable, Hashable {
     case help(text: String)
     case navigationTitle(title: String)
     case navigationSubtitle(subtitle: String)
+    case navigationTitleDisplayMode(displayMode: NavigationTitleDisplayMode)
 }
