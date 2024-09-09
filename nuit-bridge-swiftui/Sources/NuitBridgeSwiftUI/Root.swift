@@ -28,11 +28,15 @@ class Root: ObservableObject {
         }
     }
 
-    func fire(event: Event, for idPath: [Id]) {
+    @discardableResult
+    func fire(event: Event, for idPath: [Id]) -> EventResponse {
         let encoder = JSONEncoder()
         let idPathJson = String(data: try! encoder.encode(idPath), encoding: .utf8)
         let eventJson = String(data: try! encoder.encode(event), encoding: .utf8)
-        cRoot.pointee.fire_event_json(cRoot, idPathJson, eventJson)
+        let responseJsonCString = cRoot.pointee.fire_event_json(cRoot, idPathJson, eventJson)!
+        defer { nuit_c_string_drop(responseJsonCString) }
+        let responseJson = String(cString: responseJsonCString)
+        return try! JSONDecoder().decode(EventResponse.self, from: responseJson.data(using: .utf8)!)
     }
 
     private func renderJson() -> String {

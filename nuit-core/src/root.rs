@@ -1,6 +1,6 @@
 use std::{cell::RefCell, rc::Rc};
 
-use crate::{Context, Diff, Event, IdPath, IdPathBuf, Node, Storage, Update, View};
+use crate::{Context, Diff, Event, EventResponse, IdPath, IdPathBuf, Node, Storage, Update, View};
 
 /// The central state of a Nuit application.
 pub struct Root<T> {
@@ -59,20 +59,21 @@ impl<T> Root<T> where T: View {
         serde_json::to_string(&node).expect("Could not serialize view")
     }
 
-    /// Fires an event at the given path, both represented as raw JSON. Mainly
-    /// intended for FFI use.
+    /// Fires an event at the given path, returning the response, both
+    /// represented as raw JSON. Mainly intended for FFI use.
     /// 
     /// # Panics
     /// 
     /// Panics if the view cannot be deserialized from JSON. We consider this a bug.
-    pub fn fire_event_json(&self, id_path_json: &str, event_json: &str) {
+    pub fn fire_event_json(&self, id_path_json: &str, event_json: &str) -> String {
         let id_path: IdPathBuf = serde_json::from_str(id_path_json).expect("Could not deserialize id path");
         let event: Event = serde_json::from_str(event_json).expect("Could not deserialize event");
-        self.fire_event(&id_path, &event);
+        let response = self.fire_event(&id_path, &event);
+        serde_json::to_string(&response).expect("Could not serialize event response")
     }
 
-    pub fn fire_event(&self, id_path: &IdPath, event: &Event) {
-        self.view.borrow().fire(event, id_path, &Context::new(self.storage.clone()));
+    pub fn fire_event(&self, id_path: &IdPath, event: &Event) -> EventResponse {
+        self.view.borrow().fire(event, id_path, &Context::new(self.storage.clone()))
     }
 
     pub fn set_update_callback(&self, update_callback: impl Fn(&Update) + 'static) {
