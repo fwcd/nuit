@@ -77,6 +77,12 @@ struct NodeView: View {
                 .overlay(alignment: .init(alignment)) {
                     NodeView(node: overlayed.value, idPath: idPath + [overlayed.id])
                 }
+        
+        // MARK: Navigation
+        case let .navigationStack(wrapped: wrapped):
+            NavigationStack {
+                NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
+            }
 
         // MARK: Wrapper
         case let .shape(shape: shape):

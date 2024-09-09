@@ -21,6 +21,9 @@ indirect enum Node: Codable, Hashable {
     case list(wrapped: Identified<Node>)
     case overlay(wrapped: Identified<Node>, alignment: Alignment, overlayed: Identified<Node>)
 
+    // MARK: Navigation
+    case navigationStack(wrapped: Identified<Node>)
+
     // MARK: Wrapper
     case shape(shape: ShapeNode)
     case gestured(wrapped: Identified<Node>, gesture: Identified<GestureNode>)
