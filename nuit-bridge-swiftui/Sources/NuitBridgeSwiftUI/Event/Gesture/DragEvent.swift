@@ -1,3 +1,5 @@
+import NuitBridgeSwiftUICore
+
 struct DragEvent: Codable, Hashable {
     let kind: Kind
     let startLocation: Vec2<Double>

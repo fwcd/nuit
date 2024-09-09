@@ -1,4 +1,5 @@
 import SwiftUI
+import NuitBridgeSwiftUICore
 
 struct GestureNodeViewModifier: ViewModifier {
     let node: GestureNode

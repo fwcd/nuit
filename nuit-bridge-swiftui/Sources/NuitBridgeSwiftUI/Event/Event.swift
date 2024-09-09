@@ -1,3 +1,5 @@
+import NuitBridgeSwiftUICore
+
 enum Event: Codable, Hashable {
     case buttonTap
     case gesture(gesture: GestureEvent)

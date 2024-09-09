@@ -1,3 +1,5 @@
+import NuitBridgeSwiftUICore
+
 indirect enum ShapeNode: Codable, Hashable {
     // MARK: Primitive
     case capsule

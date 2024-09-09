@@ -1,4 +1,5 @@
 import CNuitBridgeSwiftUI
+import NuitBridgeSwiftUICore
 import Foundation
 
 @_cdecl("nuit_bridge_swiftui_run_app")

@@ -9,3 +9,19 @@ extern "C" {
     #[link_name = "nuit_bridge_swiftui_run_app"]
     pub fn run_app(root: *const CRoot);
 }
+
+#[cfg(test)]
+mod tests {
+    use std::process::Command;
+
+    #[test]
+    fn test_swift() {
+        let tests_succeeded = Command::new("xcrun")
+            .args(["--sdk", "macosx", "swift", "test"])
+            .status()
+            .unwrap()
+            .success();
+
+        assert!(tests_succeeded, "Swift tests failed");
+    }
+}

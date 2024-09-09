@@ -1,3 +1,5 @@
+import NuitBridgeSwiftUICore
+
 indirect enum Node: Codable, Hashable {
     case empty
 

@@ -1,3 +1,4 @@
+import NuitBridgeSwiftUICore
 import SwiftUI
 
 extension AnyShape {

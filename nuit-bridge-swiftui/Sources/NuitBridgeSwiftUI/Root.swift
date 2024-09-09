@@ -1,4 +1,5 @@
 import CNuitBridgeSwiftUI
+import NuitBridgeSwiftUICore
 import Foundation
 import Combine
 import SwiftUI
