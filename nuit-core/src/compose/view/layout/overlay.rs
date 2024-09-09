@@ -11,6 +11,7 @@ pub struct Overlay<T, O> {
 }
 
 impl<T, O> Overlay<T, O> {
+    #[must_use]
     pub const fn new(wrapped: T, alignment: Alignment, overlayed: O) -> Self {
         Self {
             wrapped,

@@ -9,6 +9,7 @@ pub struct List<T> {
 }
 
 impl<T> List<T> {
+    #[must_use]
     pub const fn new(wrapped: T) -> Self {
         Self {
             wrapped
