@@ -92,6 +92,11 @@ struct NodeView: View {
                     NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
                 }
             }
+        case let .navigationDestination(wrapped: wrapped, destination: destination):
+            NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
+                .navigationDestination(for: Value.self) { _ in
+                    NodeView(node: destination.value, idPath: idPath + [destination.id])
+                }
 
         // MARK: Wrapper
         case let .shape(shape: shape):
