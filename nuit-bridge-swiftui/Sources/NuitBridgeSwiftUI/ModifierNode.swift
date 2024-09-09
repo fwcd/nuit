@@ -14,4 +14,5 @@ enum ModifierNode: Codable, Hashable {
     case rotationEffect(angle: Angle, anchor: UnitPoint)
     case help(text: String)
     case navigationTitle(title: String)
+    case navigationSubtitle(subtitle: String)
 }

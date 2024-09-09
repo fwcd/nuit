@@ -19,4 +19,5 @@ pub enum ModifierNode {
     RotationEffect { angle: Angle, anchor: UnitPoint },
     Help { text: String },
     NavigationTitle { title: String },
+    NavigationSubtitle { subtitle: String },
 }

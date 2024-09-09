@@ -54,6 +54,8 @@ struct ModifierNodeViewModifier: ViewModifier {
             content.help(text)
         case let .navigationTitle(title: title):
             content.navigationTitle(title)
+        case let .navigationSubtitle(subtitle: subtitle):
+            content.navigationSubtitle(subtitle)
         }
     }
 }
