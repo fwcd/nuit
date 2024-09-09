@@ -32,6 +32,7 @@ pub enum Node {
 
     // Navigation
     NavigationStack { path: Option<Vec<Value>>, wrapped: Box<Identified<Node>> },
+    NavigationDestination { wrapped: Box<Identified<Node>>, destination: Box<Identified<Node>> },
 
     // Wrapper
     Shape { shape: ShapeNode },

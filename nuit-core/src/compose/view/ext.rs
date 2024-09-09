@@ -1,6 +1,6 @@
 use crate::{Alignment, Angle, DragEvent, DragGesture, EdgeSet, Event, Font, Frame, Gesture, Handler, Insets, Modified, ModifierNode, NavigationTitleDisplayMode, Style, TapGesture, UnitPoint, Vec2, View};
 
-use super::{Gestured, Overlay};
+use super::{Gestured, NavigationDestination, Overlay};
 
 /// An extension trait with various convenience methods for views.
 pub trait ViewExt: Sized {
@@ -106,6 +106,10 @@ pub trait ViewExt: Sized {
 
     fn navigation_title_display_mode(self, display_mode: impl Into<NavigationTitleDisplayMode>) -> Modified<Self> {
         self.modifier(ModifierNode::NavigationTitleDisplayMode { display_mode: display_mode.into() })
+    }
+
+    fn navigation_destination<D>(self, destination: D) -> NavigationDestination<Self, D> {
+        NavigationDestination::new(self, destination)
     }
 
     fn on_appear(self, action: impl Fn() + 'static) -> Handler<Self, impl Fn(Event)> {
