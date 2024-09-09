@@ -52,6 +52,8 @@ struct ModifierNodeViewModifier: ViewModifier {
             content.rotationEffect(.init(angle), anchor: .init(anchor))
         case let .help(text: text):
             content.help(text)
+        case let .navigationTitle(title: title):
+            content.navigationTitle(title)
         }
     }
 }

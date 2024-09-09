@@ -18,4 +18,5 @@ pub enum ModifierNode {
     ScaleEffect { factor: f64, anchor: UnitPoint },
     RotationEffect { angle: Angle, anchor: UnitPoint },
     Help { text: String },
+    NavigationTitle { title: String },
 }

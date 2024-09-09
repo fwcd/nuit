@@ -96,6 +96,10 @@ pub trait ViewExt: Sized {
         self.modifier(ModifierNode::Help { text: text.into() })
     }
 
+    fn navigation_title(self, title: impl Into<String>) -> Modified<Self> {
+        self.modifier(ModifierNode::NavigationTitle { title: title.into() })
+    }
+
     fn on_appear(self, action: impl Fn() + 'static) -> Handler<Self, impl Fn(Event)> {
         Handler::new(self, move |e| {
             if let Event::Appear = e {
