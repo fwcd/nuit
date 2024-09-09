@@ -3,31 +3,31 @@
 use nuit::{prelude::*, NavigationLink, NavigationStack, Text, VStack};
 
 #[derive(Bind, Default)]
-struct NavigationView {
+struct NavigationContent {
     i: i32,
 }
 
-impl NavigationView {
+impl NavigationContent {
     pub const fn new(i: i32) -> Self {
         Self { i }
     }
 }
 
-impl View for NavigationView {
+impl View for NavigationContent {
     type Body = impl View;
 
     fn body(&self) -> Self::Body {
         let i = self.i;
-        NavigationStack::from(
-            VStack::from((
-                Text::new(format!("This is page {i}")),
-                NavigationLink::with_text("Next", i + 1),
-            ))
-            .navigation_destination(Self::new)
-        )
+        VStack::from((
+            Text::new(format!("This is page {i}")),
+            NavigationLink::with_text("Next", i + 1),
+        ))
+        .navigation_destination(Self::new)
     }
 }
 
 fn main() {
-    nuit::run_app(NavigationView::new(0));
+    nuit::run_app(NavigationStack::from(
+        NavigationContent::new(0)
+    ));
 }

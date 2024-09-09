@@ -36,15 +36,21 @@ where
         if let Some(head) = event_path.head() {
             match head {
                 Id::Index(0) => self.wrapped.fire(event, event_path.tail(), &context.child(0)),
-                i => panic!("Cannot fire event for child id {i} on NavigationDestination which only has one child"),
+                Id::Index(i) => panic!("Cannot fire event for child id {i} on NavigationDestination"),
+                Id::String(value_json) => {
+                    let value = serde_json::from_str(&value_json).expect("Could not deserialize navigation destination id");
+                    let destination = (self.destination_func)(value);
+                    destination.fire(event, event_path.tail(), &context.child(value_json))
+                },
             }
         } else if let Event::GetNavigationDestination { value } = event {
+            let value_json = serde_json::to_string(value).expect("Could not serialize navigation destination id");
+            let id = Id::string(value_json);
+
             let value = serde_json::from_value(value.clone()).expect("Could not deserialize navigation destination value");
             let destination = (self.destination_func)(value);
-            // TODO: How do we deal with events that go here? Maybe use the
-            // JSON-serialized value as id and then dynamically rerender during
-            // firing?
-            let node = destination.render(&context.child(1)).identify(1);
+
+            let node = destination.render(&context.child(id.clone())).identify(id);
             EventResponse::Node { node }
         } else {
             EventResponse::default()
