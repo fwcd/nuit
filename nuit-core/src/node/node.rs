@@ -29,6 +29,9 @@ pub enum Node {
     List { wrapped: Box<Identified<Node>> },
     Overlay { wrapped: Box<Identified<Node>>, alignment: Alignment, overlayed: Box<Identified<Node>> },
 
+    // Navigation
+    NavigationStack { wrapped: Box<Identified<Node>> },
+
     // Wrapper
     Shape { shape: ShapeNode },
     Gestured { wrapped: Box<Identified<Node>>, gesture: Identified<GestureNode>, },
