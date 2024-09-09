@@ -23,7 +23,7 @@ impl View for NavigationView {
                 Text::new(format!("This is page {i}")),
                 NavigationLink::with_text("Next", i + 1),
             ))
-            .navigation_destination(Self::new(i + 1))
+            .navigation_destination(Self::new)
         )
     }
 }

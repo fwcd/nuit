@@ -96,10 +96,12 @@ struct NodeView: View {
             NavigationLink(value: value) {
                 NodeView(node: label.value, idPath: idPath + [label.id])
             }
-        case let .navigationDestination(wrapped: wrapped, destination: destination):
+        case let .navigationDestination(wrapped: wrapped):
             NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])
-                .navigationDestination(for: Value.self) { _ in
-                    NodeView(node: destination.value, idPath: idPath + [destination.id])
+                .navigationDestination(for: Value.self) { value in
+                    if case let .node(node: destination) = root.fire(event: .getNavigationDestination(value: value), for: idPath) {
+                        NodeView(node: destination.value, idPath: idPath + [destination.id])
+                    }
                 }
 
         // MARK: Wrapper

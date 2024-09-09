@@ -7,4 +7,5 @@ enum Event: Codable, Hashable {
     case updatePickerSelection(id: Id)
     case updateSliderValue(value: Double)
     case updateNavigationPath(path: [Value])
+    case getNavigationDestination(value: Value)
 }

@@ -24,7 +24,7 @@ indirect enum Node: Codable, Hashable {
     // MARK: Navigation
     case navigationStack(path: [Value]?, wrapped: Identified<Node>)
     case navigationLink(label: Identified<Node>, value: Value)
-    case navigationDestination(wrapped: Identified<Node>, destination: Identified<Node>)
+    case navigationDestination(wrapped: Identified<Node>)
 
     // MARK: Wrapper
     case shape(shape: ShapeNode)

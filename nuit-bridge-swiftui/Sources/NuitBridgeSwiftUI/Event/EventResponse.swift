@@ -1,4 +1,6 @@
+import NuitBridgeSwiftUICore
+
 enum EventResponse: Codable, Hashable {
     case empty
-    case node(node: Node)
+    case node(node: Identified<Node>)
 }

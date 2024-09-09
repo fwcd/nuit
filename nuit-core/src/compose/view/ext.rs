@@ -1,3 +1,5 @@
+use serde::de::DeserializeOwned;
+
 use crate::{Alignment, Angle, DragEvent, DragGesture, EdgeSet, Event, Font, Frame, Gesture, Handler, Insets, Modified, ModifierNode, NavigationTitleDisplayMode, Style, TapGesture, UnitPoint, Vec2, View};
 
 use super::{Gestured, NavigationDestination, Overlay};
@@ -108,8 +110,13 @@ pub trait ViewExt: Sized {
         self.modifier(ModifierNode::NavigationTitleDisplayMode { display_mode: display_mode.into() })
     }
 
-    fn navigation_destination<D>(self, destination: D) -> NavigationDestination<Self, D> {
-        NavigationDestination::new(self, destination)
+    fn navigation_destination<F, V, D>(self, destination_func: F) -> NavigationDestination<Self, F, V, D>
+    where
+        F: Fn(V) -> D,
+        V: DeserializeOwned,
+        D: View,
+    {
+        NavigationDestination::new(self, destination_func)
     }
 
     fn on_appear(self, action: impl Fn() + 'static) -> Handler<Self, impl Fn(Event)> {

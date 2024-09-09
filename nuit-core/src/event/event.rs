@@ -18,6 +18,7 @@ pub enum Event {
 
     // Navigation
     UpdateNavigationPath { path: Vec<Value> },
+    GetNavigationDestination { value: Value },
 
     // Lifecycle
     Appear,

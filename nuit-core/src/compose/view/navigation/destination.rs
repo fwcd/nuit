@@ -1,28 +1,51 @@
+use std::marker::PhantomData;
+
 use nuit_derive::Bind;
+use serde::de::DeserializeOwned;
 
 use crate::{Context, Event, EventResponse, Id, IdPath, IdentifyExt, Node, View};
 
 #[derive(Debug, Clone, PartialEq, Eq, Bind)]
-pub struct NavigationDestination<T, D> {
+pub struct NavigationDestination<T, F, V, D> {
     wrapped: T,
-    destination: D,
+    destination_func: F,
+    phantom_value: PhantomData<V>,
+    phantom_destination_view: PhantomData<D>,
 }
 
-impl<T, D> NavigationDestination<T, D> {
+impl<T, F, V, D> NavigationDestination<T, F, V, D> {
     #[must_use]
-    pub const fn new(wrapped: T, destination: D) -> Self {
-        Self { wrapped, destination }
+    pub const fn new(wrapped: T, destination_func: F) -> Self {
+        Self {
+            wrapped,
+            destination_func,
+            phantom_value: PhantomData,
+            phantom_destination_view: PhantomData,
+        }
     }
 }
 
-impl<T, D> View for NavigationDestination<T, D> where T: View, D: View {
+impl<T, F, V, D> View for NavigationDestination<T, F, V, D>
+where
+    T: View,
+    F: Fn(V) -> D,
+    V: DeserializeOwned,
+    D: View,
+{
     fn fire(&self, event: &Event, event_path: &IdPath, context: &Context) -> EventResponse {
         if let Some(head) = event_path.head() {
             match head {
                 Id::Index(0) => self.wrapped.fire(event, event_path.tail(), &context.child(0)),
-                Id::Index(1) => self.destination.fire(event, event_path.tail(), &context.child(1)),
-                i => panic!("Cannot fire event for child id {i} on NavigationDestination which only has two childs"),
+                i => panic!("Cannot fire event for child id {i} on NavigationDestination which only has one child"),
             }
+        } else if let Event::GetNavigationDestination { value } = event {
+            let value = serde_json::from_value(value.clone()).expect("Could not deserialize navigation destination value");
+            let destination = (self.destination_func)(value);
+            // TODO: How do we deal with events that go here? Maybe use the
+            // JSON-serialized value as id and then dynamically rerender during
+            // firing?
+            let node = destination.render(&context.child(1)).identify(1);
+            EventResponse::Node { node }
         } else {
             EventResponse::default()
         }
@@ -31,7 +54,6 @@ impl<T, D> View for NavigationDestination<T, D> where T: View, D: View {
     fn render(&self, context: &Context) -> Node {
         Node::NavigationDestination {
             wrapped: Box::new(self.wrapped.render(&context.child(0)).identify(0)),
-            destination: Box::new(self.wrapped.render(&context.child(1)).identify(1)),
         }
     }
 }
