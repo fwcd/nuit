@@ -1,6 +1,6 @@
 #![feature(type_alias_impl_trait, impl_trait_in_assoc_type)]
 
-use nuit::{prelude::*, NavigationLink, NavigationSplitView, NavigationStack, Text, VStack};
+use nuit::{prelude::*, List, NavigationLink, NavigationSplitView, NavigationStack, Text, VStack};
 
 #[derive(Bind, Default)]
 struct NavigationContent {
@@ -33,9 +33,12 @@ impl View for NavigationView {
     type Body = impl View;
 
     fn body(&self) -> Self::Body {
-        NavigationSplitView::with_sidebar({
-            
-        }).with_detail(
+        NavigationSplitView::with_sidebar(
+            List::from((
+                Text::new("Hello"),
+                Text::new("World"),
+            ))
+        ).with_detail(
             NavigationStack::from(
                 NavigationContent::new(0)
             )
