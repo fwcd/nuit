@@ -32,6 +32,7 @@ pub enum Node {
 
     // Navigation
     NavigationStack { path: Option<Vec<Value>>, wrapped: Box<Identified<Node>> },
+    NavigationSplitView { sidebar: Box<Identified<Node>>, content: Box<Identified<Node>>, detail: Box<Identified<Node>> },
     NavigationLink { label: Box<Identified<Node>>, value: Value },
     NavigationDestination { wrapped: Box<Identified<Node>> },
 
