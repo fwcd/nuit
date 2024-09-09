@@ -24,12 +24,12 @@ impl View for FizzBuzzView {
             Button::with_text("Increment", clone!(count => move || {
                 count.set(count.get() + 1);
             })),
-            If::new_or_else(fizz || buzz, || {
+            If::new(fizz || buzz, || {
                 HStack::from((
                     If::new(fizz, || Text::new("Fizz")),
                     If::new(buzz, || Text::new("Buzz")),
                 ))
-            }, || {
+            }).or_else(|| {
                 Text::new(format!("{}", self.count.get()))
             }),
         ))

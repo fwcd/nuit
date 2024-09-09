@@ -6,6 +6,7 @@ use crate::{View, Node, Context, Event, IdPath, Id, IdentifyExt};
 /// on a boolean condition.
 #[derive(Debug, Clone, PartialEq, Eq, Bind)]
 pub struct If<T, F> {
+    condition: bool,
     then_view: Option<T>,
     else_view: Option<F>,
 }
@@ -13,18 +14,28 @@ pub struct If<T, F> {
 impl<T> If<T, ()> {
     pub fn new(condition: bool, then_view: impl FnOnce() -> T) -> Self {
         Self {
+            condition,
             then_view: if condition { Some(then_view()) } else { None },
             else_view: None,
         }
     }
 }
 
+#[allow(clippy::if_not_else)]
 impl<T, F> If<T, F> {
-    #[allow(clippy::if_not_else)]
     pub fn new_or_else(condition: bool, then_view: impl FnOnce() -> T, else_view: impl FnOnce() -> F) -> Self {
         Self {
+            condition,
             then_view: if condition { Some(then_view()) } else { None },
             else_view: if !condition { Some(else_view()) } else { None },
+        }
+    }
+
+    pub fn or_else<G>(self, else_view: impl FnOnce() -> G) -> If<T, G> {
+        If {
+            condition: self.condition,
+            then_view: self.then_view,
+            else_view: if !self.condition { Some(else_view()) } else { None },
         }
     }
 }
