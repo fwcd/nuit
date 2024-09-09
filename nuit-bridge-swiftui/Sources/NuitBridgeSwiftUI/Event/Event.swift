@@ -8,4 +8,5 @@ enum Event: Codable, Hashable {
     case updateSliderValue(value: Double)
     case updateNavigationPath(path: [Value])
     case getNavigationDestination(value: Value)
+    case getGeometryReaderView(geometry: Geometry)
 }

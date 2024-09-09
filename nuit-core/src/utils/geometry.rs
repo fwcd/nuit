@@ -14,4 +14,14 @@ impl Geometry {
     pub const fn size(self) -> Vec2<f64> {
         self.size
     }
+
+    #[must_use]
+    pub const fn width(self) -> f64 {
+        self.size.x
+    }
+
+    #[must_use]
+    pub const fn height(self) -> f64 {
+        self.size.y
+    }
 }

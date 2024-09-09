@@ -24,6 +24,7 @@ pub enum Node {
     Group { children: Vec<Identified<Node>> },
 
     // Layout
+    GeometryReader {},
     VStack { alignment: HorizontalAlignment, spacing: f64, wrapped: Box<Identified<Node>> },
     HStack { alignment: VerticalAlignment, spacing: f64, wrapped: Box<Identified<Node>> },
     ZStack { alignment: Alignment, spacing: f64, wrapped: Box<Identified<Node>> },

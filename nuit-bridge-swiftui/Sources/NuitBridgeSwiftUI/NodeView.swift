@@ -55,6 +55,12 @@ struct NodeView: View {
             }
 
         // MARK: Layout
+        case .geometryReader:
+            GeometryReader { proxy in
+                if case let .node(node: node) = root.fire(event: .getGeometryReaderView(geometry: .init(proxy)), for: idPath) {
+                    NodeView(node: node.value, idPath: idPath + [node.id])
+                }
+            }
         case let .vStack(alignment: alignment, spacing: spacing, wrapped: wrapped):
             VStack(alignment: .init(alignment), spacing: spacing) {
                 NodeView(node: wrapped.value, idPath: idPath + [wrapped.id])

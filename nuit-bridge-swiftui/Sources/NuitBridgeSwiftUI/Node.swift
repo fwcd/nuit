@@ -15,6 +15,7 @@ indirect enum Node: Codable, Hashable {
     case group(children: [Identified<Node>])
 
     // MARK: Layout
+    case geometryReader
     case vStack(alignment: HorizontalAlignment, spacing: Double, wrapped: Identified<Node>)
     case hStack(alignment: VerticalAlignment, spacing: Double, wrapped: Identified<Node>)
     case zStack(alignment: Alignment, spacing: Double, wrapped: Identified<Node>)
