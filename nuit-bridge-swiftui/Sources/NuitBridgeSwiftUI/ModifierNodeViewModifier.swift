@@ -55,7 +55,11 @@ struct ModifierNodeViewModifier: ViewModifier {
         case let .navigationTitle(title: title):
             content.navigationTitle(title)
         case let .navigationSubtitle(subtitle: subtitle):
+            #if os(macOS) || targetEnvironment(macCatalyst)
             content.navigationSubtitle(subtitle)
+            #else
+            content
+            #endif
         case let .navigationTitleDisplayMode(displayMode: displayMode):
             #if !os(macOS)
             content.navigationBarTitleDisplayMode(.init(displayMode))
