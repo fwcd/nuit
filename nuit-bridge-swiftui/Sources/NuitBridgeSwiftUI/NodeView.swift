@@ -45,6 +45,13 @@ struct NodeView: View {
             } else {
                 Slider(value: binding, in: lowerBound...upperBound)
             }
+        case let .toggle(isOn: isOn):
+            Toggle(isOn: Binding(
+                get: { isOn },
+                set: { _ in root.fire(event: .toggleChange, for: idPath) }
+            )) {
+                EmptyView()
+            }
 
         // MARK: Aggregation
         case let .child(wrapped: wrapped):

@@ -6,6 +6,7 @@ enum Event: Codable, Hashable {
     case updateText(content: String)
     case updatePickerSelection(id: Id)
     case updateSliderValue(value: Double)
+    case toggleChange
     case updateNavigationPath(path: [Value])
     case getNavigationDestination(value: Value)
     case getGeometryReaderView(geometry: Geometry)

@@ -15,6 +15,7 @@ pub enum Event {
     UpdateText { content: String },
     UpdatePickerSelection { id: Id },
     UpdateSliderValue { value: f64 },
+    ToggleChange {},
 
     // Navigation
     UpdateNavigationPath { path: Vec<Value> },

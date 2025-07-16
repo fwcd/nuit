@@ -9,6 +9,7 @@ indirect enum Node: Codable, Hashable {
     case button(label: Identified<Node>)
     case picker(title: String, selection: Id, content: Identified<Node>)
     case slider(value: Double, lowerBound: Double, upperBound: Double, step: Double?)
+    case toggle(isOn: Bool)
 
     // MARK: Aggregation
     case child(wrapped: Identified<Node>)

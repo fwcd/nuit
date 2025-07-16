@@ -18,6 +18,7 @@ pub enum Node {
     Button { label: Box<Identified<Node>> },
     Picker { title: String, selection: Id, content: Box<Identified<Node>> },
     Slider { value: f64, lower_bound: f64, upper_bound: f64, step: Option<f64> },
+    Toggle { is_on: bool },
 
     // Aggregation
     Child { wrapped: Box<Identified<Node>> },
