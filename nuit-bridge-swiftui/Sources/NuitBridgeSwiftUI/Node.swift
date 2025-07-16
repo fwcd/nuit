@@ -20,6 +20,7 @@ indirect enum Node: Codable, Hashable {
     case hStack(alignment: VerticalAlignment, spacing: Double, wrapped: Identified<Node>)
     case zStack(alignment: Alignment, spacing: Double, wrapped: Identified<Node>)
     case list(wrapped: Identified<Node>)
+    case scrollView(axes: Axis, showIndicators: Bool, wrapped: Identified<Node>)
     case overlay(wrapped: Identified<Node>, alignment: Alignment, overlayed: Identified<Node>)
 
     // MARK: Navigation

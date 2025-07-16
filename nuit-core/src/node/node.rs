@@ -2,7 +2,7 @@ use nuit_derive::Diff;
 use serde::{Serialize, Deserialize};
 use serde_json::Value;
 
-use crate::{Alignment, HorizontalAlignment, Id, IdPath, IdPathBuf, Identified, VerticalAlignment};
+use crate::{Alignment, Axis, HorizontalAlignment, Id, IdPath, IdPathBuf, Identified, VerticalAlignment};
 
 use super::{GestureNode, ModifierNode, ShapeNode};
 
@@ -29,6 +29,7 @@ pub enum Node {
     HStack { alignment: VerticalAlignment, spacing: f64, wrapped: Box<Identified<Node>> },
     ZStack { alignment: Alignment, spacing: f64, wrapped: Box<Identified<Node>> },
     List { wrapped: Box<Identified<Node>> },
+    ScrollView { axes: Axis, show_indicators: bool, wrapped: Box<Identified<Node>> },
     Overlay { wrapped: Box<Identified<Node>>, alignment: Alignment, overlayed: Box<Identified<Node>> },
 
     // Navigation

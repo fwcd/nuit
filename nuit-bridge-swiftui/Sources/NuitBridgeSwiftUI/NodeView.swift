@@ -78,6 +78,10 @@ struct NodeView: View {
             List {
                 childView(for: wrapped)
             }
+        case let .scrollView(axes: axes, showIndicators: showIndicators, wrapped: wrapped):
+            ScrollView(axes.swiftUIAxes, showsIndicators: showIndicators) {
+                childView(for: wrapped)
+            }
         case let .overlay(wrapped: wrapped, alignment: alignment, overlayed: overlayed):
             childView(for: wrapped)
                 .overlay(alignment: .init(alignment)) {
