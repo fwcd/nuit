@@ -16,4 +16,18 @@ enum ModifierNode: Codable, Hashable {
     case navigationTitle(title: String)
     case navigationSubtitle(subtitle: String)
     case navigationTitleDisplayMode(displayMode: NavigationTitleDisplayMode)
+    case border(style: Style, width: Double)
+    case shadow(color: Style, radius: Double, offset: Vec2<Double>)
+    case blur(radius: Double)
+    case cornerRadius(radius: Double)
+    case overlay(style: Style, alignment: Alignment)
+    case zIndex(zIndex: Double)
+    case hidden(isHidden: Bool)
+    case disabled(isDisabled: Bool)
+    case grayscale(intensity: Double)
+    case brightness(amount: Double)
+    case contrast(amount: Double)
+    case saturation(amount: Double)
+    case hueRotation(angle: Angle)
+    case clipped
 }

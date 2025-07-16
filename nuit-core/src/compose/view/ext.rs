@@ -134,6 +134,62 @@ pub trait ViewExt: Sized {
             }
         })
     }
+
+    fn border(self, style: impl Into<Style>, width: impl Into<f64>) -> Modified<Self> {
+        self.modifier(ModifierNode::Border { style: style.into(), width: width.into() })
+    }
+
+    fn shadow(self, color: impl Into<Style>, radius: impl Into<f64>, offset: Vec2<f64>) -> Modified<Self> {
+        self.modifier(ModifierNode::Shadow { color: color.into(), radius: radius.into(), offset })
+    }
+
+    fn blur(self, radius: impl Into<f64>) -> Modified<Self> {
+        self.modifier(ModifierNode::Blur { radius: radius.into() })
+    }
+
+    fn corner_radius(self, radius: impl Into<f64>) -> Modified<Self> {
+        self.modifier(ModifierNode::CornerRadius { radius: radius.into() })
+    }
+
+    fn overlay_with(self, alignment: Alignment, style: impl Into<Style>) -> Modified<Self> {
+        self.modifier(ModifierNode::Overlay { style: style.into(), alignment })
+    }
+
+    fn z_index(self, z_index: impl Into<f64>) -> Modified<Self> {
+        self.modifier(ModifierNode::ZIndex { z_index: z_index.into() })
+    }
+
+    fn hidden(self, is_hidden: bool) -> Modified<Self> {
+        self.modifier(ModifierNode::Hidden { is_hidden })
+    }
+
+    fn disabled(self, is_disabled: bool) -> Modified<Self> {
+        self.modifier(ModifierNode::Disabled { is_disabled })
+    }
+
+    fn grayscale(self, intensity: impl Into<f64>) -> Modified<Self> {
+        self.modifier(ModifierNode::Grayscale { intensity: intensity.into() })
+    }
+
+    fn brightness(self, amount: impl Into<f64>) -> Modified<Self> {
+        self.modifier(ModifierNode::Brightness { amount: amount.into() })
+    }
+
+    fn contrast(self, amount: impl Into<f64>) -> Modified<Self> {
+        self.modifier(ModifierNode::Contrast { amount: amount.into() })
+    }
+
+    fn saturation(self, amount: impl Into<f64>) -> Modified<Self> {
+        self.modifier(ModifierNode::Saturation { amount: amount.into() })
+    }
+
+    fn hue_rotation(self, angle: impl Into<Angle>) -> Modified<Self> {
+        self.modifier(ModifierNode::HueRotation { angle: angle.into() })
+    }
+
+    fn clipped(self) -> Modified<Self> {
+        self.modifier(ModifierNode::Clipped {})
+    }
 }
 
 impl<T> ViewExt for T where T: View {}

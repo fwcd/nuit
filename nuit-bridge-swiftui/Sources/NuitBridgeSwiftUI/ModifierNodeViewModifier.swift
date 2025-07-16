@@ -66,6 +66,45 @@ struct ModifierNodeViewModifier: ViewModifier {
             #else
             content
             #endif
+        case let .border(style: style, width: width):
+            content.border(AnyShapeStyle(style), width: CGFloat(width))
+        case let .shadow(color: color, radius: radius, offset: offset):
+            // For shadow, we need a concrete color. If the style is not a color, use black as fallback
+            if case let .color(color: shadowColor) = color {
+                content.shadow(color: Color(shadowColor), radius: CGFloat(radius), x: CGFloat(offset.x), y: CGFloat(offset.y))
+            } else {
+                content.shadow(color: .black, radius: CGFloat(radius), x: CGFloat(offset.x), y: CGFloat(offset.y))
+            }
+        case let .blur(radius: radius):
+            content.blur(radius: CGFloat(radius))
+        case let .cornerRadius(radius: radius):
+            content.cornerRadius(CGFloat(radius))
+        case let .overlay(style: style, alignment: alignment):
+            content.overlay(alignment: .init(alignment)) {
+                Rectangle().fill(AnyShapeStyle(style))
+            }
+        case let .zIndex(zIndex: zIndex):
+            content.zIndex(zIndex)
+        case let .hidden(isHidden: isHidden):
+            if isHidden {
+                content.hidden()
+            } else {
+                content
+            }
+        case let .disabled(isDisabled: isDisabled):
+            content.disabled(isDisabled)
+        case let .grayscale(intensity: intensity):
+            content.grayscale(intensity)
+        case let .brightness(amount: amount):
+            content.brightness(amount)
+        case let .contrast(amount: amount):
+            content.contrast(amount)
+        case let .saturation(amount: amount):
+            content.saturation(amount)
+        case let .hueRotation(angle: angle):
+            content.hueRotation(.init(angle))
+        case .clipped:
+            content.clipped()
         }
     }
 }

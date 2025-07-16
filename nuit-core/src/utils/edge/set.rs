@@ -4,7 +4,7 @@ use super::Edge;
 
 /// A set of edges in a 2D rectangle.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
-#[serde(rename_all = "camelCase")]
+#[serde(transparent)]
 pub struct EdgeSet {
     raw_value: u8,
 }

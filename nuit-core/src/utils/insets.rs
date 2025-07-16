@@ -21,3 +21,14 @@ impl Default for Insets {
         }
     }
 }
+
+impl From<f64> for Insets {
+    fn from(value: f64) -> Self {
+        Self {
+            top: value,
+            leading: value,
+            bottom: value,
+            trailing: value,
+        }
+    }
+}
